@@ -13,7 +13,7 @@ function Footer() {
             </Link>
           </div>
           <div className="lg:px-16 mb-4">
-            <p className="mb-4 text-xl uppercase font-semibold">Về 5E REAL</p>
+            <p className="mb-4 text-xl uppercase font-bold bg-text-yellow">Về 5E REAL</p>
             <ul>
               <li className="py-2">Giới thiệu</li>
               <li className="py-2">Dự án</li>
@@ -22,7 +22,7 @@ function Footer() {
             </ul>
           </div>
           <div className="lg:px-16">
-            <p className="mb-4 text-xl uppercase font-semibold">LIÊN HỆ</p>
+            <p className="mb-4 text-xl uppercase font-bold bg-text-yellow">LIÊN HỆ</p>
             <p className="mb-4 uppercase font-bold text-xl">CÔNG TY CỔ PHẦN TƯ VẤN VÀ PHÁT TRIỂN KINH DOANH BẤT ĐỘNG SẢN 5E</p>
             <ul>
               <li className="py-2">

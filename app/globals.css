@@ -21,3 +21,9 @@
     rgba(0, 0, 0, 0)
   );
 }
+
+.bg-text-yellow {
+  background: linear-gradient(to right, #D09B4E, #FDDD9B, #FFFEE5);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}

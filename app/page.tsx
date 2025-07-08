@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DoiNguCoVan from "@/components/ui/homepage/doi-ngu-co-van";
 import DonViThanhVien from "@/components/ui/homepage/don-vi-thanh-vien";
+import TinTuc from "@/components/ui/homepage/tin-tuc";
 
 export default async function Home() {
   // const res = await fetch('http://localhost:3000/api/bds', {
@@ -79,7 +80,7 @@ export default async function Home() {
       </section>
       <section className="mb-16 px-4 container mx-auto">
         {/* Section Title */}
-        <h2 className="text-3xl md:text-4xl font-bold text-[#013d7b] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
@@ -128,7 +129,7 @@ export default async function Home() {
         <div className="container mx-auto relative">
           <Image src="/dau1@3x.png" alt="dau1@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute top-0 left-0" />
           <Image src="/logo-2@3x.png" alt="5E REAL" width={1084} height={438} loading="lazy" className="w-1/2 m-auto" />
-          <p className="text-xl text-[#003770] text-justify mb-6">
+          <p className="text-xl text-[#007AA7] text-justify mb-6">
             5E - đối tác chiến lược trong phát triển và thương mại hóa bất động sản. Không đơn thuẩn là một đơn vị phân phối, 5E chủ động tham gia từ khâu nghiên cứu thị trường, tư vấn định vị sản phẩm đến xây dựng chiến lược ra hàng phù hợp từng phân khúc. Với tệp khách hàng sẵn có, hệ thống phân loại thông minh và cộng đồng nhà đầu tư được nuôi dưỡng chuyên nghiệp, 5E tạo nên bàn tay kép dẫn dắt thị trường - đúng điều khách cần, tròn điều chủ muốn.
           </p>
           <Image src="/dau2@3x.png" alt="dau2@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute bottom-[-5rem] right-0" />
@@ -140,61 +141,64 @@ export default async function Home() {
       </section>
 
       <section className="mb-16 px-4">
-        <div className="flex flex-col lg:flex-row mb-4 ">
-          <div className="flex flex-col justify-end">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#013d7b] mb-12 text-center">DỰ ÁN</h2>
-            <Image src="/du-an-1.png" alt="du-an-1" width={1306} height={637} className="h-2/3" />
+        <div className="container mx-auto">
+          <div className="flex flex-col lg:flex-row mb-4 ">
+            <div className="flex flex-col justify-end">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-12 text-center">DỰ ÁN</h2>
+              <Image src="/du-an-1.png" alt="du-an-1" width={1306} height={637} className="h-2/3" />
+            </div>
+            <Image src="/du-an-2.png" alt="du-an-2" width={1309} height={1025} />
           </div>
-          <Image src="/du-an-2.png" alt="du-an-2" width={1309} height={1025} />
-        </div>
-        <p className="text-xl text-[#003770] text-justify lg:text-center mb-6 px-4 lg:px-16">
-          5E lựa chọn đồng hành cùng những dự án mang &quot;hơi thở phát triển&quot; - nơi hạ tầng đang vươn mình, dòng tiền đang đổ về và giá trị sống, giá trị đầu tư cùng bừng sáng theo từng bước chuyển mình của đô thị.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 container mx-auto rounded-2xl overflow-hidden">
-          {projects.map((tool) => (
-            <div
-              key={tool.id}
-              className="group relative overflow-hidden shadow-lg hover:shadow-xl"
-            >
-              {/* Background Image with Overlay */}
-              <div className="relative">
-                <Image
-                  src={`/cong-cu-${tool.id}.jpg`}
-                  alt={tool.name}
-                  width={600}
-                  height={400}
-                  className="w-full object-cover"
-                  loading="lazy"
-                />
-                {/* Content */}
-                <div className="absolute background-linear-black bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
-                  {/* Number Badge */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="text-6xl font-bold text-white/90 leading-none">{tool.name}</div>
-                  </div>
-
-                  {/* Title and CTA */}
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-2 mb-4">
-                      <Image src="/location.png" alt="location" width={20} height={20} />
-                      <p className="text-xl font-semibold text-white leading-tight">{tool.address}</p>
+          <p className="text-xl text-[#007AA7] text-justify lg:text-center mb-6 px-4 lg:px-16">
+            5E lựa chọn đồng hành cùng những dự án mang &quot;hơi thở phát triển&quot; - nơi hạ tầng đang vươn mình, dòng tiền đang đổ về và giá trị sống, giá trị đầu tư cùng bừng sáng theo từng bước chuyển mình của đô thị.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 container mx-auto rounded-2xl overflow-hidden">
+            {projects.map((tool) => (
+              <div
+                key={tool.id}
+                className="group relative overflow-hidden shadow-lg hover:shadow-xl"
+              >
+                {/* Background Image with Overlay */}
+                <div className="relative">
+                  <Image
+                    src={`/cong-cu-${tool.id}.jpg`}
+                    alt={tool.name}
+                    width={600}
+                    height={400}
+                    className="w-full object-cover"
+                    loading="lazy"
+                  />
+                  {/* Content */}
+                  <div className="absolute background-linear-black bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
+                    {/* Number Badge */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="text-6xl font-bold text-white/90 leading-none">{tool.name}</div>
                     </div>
-                    <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
-                      <Link href={tool.link} className="flex items-center">
-                        <span className="mr-2 text-xl">Xem chi tiết</span>
-                        <ArrowRightIcon className="w-4 h-4" />
-                      </Link>
-                    </button>
+
+                    {/* Title and CTA */}
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-2 mb-4">
+                        <Image src="/location.png" alt="location" width={20} height={20} />
+                        <p className="text-xl font-semibold text-white leading-tight">{tool.address}</p>
+                      </div>
+                      <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
+                        <Link href={tool.link} className="flex items-center">
+                          <span className="mr-2 text-xl">Xem chi tiết</span>
+                          <ArrowRightIcon className="w-4 h-4" />
+                        </Link>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
-      
+
       <DoiNguCoVan />
       <DonViThanhVien />
+      <TinTuc />
     </main>
   );
 }
