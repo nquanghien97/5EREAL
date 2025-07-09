@@ -7,12 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum USER_ROLE {
+  USER
+  ADMIN
+  STAFF
+}
+
 model user {
-  id          Int      @id @default(autoincrement())
-  phoneNumber String   @unique
+  id          Int       @id @default(autoincrement())
+  phoneNumber String    @unique
   fullName    String
   password    String
-  createdAt   DateTime @default(now())
+  role        USER_ROLE @default(USER)
+  createdAt   DateTime  @default(now())
 
   news news[]
 }

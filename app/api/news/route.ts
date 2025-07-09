@@ -6,6 +6,14 @@ import { deleteFile, uploadFile } from "@/utils/fileUpload";
 export async function POST(req: Request) {
   let filenames: string[] = [];
   try {
+    const authorId = req.headers.get('X-User-ID');
+    const role = req.headers.get('X-User-Role');
+    if (!authorId || !role || role !== 'ADMIN') {
+      return NextResponse.json(
+        { message: 'Bạn không có quyền thực hiện hành động này' },
+        { status: 403 }
+      );
+    }
     const formData = await req.formData();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
@@ -21,7 +29,7 @@ export async function POST(req: Request) {
         title,
         content,
         slug,
-        authorId: +1,
+        authorId: Number(authorId),
         thumbnailUrl: `/images/news/${filenames[0]}`
       }
     })
