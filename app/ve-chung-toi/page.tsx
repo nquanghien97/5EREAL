@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import GiaTriCotLoi from '@/components/ui/ve-chung-toi/gia-tri-cot-loi'
+import ThanhTuu from '@/components/ui/ve-chung-toi/thanh-tuu'
+import HeSinhThaiDaLinhVuc from '@/components/ui/ve-chung-toi/he-sinh-thai-da-linh-vuc'
 
 function page() {
   return (
@@ -23,7 +25,7 @@ function page() {
         </div>
       </section>
 
-      <section className="bg-[#fef7e5] mb-8">
+      <section className="bg-[#fef7e5] py-8">
         <div className="container mx-auto px-4 py-8">
           <div className="flex gap-2 flex-col lg:flex-row mb-4">
             <div className="lg:hidden flex flex-col justify-center">
@@ -53,6 +55,22 @@ function page() {
       </section>
 
       <GiaTriCotLoi />
+      <ThanhTuu />
+      <HeSinhThaiDaLinhVuc />
+
+      <section className="bg-[#fef7e5] py-8">
+        <div className="px-4 w-full lg:w-3/4 m-auto flex justify-center">
+          <div className="px-16 bg-gradient-to-br from-[#157e9e] to-[#1a4c65] rounded-2xl py-8 w-full flex flex-col items-center">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2 text-center">ĐỐI TÁC</h2>
+            <div className="flex gap-4 justify-center">
+              <Image src="/doi-tac-1.png" alt="doi-tac-1" width={300} height={591} className="w-1/4" />
+              <Image src="/doi-tac-2.png" alt="doi-tac-2" width={300} height={591} className="w-1/4" />
+              <Image src="/doi-tac-3.png" alt="doi-tac-3" width={300} height={591} className="w-1/4" />
+              <Image src="/doi-tac-4.png" alt="doi-tac-4" width={300} height={591} className="w-1/4" />
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

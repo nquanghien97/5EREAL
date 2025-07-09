@@ -2,8 +2,8 @@ import React from 'react'
 
 function ThanhTuu() {
   return (
-    <section className="mb-8">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">GIÁ TRỊ CỐT LÕI</h2>
+    <section className="bg-[#fef7e5] py-8">
+      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">THÀNH TỰU</h2>
       <div className="container m-auto px-4 mb-8">
         <ul className="flex flex-wrap flex-col lg:flex-row justify-center gap-4 px-4">
           <li className="rounded-2xl lg:max-w-1/4 bg-gradient-to-b from-[#007AA7] to-[#0F3E5A] px-4 py-8">
