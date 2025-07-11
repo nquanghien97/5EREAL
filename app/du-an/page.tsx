@@ -34,7 +34,7 @@ function DuAn() {
   return (
     <main>
       <section className="">
-        <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full" />
+        <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full" />
       </section>
 
       <section>

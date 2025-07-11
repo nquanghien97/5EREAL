@@ -136,9 +136,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="mb-4 px-4">
-        <LinhVucHoatDong />
-      </section>
+      <LinhVucHoatDong />
 
       <section className="mb-16 px-4">
         <div className="container mx-auto">
