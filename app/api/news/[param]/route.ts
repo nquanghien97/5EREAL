@@ -4,8 +4,8 @@ import prisma from "../../../../lib/prisma"
 import { NextResponse } from "next/server";
 import { deleteFile, uploadFile } from "@/utils/fileUpload";
 
-export async function PUT(req: Request, { params }: { params: { param: number } }) {
-  const { param } = params;
+export async function PUT(req: Request, { params }: { params: Promise<{ param: number }> }) {
+  const { param } = await params;
   let filenames: string[] = [];
   try {
     if (!param) {
@@ -75,8 +75,8 @@ export async function PUT(req: Request, { params }: { params: { param: number } 
   }
 }
 
-export async function GET(req: Request, { params }: { params: { param: number | string } }) {
-  const { param } = params
+export async function GET(req: Request, { params }: { params: Promise<{ param: number | string }> }) {
+  const { param } = await params;
   try {
     if (!isNaN(Number(param))) {
       const news = await prisma.news.findUnique({
@@ -113,8 +113,8 @@ export async function GET(req: Request, { params }: { params: { param: number | 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { param: number } }) {
-  const { param } = params
+export async function DELETE(req: Request, { params }: { params: Promise<{ param: number }> }) {
+  const { param } = await params;
   try {
     const news = await prisma.news.findUnique({
       where: {
