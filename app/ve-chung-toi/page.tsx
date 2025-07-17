@@ -3,6 +3,7 @@ import Image from 'next/image'
 import GiaTriCotLoi from '@/components/ui/ve-chung-toi/gia-tri-cot-loi'
 import ThanhTuu from '@/components/ui/ve-chung-toi/thanh-tuu'
 import HeSinhThaiDaLinhVuc from '@/components/ui/ve-chung-toi/he-sinh-thai-da-linh-vuc'
+import NewsSection from '@/components/news-section'
 
 function page() {
   return (
@@ -71,6 +72,8 @@ function page() {
           </div>
         </div>
       </section>
+
+      <NewsSection />
     </main>
   )
 }

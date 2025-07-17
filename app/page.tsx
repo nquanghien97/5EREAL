@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DoiNguCoVan from "@/components/ui/homepage/doi-ngu-co-van";
 import DonViThanhVien from "@/components/ui/homepage/don-vi-thanh-vien";
-import TinTuc from "@/components/ui/homepage/tin-tuc";
+import NewsSection from "@/components/news-section";
 
 export default async function Home() {
   // const res = await fetch('http://localhost:3000/api/bds', {
@@ -196,7 +196,7 @@ export default async function Home() {
 
       <DoiNguCoVan />
       <DonViThanhVien />
-      <TinTuc />
+      <NewsSection />
     </main>
   );
 }

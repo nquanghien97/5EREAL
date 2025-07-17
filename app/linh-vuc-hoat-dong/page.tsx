@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import PhanPhoiBatDongSan from '@/components/ui/linh-vuc-hoat-dong/phan-phoi-bat-dong-san'
+import NewsSection from '@/components/news-section'
 
 const tools = [
   {
@@ -113,6 +114,8 @@ function LinhVucHoatDong() {
           </div>
         </div>
       </section>
+
+      <NewsSection />
     </main>
   )
 }

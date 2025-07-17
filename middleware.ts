@@ -9,6 +9,7 @@ type ExcludeRoute = {
 const excludedRoutes: ExcludeRoute[] = [
   { path: '/api/auth/login', method: 'POST' },
   { path: '/api/news', method: 'GET' },
+  { path: '/api/images', method: 'GET' },
 ];
 
 const corsHeaders = {

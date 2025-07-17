@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ArrowRightIcon from '@/assets/icons/ArrowRightIcon'
+import NewsSection from '@/components/news-section'
 
 const projects = [
     {
@@ -121,7 +122,7 @@ function DuAn() {
         </div>
       </section>
 
-      <section className="mb-16 px-4">
+      <section className="px-4">
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row mb-4 ">
             <div className="flex flex-col justify-end">
@@ -176,6 +177,8 @@ function DuAn() {
           </div>
         </div>
       </section>
+
+      <NewsSection />
     </main>
   )
 }
