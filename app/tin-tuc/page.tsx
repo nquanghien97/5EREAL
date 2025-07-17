@@ -13,7 +13,6 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
   const responseFirstNews: { data: NewsEntity[] } = await getFirstNews()
   const firstNews = responseFirstNews.data[0]
   const otherNews = response.data.slice(1)
-  console.log(response)
   return (
     <main>
       <section className="mb-8">
