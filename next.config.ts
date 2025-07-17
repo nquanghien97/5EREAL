@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
         protocol: 'http',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: '5ereal.h2group.top'
+      }
     ]
   },
   async headers() {
