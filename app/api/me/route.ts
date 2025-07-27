@@ -1,51 +1,23 @@
-import prisma from "@/lib/prisma";
-import { verifyToken } from "@/utils/token";
-import { NextResponse } from "next/server";
+import { cookies } from 'next/headers';
+import { verifyToken } from '@/utils/token';
+import prisma from '@/lib/prisma';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
-    const authorization = req.headers.get('authorization');
-    const token = authorization?.split(' ')[1];
+    const cookieStore = await cookies();
+    const token = cookieStore.get('access_token')?.value;
     if (!token) {
-      return NextResponse.json({
-        success: false,
-        message: "Phiên làm việc đã hết hạn, vui lòng đăng nhập lại."
-      }, { status: 401 });
-    }
-    const userParse = await verifyToken(token)
-    if (!userParse || !userParse.userId) {
-      return NextResponse.json({
-        success: false,
-        message: "Phiên làm việc đã hết hạn, vui lòng đăng nhập lại."
-      }, { status: 401 });
+      return Response.json({ success: false, message: 'Not logged in' }, { status: 401 });
     }
 
-
-    const dataUser = await prisma.user.findUnique({
-      where: {
-        id: Number(userParse.userId),
-      },
-      select: {
-        id: true,
-        createdAt: true,
-        fullName: true,
-        phoneNumber: true,
-        role: true,
-      }
-    })
-
-    return NextResponse.json({
-      success: true,
-      message: "Success",
-      user: dataUser
-    });
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({
-        success: false,
-        message: "Server error, please try again.",
-        error: err.message,
-      }, { status: 500 });
+    const userData = await verifyToken(token);
+    if (!userData) {
+      return Response.json({ success: false, message: 'Invalid token' }, { status: 401 });
     }
+
+    const user = await prisma.user.findUnique({ where: { id: Number(userData.userId) } });
+    return Response.json({ success: true, user });
+  } catch (error) {
+    return Response.json({ success: false, message: (error as Error).message }, { status: 500 });
   }
 }

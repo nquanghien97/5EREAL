@@ -34,12 +34,33 @@ export async function POST(req: NextRequest) {
     }
 
     const accessToken = await createToken(user.id, user.role, user.phoneNumber);
+    const userResponse = {
+      id: user.id,
+      role: user.role,
+      phoneNumber: user.phoneNumber,
+      fullName: user.fullName,
+      createdAt: user.createdAt,
+    }
 
-    return NextResponse.json({
+    // Tạo response JSON
+    const response = NextResponse.json({
       success: true,
       message: "Login successfully",
-      accessToken
+      user: userResponse
     }, { status: 200 });
+
+    // Set HttpOnly cookie
+    response.cookies.set({
+      name: 'access_token',
+      value: accessToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Chỉ secure ở môi trường production
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7 // 7 ngày
+    });
+
+    return response;
 
   } catch (err) {
     return NextResponse.json({

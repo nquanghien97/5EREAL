@@ -3,33 +3,39 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ArrowRightIcon from '@/assets/icons/ArrowRightIcon'
 import NewsSection from '@/components/news-section'
+import { Metadata } from 'next'
 
 const projects = [
-    {
-      id: "1",
-      name: "Palmy Biztown",
-      address: "Thanh Liệt, Thanh Trì, Hà Nội",
-      link: "/tools/smart-management",
-    },
-    {
-      id: "2",
-      name: "Laivian Green",
-      address: "Lại Yên, Hoài Đức, Hà Nội",
-      link: "/tools/price-map",
-    },
-    {
-      id: "3",
-      name: "UDIC Nguyễn Xiển",
-      address: "Thanh Liệt, Thanh Trì, Hà Nội",
-      link: "/tools/price-consultation",
-    },
-    {
-      id: "4",
-      name: "Thái Bình",
-      address: "Thanh Liệt, Thanh Trì, Hà Nội",
-      link: "/tools/price-forecast",
-    },
-  ]
+  {
+    id: "1",
+    name: "Palmy Biztown",
+    address: "Thanh Liệt, Thanh Trì, Hà Nội",
+    link: "/tools/smart-management",
+  },
+  {
+    id: "2",
+    name: "Laivian Green",
+    address: "Lại Yên, Hoài Đức, Hà Nội",
+    link: "/tools/price-map",
+  },
+  {
+    id: "3",
+    name: "UDIC Nguyễn Xiển",
+    address: "Thanh Liệt, Thanh Trì, Hà Nội",
+    link: "/tools/price-consultation",
+  },
+  {
+    id: "4",
+    name: "Thái Bình",
+    address: "Thanh Liệt, Thanh Trì, Hà Nội",
+    link: "/tools/price-forecast",
+  },
+]
+
+export const metadata: Metadata = {
+  title: 'Dự án',
+  description: 'Tổng quan dự án'
+}
 
 function DuAn() {
   return (

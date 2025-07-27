@@ -1,4 +1,10 @@
+import { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Chi tiết tin tức',
+  description: 'Chi tiết tin tức'
+}
 
 async function page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

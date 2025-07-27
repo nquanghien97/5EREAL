@@ -4,8 +4,14 @@ import { getFirstNews, getNews } from '@/services/news'
 import { NewsEntity } from '@/entities/news'
 import ListNews from './ListNews'
 import Link from 'next/link'
+import { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Tin tức',
+  description: 'Danh sách tin tức'
+}
 
 async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, pageSize: string }> }) {
   const { page = 1, pageSize = 6 } = await searchParams

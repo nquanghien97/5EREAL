@@ -1,0 +1,27 @@
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #0b0b0b80;
+}
+
+.body {
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.wrapper {
+  position: fixed;
+  top: 3rem;
+  margin: auto;
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 8px;
+}

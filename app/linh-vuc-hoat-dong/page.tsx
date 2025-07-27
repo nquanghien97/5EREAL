@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import PhanPhoiBatDongSan from '@/components/ui/linh-vuc-hoat-dong/phan-phoi-bat-dong-san'
 import NewsSection from '@/components/news-section'
+import { Metadata } from 'next'
 
 const tools = [
   {
@@ -29,6 +30,11 @@ const tools = [
     link: "/tools/price-forecast",
   },
 ]
+
+export const metadata: Metadata = {
+  title: 'Lĩnh vực hoạt động',
+  description: 'Lĩnh vực hoạt động'
+}
 
 function LinhVucHoatDong() {
   return (
@@ -102,7 +108,7 @@ function LinhVucHoatDong() {
               </div>
             </div>
             <div className="h-full flex-1">
-              <Image src="/@TMB 2.jpg" alt="@TMB 2" width={600} height={400} className="rounded-2xl w-full h-full object-cover" />
+              <Image src="/TMB 2.jpg" alt="TMB 2" width={600} height={400} className="rounded-2xl w-full h-full object-cover" />
             </div>
             <div className="flex flex-col gap-2 flex-1 max-lg:hidden">
               <div className="flex-1 flex flex-col justify-center items-center">

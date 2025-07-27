@@ -4,6 +4,12 @@ import GiaTriCotLoi from '@/components/ui/ve-chung-toi/gia-tri-cot-loi'
 import ThanhTuu from '@/components/ui/ve-chung-toi/thanh-tuu'
 import HeSinhThaiDaLinhVuc from '@/components/ui/ve-chung-toi/he-sinh-thai-da-linh-vuc'
 import NewsSection from '@/components/news-section'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Giới thiệu',
+  description: 'Giới thiệu'
+}
 
 function page() {
   return (

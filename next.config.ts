@@ -11,7 +11,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '5ereal.h2group.top'
-      }
+      },
+      {
+        protocol: 'http',
+        hostname: '27.73.22.149',
+        port: '3000',
+        pathname: '/api/images/news/**',
+      },
     ]
   },
   async headers() {
