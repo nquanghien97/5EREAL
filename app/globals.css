@@ -27,3 +27,16 @@
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 }
+
+/* mxp-box */
+
+.mapboxgl-popup-content {
+  padding: 20px 20px 12px 20px !important;
+}
+
+.mapboxgl-popup-close-button {
+  top: 2px !important;
+  right: 4px !important;
+  font-size: 20px !important;
+  margin: 4px;
+}

@@ -9,6 +9,7 @@ import Footer from "@/components/ui/footer";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/utils/token";
 import prisma from "@/lib/prisma";
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default async function RootLayout({
         <Header me={me} />
         {children}
         <Footer />
+        <ToastContainer />
       </body>
     </html>
   );
