@@ -46,10 +46,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Read token from HttpOnly cookie
-  const token =
-    req.cookies.get('access_token')?.value || // Đọc từ cookie mới
-    req.headers.get('authorization')?.replace('Bearer ', '');
+  // Lấy token từ cookie hoặc header
+  const tokenFromCookie = req.cookies.get('access_token')?.value;
+  const tokenFromHeader = req.headers.get('authorization')?.replace('Bearer ', '');
+  
+  const token = tokenFromHeader || tokenFromCookie;
 
   if (!token || token === 'undefined') {
     return new NextResponse(
@@ -68,9 +69,9 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    const userParse = await verifyToken(token);
+    const user = await verifyToken(token);
 
-    if (!userParse || !userParse.userId) {
+    if (!user || !user.userId) {
       return new NextResponse(
         JSON.stringify({
           success: false,
@@ -86,20 +87,30 @@ export async function middleware(req: NextRequest) {
       );
     }
 
+    // ✨ KEY IMPROVEMENT: Clone request và thêm Authorization header
     const requestHeaders = new Headers(req.headers);
-    requestHeaders.set('X-User-ID', userParse.userId.toString());
-    requestHeaders.set('X-User-Role', String(userParse.role));
-
-    // Set Authorization header if missing
-    if (!requestHeaders.get('authorization')) {
-      requestHeaders.set('authorization', `Bearer ${token}`);
+    
+    // Nếu chưa có Authorization header, thêm từ cookie
+    if (!requestHeaders.get('authorization') && tokenFromCookie) {
+      requestHeaders.set('authorization', `Bearer ${tokenFromCookie}`);
     }
+    
+    // Thêm user info vào headers để API routes có thể sử dụng
+    requestHeaders.set('x-user-id', user.userId.toString());
+    requestHeaders.set('x-user-role', user.role?.toString() ?? '');
 
-    return NextResponse.next({
+    // Tạo response với headers được modify
+    const response = NextResponse.next({
       request: {
         headers: requestHeaders,
       },
     });
+
+    // Set CORS headers
+    response.headers.set('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+
+    return response;
   } catch (error) {
     console.error('Token verification error:', error);
     return new NextResponse(

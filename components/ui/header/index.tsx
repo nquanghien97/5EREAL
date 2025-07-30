@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Auth from '../auth';
 import { useAuthStore } from '@/zustand/user';
-import { LogoutUser } from '@/services/auth';
+import { getMe, LogoutUser } from '@/services/auth';
 import { UserEntity } from '@/entities/user';
 
 interface HeaderProps {
@@ -24,6 +24,11 @@ function Header({ me }: HeaderProps) {
   const { user, setUser } = useAuthStore();
   const currentUser = user === undefined ? me : user;
 
+  useEffect(() => {
+    (async () => {
+      await getMe()
+    })()
+  }, [])
   // Gán user từ server (SSR) vào Zustand lần đầu
   useEffect(() => {
     if (me) setUser(me);
@@ -50,9 +55,8 @@ function Header({ me }: HeaderProps) {
                 <Link
                   key={index}
                   href={item.href}
-                  className={`hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase ${
-                    pathname === item.href ? 'text-[#d29015]' : 'text-white'
-                  }`}
+                  className={`hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase ${pathname === item.href ? 'text-[#d29015]' : 'text-white'
+                    }`}
                 >
                   {item.title}
                 </Link>
@@ -95,30 +99,27 @@ function Header({ me }: HeaderProps) {
 
           {/* Mobile Navigation */}
           <div
-            className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-              isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-            }`}
+            className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}
           >
             <nav className="border-t border-slate-700">
               <div
-                className={`flex flex-col space-y-1 py-4 transform transition-transform duration-300 ease-in-out ${
-                  isMenuOpen ? 'translate-y-0' : '-translate-y-4'
-                }`}
+                className={`flex flex-col space-y-1 py-4 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-y-0' : '-translate-y-4'
+                  }`}
               >
                 {ListHeader.map((item, index) => (
                   <Link
                     key={index}
                     href={item.href}
-                    className={`text-white hover:text-yellow-500 hover:bg-slate-700 font-medium text-sm tracking-wide py-3 px-4 rounded-md transform transition-all duration-200 ${
-                      isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
-                    }`}
+                    className={`text-white hover:text-yellow-500 hover:bg-slate-700 font-medium text-sm tracking-wide py-3 px-4 rounded-md transform transition-all duration-200 ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                      }`}
                     style={{ transitionDelay: `${index * 50}ms` }}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.title}
                   </Link>
                 ))}
-                {!currentUser && (
+                {!currentUser ? (
                   <div className="lg:hidden flex justify-center">
                     <button
                       className="hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase bg-white px-8 py-2 rounded-lg text-[#0F3E5A] cursor-pointer"
@@ -129,6 +130,18 @@ function Header({ me }: HeaderProps) {
                     >
                       Đăng nhập
                     </button>
+                  </div>
+                ) : (
+                  <div className="lg:hidden flex flex-col items-center gap-4">
+                    <p>Xin chào {currentUser.fullName}</p>
+                    <div>
+                      <button
+                        className="hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase bg-white px-8 py-2 rounded-lg text-[#0F3E5A] cursor-pointer"
+                        onClick={onLogout}
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

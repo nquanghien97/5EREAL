@@ -2,10 +2,11 @@ import { NewsEntity } from "@/entities/news";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function getNews({ page, pageSize }: { page?: number, pageSize?: number }) {
+export async function getNews({ page, pageSize, excludeNewsSlug }: { page?: number, pageSize?: number, excludeNewsSlug?: string }) {
   const params = new URLSearchParams();
   if (page) params.append('page', page.toString());
   if (pageSize) params.append('pageSize', pageSize.toString());
+  if (excludeNewsSlug) params.append('excludeNewsSlug', excludeNewsSlug.toString());
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news?${params.toString()}`)
   return res.json()
 }
@@ -20,16 +21,30 @@ export async function getNewsBySlug(slug: string): Promise<NewsEntity> {
   return res.json()
 }
 
-export async function getNewsByPrisma() {
-
+export async function getNewsByPrisma({ page = 1, pageSize = 3, excludeNewsSlug }: { page: number, pageSize: number, excludeNewsSlug?: string }) {
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
   try {
     const news = await prisma.news.findMany({
-      skip: 0,
-      take: 4
+      skip,
+      take,
+      where: excludeNewsSlug ? {
+        slug: { not: excludeNewsSlug }
+      } : {}
+    })
+    const total = await prisma.news.count({
+      where: excludeNewsSlug ? {
+        slug: { not: excludeNewsSlug }
+      } : {}
     })
     return NextResponse.json(
       {
         data: news,
+        paging: {
+          page,
+          pageSize,
+          total
+        }
       },
       { status: 200 }
     )

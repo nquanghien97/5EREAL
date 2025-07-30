@@ -50,15 +50,23 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const page = parseInt(url.searchParams.get('page') ?? '1', 10);
   const pageSize = parseInt(url.searchParams.get('pageSize') ?? '10', 10);
+  const excludeNewsSlug = url.searchParams.get('excludeNewsSlug')
 
   const skip = (page - 1) * pageSize;
   const take = pageSize;
   try {
     const news = await prisma.news.findMany({
       skip,
-      take
+      take,
+      where: excludeNewsSlug ? {
+        slug: { not: excludeNewsSlug }
+      } : {}
     })
-    const total = await prisma.news.count()
+    const total = await prisma.news.count({
+      where: excludeNewsSlug ? {
+        slug: { not: excludeNewsSlug }
+      } : {}
+    })
     return NextResponse.json(
       {
         data: news,

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 async function NewsSection() {
-  const response = await getNewsByPrisma()
+  const response = await getNewsByPrisma({ page: 1, pageSize: 4 })
   const result = await response.json() as { data: NewsEntity[] }
   const firstNews = result.data[0]
   const otherNews = result.data.slice(1)
