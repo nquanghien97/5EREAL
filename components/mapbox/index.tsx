@@ -28,13 +28,13 @@ function MapBox({ initCoordinates }: MapBoxProps) {
   const getDistanceThresholdByZoom = (zoom: number): number => {
     if (zoom >= 14) return 100
     if (zoom >= 11) return 300
-    return 800
+    return 800 
   }
 
   const createCustomMarkerElement = useCallback((note: string, color = '#EF4444') => {
     const wrapper = document.createElement('div')
     wrapper.className = 'flex flex-col items-center'
-
+    
     const label = document.createElement('div')
     label.className =
       'mb-1 max-w-[120px] px-2 py-1 text-xs bg-white text-black border border-gray-300 rounded shadow whitespace-nowrap text-center'
@@ -128,7 +128,7 @@ function MapBox({ initCoordinates }: MapBoxProps) {
 
       const result = await SaveCoordinates({ lat, lng, note })
 
-      const { wrapper, label } = createCustomMarkerElement(note)
+      const { wrapper, label } = createCustomMarkerElement(note, '#EF4444')
       const realPopup = new mapboxgl.Popup({ offset: 25 })
 
       const newMarker = new mapboxgl.Marker({ element: wrapper })
@@ -167,7 +167,7 @@ function MapBox({ initCoordinates }: MapBoxProps) {
       center: [105.85, 21.02],
       zoom: 12
     })
-
+    
     initCoordinates.forEach(({ id, lat, lng, note = '' }) => {
       const { wrapper, label } = createCustomMarkerElement(note, '#3B82F6')
       const popup = new mapboxgl.Popup({ offset: 25 })

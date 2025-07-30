@@ -45,7 +45,7 @@ function LinhVucHoatDong() {
 
       <section>
         <div className="container mx-auto px-4 py-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] text-center">ĐẦU TỪ VÀ PHÁT TRIỂN DỰ ÁN</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] text-center">ĐẦU TƯ VÀ PHÁT TRIỂN DỰ ÁN</h2>
           <p className="text-[#007AA7] text-center mb-4">5E tham gia từ sớm cùng chủ đầu tư để định hình chiến lược thương mại và truyền thông cho dự án.</p>
           <div className="mb-16 px-4 container mx-auto">
 
