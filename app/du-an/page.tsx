@@ -29,7 +29,7 @@ async function DuAn() {
           {firstProject && (
             <div className="flex items-center flex-col lg:flex-row gap-8 mb-8">
               <div className="w-full lg:w-3/5">
-                <Image src="/du-an-3.png" alt="du-an-3" width={600} height={400} className="w-full object-cover rounded-2xl" />
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + firstProject.thumbnailUrl} alt={firstProject.name} width={600} height={400} className="w-full object-cover rounded-2xl" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">
@@ -71,7 +71,7 @@ async function DuAn() {
           {secondProject && (
             <div className="flex items-center flex-col lg:flex-row gap-8">
               <div className="w-full lg:w-3/5 lg:hidden">
-                <Image src="/du-an-3.png" alt="du-an-3" width={600} height={400} className="w-full object-cover rounded-2xl" />
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + secondProject.thumbnailUrl} alt={secondProject.name} width={600} height={400} className="w-full object-cover rounded-2xl" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">
