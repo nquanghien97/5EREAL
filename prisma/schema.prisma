@@ -23,17 +23,19 @@ model user {
 
   news        news[]
   coordinates coordinates[]
+
+  projects projects[]
 }
 
 model coordinates {
   id        Int      @id @default(autoincrement())
   lat       Float
   lng       Float
-  note      String?   @db.LongText
+  note      String?  @db.LongText
   userId    Int
   user      user     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model news {
@@ -45,4 +47,24 @@ model news {
   createdAt    DateTime @default(now())
   authorId     Int
   author       user     @relation(fields: [authorId], references: [id])
+}
+
+model projects {
+  id               Int      @id @default(autoincrement())
+  name             String
+  slug             String   @unique
+  location         String
+  totalArea        Int //Diện tích (m2)
+  constructionRate Float // Mật độ xây dựng (%)
+  floorHeightMin   Int // Số tầng thấp nhất
+  floorHeightMax   Int // Số tầng cao nhất
+  type             String // Loại hình bất động sản
+  numberOfUnits    Int // Tổng số căn
+  investor         String // Tên chủ đầu tư
+  thumbnailUrl     String // URL ảnh đại diện
+  content          String   @db.LongText // Nội dung mô tả chi tiết (HTML/Markdown)
+  authorId         Int
+  author           user     @relation(fields: [authorId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

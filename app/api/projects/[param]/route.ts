@@ -12,11 +12,14 @@ export async function PUT(req: Request, { params }: { params: Promise<{ param: n
     if (!param) {
       return NextResponse.json(
         {
-          message: 'news ID is required',
+          message: 'projects params is required',
         },
         { status: 400 }
       );
     }
+    const oldProjects = await prisma.projects.findUnique({
+      where: { id: +param },
+    });
     const user = await getUserFromCookie();
     const userId = user?.userId;
     const role = user?.role;
@@ -26,50 +29,72 @@ export async function PUT(req: Request, { params }: { params: Promise<{ param: n
         { status: 403 }
       );
     }
-    const oldNews = await prisma.news.findUnique({
-      where: { id: +param },
-    });
 
     const formData = await req.formData();
-    const title = formData.get('title') as string;
+    const name = formData.get('name') as string;
+    const slug = createSlug(name);
+    const location = formData.get('location') as string;
+    const totalArea = parseInt(formData.get('totalArea') as string, 10);
+    const constructionRate = parseFloat(formData.get('constructionRate') as string);
+    const floorHeightMin = parseInt(formData.get('floorHeightMin') as string, 10);
+    const floorHeightMax = parseInt(formData.get('floorHeightMax') as string, 10);
+    const type = formData.get('type') as string;
+    const numberOfUnits = parseInt(formData.get('numberOfUnits') as string, 10);
+    const investor = formData.get('investor') as string;
     const content = formData.get('content') as string;
     const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
-    const slug = createSlug(title);
+
     if (files.length === 0) {
-      const updatedNews = await prisma.$transaction(async (tx) => {
-        const news = await tx.news.update({
+      const updatedProjects = await prisma.$transaction(async (tx) => {
+        const projects = await tx.projects.update({
           where: { id: +param },
           data: {
-            title,
+            name,
+            location,
+            totalArea,
+            constructionRate,
+            floorHeightMin,
+            floorHeightMax,
+            type,
+            numberOfUnits,
+            investor,
             content,
             slug
           },
         });
 
-        return news;
+        return projects;
       });
       return NextResponse.json(
-        { updatedNews },
+        { updatedProjects },
         { status: 200 }
       );
     }
-    await deleteFile(oldNews?.thumbnailUrl || '');
+    await deleteFile(oldProjects?.thumbnailUrl || '');
 
-    filenames = await uploadFile(files, "news");
-    const updatednews = await prisma.$transaction(async (tx) => {
-      const news = await tx.news.update({
+    filenames = await uploadFile(files, "projects");
+    const updatedProjects = await prisma.$transaction(async (tx) => {
+      const projects = await tx.projects.update({
         where: { id: +param },
         data: {
-          title,
+          name,
+          location,
+          totalArea,
+          constructionRate,
+          floorHeightMin,
+          floorHeightMax,
+          type,
+          numberOfUnits,
+          investor,
           content,
-          thumbnailUrl: `/images/news/${filenames[0]}`,
+          thumbnailUrl: `/images/projects/${filenames[0]}`,
           slug
         },
       });
-      return news;
+      return projects;
     })
     return NextResponse.json(
-      { updatednews },
+      { updatedProjects },
       { status: 200 }
     );
 
@@ -86,29 +111,29 @@ export async function PUT(req: Request, { params }: { params: Promise<{ param: n
 }
 
 export async function GET(req: Request, { params }: { params: Promise<{ param: number | string }> }) {
-  const { param } = await params;
   try {
+    const { param } = await params;
     if (!isNaN(Number(param))) {
-      const news = await prisma.news.findUnique({
+      const projects = await prisma.projects.findUnique({
         where: {
           id: +param
         }
       })
       return NextResponse.json(
         {
-          data: news,
+          data: projects,
         },
         { status: 200 }
       )
     } else {
-      const news = await prisma.news.findUnique({
+      const projects = await prisma.projects.findUnique({
         where: {
           slug: param.toString()
         }
       })
       return NextResponse.json(
         {
-          data: news,
+          data: projects,
         },
         { status: 200 }
       )
@@ -135,20 +160,20 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ param
         { status: 403 }
       );
     }
-    const news = await prisma.news.findUnique({
+    const projects = await prisma.projects.findUnique({
       where: {
         id: +param
       }
     })
-    await prisma.news.delete({
+    await prisma.projects.delete({
       where: {
         id: +param
       }
     })
-    await deleteFile(news?.thumbnailUrl || "")
+    await deleteFile(projects?.thumbnailUrl || "")
     return NextResponse.json(
       {
-        message: 'Xóa Tin tức thành công',
+        message: 'Xóa Dự án thành công',
       },
       { status: 200 }
     );

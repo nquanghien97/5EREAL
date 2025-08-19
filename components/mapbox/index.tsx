@@ -10,6 +10,7 @@ import {
   DeleteCoordinates
 } from '@/services/coordinates/coordinates'
 import { calcDistance } from '@/utils/calcDistance'
+import SearchMapbox from './SearchMapbox'
 
 interface MapBoxProps {
   initCoordinates: {
@@ -206,10 +207,13 @@ function MapBox({ initCoordinates }: MapBoxProps) {
   }, [createCustomMarkerElement, createPopupContent, initCoordinates, openPopupForNewMarker])
 
   return (
-    <div
+    <>
+      <SearchMapbox mapRef={mapRef} />
+      <div
       ref={mapContainerRef}
       className="w-full h-[600px] rounded shadow"
     />
+    </>
   )
 }
 

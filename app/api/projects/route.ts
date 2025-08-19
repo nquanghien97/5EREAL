@@ -3,7 +3,6 @@ import prisma from "../../../lib/prisma";
 import { NextResponse } from "next/server";
 import { deleteFile, uploadFile } from "@/utils/fileUpload";
 import { getUserFromCookie } from "@/lib/getUserFromCookie";
-import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
   let filenames: string[] = [];
@@ -18,28 +17,44 @@ export async function POST(req: Request) {
       );
     }
     const formData = await req.formData();
-    const title = formData.get('title') as string;
+    const name = formData.get('name') as string;
+    const slug = createSlug(name);
+    const location = formData.get('location') as string;
+    const totalArea = parseInt(formData.get('totalArea') as string, 10);
+    const constructionRate = parseFloat(formData.get('constructionRate') as string);
+    const floorHeightMin = parseInt(formData.get('floorHeightMin') as string, 10);
+    const floorHeightMax = parseInt(formData.get('floorHeightMax') as string, 10);
+    const type = formData.get('type') as string;
+    const numberOfUnits = parseInt(formData.get('numberOfUnits') as string, 10);
+    const investor = formData.get('investor') as string;
     const content = formData.get('content') as string;
     const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
-    const slug = createSlug(title);
 
     if (files.length === 0) {
       return NextResponse.json({ message: "Không file nào được chọn" }, { status: 400 });
     }
-    filenames = await uploadFile(files, "news");
-    const newNews = await prisma.news.create({
+    filenames = await uploadFile(files, "projects");
+    const newProject = await prisma.projects.create({
       data: {
-        title,
+        name,
+        location,
+        totalArea,
+        constructionRate,
+        floorHeightMin,
+        floorHeightMax,
+        type,
+        numberOfUnits,
+        investor,
         content,
         slug,
         authorId: Number(userId),
-        thumbnailUrl: `/images/news/${filenames[0]}`
+        thumbnailUrl: `/images/projects/${filenames[0]}`
       }
     })
-    return NextResponse.json({ newNews }, { status: 200 })
+    return NextResponse.json({ newProject }, { status: 200 })
   } catch (err) {
     if (filenames.length > 0) {
-      await Promise.all(filenames.map((filename) => deleteFile(`/images/news/${filename}`)));
+      await Promise.all(filenames.map((filename) => deleteFile(`/images/projects/${filename}`)));
     }
     if (err instanceof Error) {
       return NextResponse.json({ message: err.message }, { status: 500 })
@@ -53,34 +68,26 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const page = parseInt(url.searchParams.get('page') ?? '1', 10);
   const pageSize = parseInt(url.searchParams.get('pageSize') ?? '10', 10);
-  const excludeNewsSlug = url.searchParams.get('excludeNewsSlug')
-  const search = url.searchParams.get('search')
+  const excludeProjectsSlug = url.searchParams.get('excludeProjectsSlug')
 
   const skip = (page - 1) * pageSize;
   const take = pageSize;
-
-  const whereCondition: Prisma.newsWhereInput = {
-    ...(excludeNewsSlug ? { slug: { not: excludeNewsSlug } } : {}),
-    ...(search && {
-      OR: [
-        { title: { contains: search } },
-        { content: { contains: search } },
-      ],
-    }),
-  }
-
   try {
-    const news = await prisma.news.findMany({
+    const projects = await prisma.projects.findMany({
       skip,
       take,
-      where: whereCondition
+      where: excludeProjectsSlug ? {
+        slug: { not: excludeProjectsSlug }
+      } : {}
     })
     const total = await prisma.news.count({
-      where: whereCondition
+      where: excludeProjectsSlug ? {
+        slug: { not: excludeProjectsSlug }
+      } : {}
     })
     return NextResponse.json(
       {
-        data: news,
+        data: projects,
         paging: {
           page,
           pageSize,

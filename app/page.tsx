@@ -112,7 +112,7 @@ export default async function Home() {
                     <h3 className="text-xl font-semibold text-white leading-tight">{tool.title}</h3>
 
                     <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors group-hover:translate-x-1 transform duration-200">
-                      <Link href={tool.link} className="flex items-center">
+                      <Link href="#" className="flex items-center">
                         <span className="mr-2 text-xl">Xem chi tiết</span>
                         <ArrowRightIcon className="w-4 h-4" />
                       </Link>

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/utils/token';
 
 type ExcludeRoute = {
-  path: string;
+  path: string | RegExp;
   method?: string;
 };
 
@@ -11,9 +11,12 @@ const excludedRoutes: ExcludeRoute[] = [
   { path: '/api/auth/register', method: 'POST' },
   { path: '/api/news', method: 'GET' },
   { path: '/api/images', method: 'GET' },
+  { path: '/api/projects', method: 'GET' },
+  { path: /^\/api\/projects(\/.*)?$/, method: 'GET' }
 ];
 
-const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+// const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+const ALLOWED_ORIGIN = '*'
 
 export const corsHeaders = {
   'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
@@ -37,7 +40,9 @@ export async function middleware(req: NextRequest) {
 
   // Check if route is excluded
   const isExcluded = excludedRoutes.some(route => {
-    const pathMatch = pathname.startsWith(route.path);
+    const pathMatch = route.path instanceof RegExp
+      ? route.path.test(pathname)
+      : pathname.startsWith(route.path);
     const methodMatch = !route.method || route.method === method;
     return pathMatch && methodMatch;
   });
@@ -49,7 +54,7 @@ export async function middleware(req: NextRequest) {
   // Lấy token từ cookie hoặc header
   const tokenFromCookie = req.cookies.get('access_token')?.value;
   const tokenFromHeader = req.headers.get('authorization')?.replace('Bearer ', '');
-  
+
   const token = tokenFromHeader || tokenFromCookie;
 
   if (!token || token === 'undefined') {
@@ -89,12 +94,12 @@ export async function middleware(req: NextRequest) {
 
     // ✨ KEY IMPROVEMENT: Clone request và thêm Authorization header
     const requestHeaders = new Headers(req.headers);
-    
+
     // Nếu chưa có Authorization header, thêm từ cookie
     if (!requestHeaders.get('authorization') && tokenFromCookie) {
       requestHeaders.set('authorization', `Bearer ${tokenFromCookie}`);
     }
-    
+
     // Thêm user info vào headers để API routes có thể sử dụng
     requestHeaders.set('x-user-id', user.userId.toString());
     requestHeaders.set('x-user-role', user.role?.toString() ?? '');

@@ -1,11 +1,11 @@
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { verifyToken } from '@/utils/token';
 import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get('access_token')?.value;
+    const token = cookieStore.get('access_token')?.value || (await headers()).get('authorization')?.replace('Bearer ', '');
     if (!token) {
       return Response.json({ success: false, message: 'Not logged in' }, { status: 401 });
     }

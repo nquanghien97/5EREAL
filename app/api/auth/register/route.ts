@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
-      data: { phoneNumber, fullName, password: hashedPassword },
+      data: { phoneNumber, fullName, password: hashedPassword, role: 'USER' },
       select: { id: true, fullName: true, phoneNumber: true, role: true, createdAt: true },
     });
 
