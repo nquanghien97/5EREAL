@@ -4,11 +4,11 @@ export const ListHeader = [
     title: 'Về chúng tôi',
     href: '/ve-chung-toi',
   },
-  // {
-  //   id: 2,
-  //   title: 'Công cụ định giá',
-  //   href: '/cong-cu-dinh-gia',
-  // },
+  {
+    id: 2,
+    title: 'Công cụ định giá',
+    href: '/cong-cu-dinh-gia',
+  },
   {
     id: 3,
     title: 'Dự án',

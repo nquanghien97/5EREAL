@@ -15,7 +15,6 @@ const excludedRoutes: ExcludeRoute[] = [
   { path: /^\/api\/projects(\/.*)?$/, method: 'GET' }
 ];
 
-// const ALLOWED_ORIGIN = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
 const ALLOWED_ORIGIN = '*'
 
 export const corsHeaders = {

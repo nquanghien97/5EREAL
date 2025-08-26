@@ -11,6 +11,8 @@ import {
 } from '@/services/coordinates/coordinates'
 import { calcDistance } from '@/utils/calcDistance'
 import SearchMapbox from './SearchMapbox'
+import ReactDOM from 'react-dom/client'
+import PopupContent from './PopupContent'
 
 interface MapBoxProps {
   initCoordinates: {
@@ -59,104 +61,79 @@ function MapBox({ initCoordinates }: MapBoxProps) {
     initialNote: string
   ) => {
     const container = document.createElement('div')
-    container.className = 'p-2 space-y-2'
-
-    const textarea = document.createElement('textarea')
-    textarea.className =
-      'p-2 border rounded-md text-sm text-gray-700'
-    textarea.value = initialNote
-    container.appendChild(textarea)
-
-    const btnWrapper = document.createElement('div')
-    btnWrapper.className = 'flex justify-between space-x-2'
-
-    const saveBtn = document.createElement('button')
-    saveBtn.className =
-      'px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded'
-    saveBtn.innerText = 'Lưu'
-    saveBtn.onclick = async () => {
-      const note = textarea.value.trim()
-      if (note !== initialNote) {
-        labelEl.innerText =
-          note.length > 30 ? note.slice(0, 30) + '…' : note || '(Chưa có ghi chú)'
-        await UpdateCoordinates({ id, note })
-        toast.success('Đã cập nhật ghi chú')
-      }
-      popup.remove()
-    }
-
-    const deleteBtn = document.createElement('button')
-    deleteBtn.className =
-      'px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded'
-    deleteBtn.innerText = 'Xoá'
-    deleteBtn.onclick = async () => {
-      marker.remove()
-      markersRef.current = markersRef.current.filter(m => m.marker !== marker)
-      await DeleteCoordinates({ id })
-      toast.success('Đã xoá marker')
-    }
-
-    btnWrapper.appendChild(saveBtn)
-    btnWrapper.appendChild(deleteBtn)
-    container.appendChild(btnWrapper)
+    const root = ReactDOM.createRoot(container)
+    root.render(
+    <PopupContent
+      coordinatesId={id}
+      initialNote={initialNote}
+      onSave={async (note) => {
+        if (note !== initialNote) {
+          labelEl.innerText = note.length > 30 ? note.slice(0, 30) + "…" : note || "(Chưa có ghi chú)"
+          await UpdateCoordinates({ id, note })
+          toast.success("Đã cập nhật ghi chú")
+        }
+        popup.remove()
+      }}
+      onDelete={async () => {
+        marker.remove()
+        markersRef.current = markersRef.current.filter(m => m.marker !== marker)
+        await DeleteCoordinates({ id })
+        toast.success("Đã xoá marker")
+        popup.remove()
+      }}
+      onCancel={() => popup.remove()}
+    />
+  )
 
     return container
   }, [])
 
   const openPopupForNewMarker = React.useCallback((lat: number, lng: number) => {
-    const popup = new mapboxgl.Popup({ offset: 25 })
-      .setLngLat([lng, lat])
-      .addTo(mapRef.current!)
+  const popup = new mapboxgl.Popup({ offset: 25 })
+    .setLngLat([lng, lat])
+    .addTo(mapRef.current!)
 
-    const container = document.createElement('div')
-    container.className = 'p-2 space-y-2'
+  const container = document.createElement('div')
+  const root = ReactDOM.createRoot(container)
 
-    const textarea = document.createElement('textarea')
-    textarea.className =
-      'p-2 border rounded-md text-sm text-gray-700'
-    container.appendChild(textarea)
+  root.render(
+    <PopupContent
+      coordinatesId={null} // lúc tạo mới chưa có id
+      initialNote=""
+      onSave={async (note) => {
+        if (!note.trim()) return
 
-    const btnWrapper = document.createElement('div')
-    btnWrapper.className = 'flex justify-between space-x-2'
+        // gọi API lưu
+        const result = await SaveCoordinates({ lat, lng, note })
 
-    const saveBtn = document.createElement('button')
-    saveBtn.className =
-      'px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded'
-    saveBtn.innerText = 'Lưu'
-    saveBtn.onclick = async () => {
-      const note = textarea.value.trim()
-      if (!note) return
+        // tạo marker thật sự
+        const { wrapper, label } = createCustomMarkerElement(note, '#EF4444')
+        const realPopup = new mapboxgl.Popup({ offset: 25 })
 
-      const result = await SaveCoordinates({ lat, lng, note })
+        const newMarker = new mapboxgl.Marker({ element: wrapper })
+          .setLngLat([lng, lat])
+          .setPopup(realPopup)
+          .addTo(mapRef.current!)
 
-      const { wrapper, label } = createCustomMarkerElement(note, '#EF4444')
-      const realPopup = new mapboxgl.Popup({ offset: 25 })
+        const popupContent = createPopupContent(result.data.id, label, newMarker, realPopup, note)
+        realPopup.setDOMContent(popupContent)
 
-      const newMarker = new mapboxgl.Marker({ element: wrapper })
-        .setLngLat([lng, lat])
-        .setPopup(realPopup)
-        .addTo(mapRef.current!)
+        markersRef.current.push({ marker: newMarker, id: result.data.id })
+        toast.success('Đã thêm marker mới')
 
-      const popupContent = createPopupContent(result.data.id, label, newMarker, realPopup, note)
-      realPopup.setDOMContent(popupContent)
+        popup.remove()
+      }}
+      onDelete={() => {
+        // marker mới chưa có id nên không cho xoá
+        toast.error("Chưa lưu nên không thể xoá")
+      }}
+      onCancel={() => popup.remove()}
+    />
+  )
 
-      markersRef.current.push({ marker: newMarker, id: result.data.id })
-      toast.success('Đã thêm marker mới')
-      popup.remove()
-    }
+  popup.setDOMContent(container)
+}, [createCustomMarkerElement, createPopupContent, markersRef, mapRef])
 
-    const cancelBtn = document.createElement('button')
-    cancelBtn.className =
-      'px-3 py-1 bg-gray-400 hover:bg-gray-500 text-white text-sm rounded'
-    cancelBtn.innerText = 'Hủy'
-    cancelBtn.onclick = () => popup.remove()
-
-    btnWrapper.appendChild(saveBtn)
-    btnWrapper.appendChild(cancelBtn)
-    container.appendChild(btnWrapper)
-
-    popup.setDOMContent(container)
-  }, [createCustomMarkerElement, createPopupContent, markersRef, mapRef])
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN_MAPBOX as string

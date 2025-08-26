@@ -24,7 +24,8 @@ model user {
   news        news[]
   coordinates coordinates[]
 
-  projects projects[]
+  projects          projects[]
+  images_review_bds images_review_bds[]
 }
 
 model coordinates {
@@ -36,6 +37,8 @@ model coordinates {
   user      user     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  images_review_bds images_review_bds[]
 }
 
 model news {
@@ -67,4 +70,15 @@ model projects {
   author           user     @relation(fields: [authorId], references: [id])
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+}
+
+model images_review_bds {
+  id            Int         @id @default(autoincrement())
+  url           String
+  userId        Int
+  user          user        @relation(fields: [userId], references: [id])
+  coordinatesId Int
+  coordinates   coordinates @relation(fields: [coordinatesId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
