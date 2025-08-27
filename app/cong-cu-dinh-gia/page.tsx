@@ -1,8 +1,9 @@
-import MapBox from '@/components/mapbox'
+import MapBox from '@/app/cong-cu-dinh-gia/mapbox'
 import { GetCoordinates } from '@/services/coordinates/get-coordinates'
 import { Metadata } from 'next'
 import React from 'react'
 import BDSNews from './tin-tuc-bds'
+import Valuation from './valuation'
 
 export const metadata: Metadata = {
   title: 'Công cụ định giá',
@@ -15,12 +16,13 @@ async function CongCuDinhGia() {
 
   return (
     <main className="py-4">
-      <BDSNews />
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
-      <MapBox initCoordinates={res.data} />
-      <div className="container m-auto p-4">
-
+      <div className="mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-2 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h1>
+        <div className="w-1/2 m-auto h-1 bg-[#0F3E5A] rounded-md" />
       </div>
+      <BDSNews />
+      <MapBox initCoordinates={res.data} />
+      <Valuation />
     </main>
   )
 }

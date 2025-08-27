@@ -5,7 +5,7 @@ import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from 'next/image';
 import TrashIcon from '@/assets/icons/TrashIcon';
-import Modal from '../ui/modal';
+import Modal from '../../../components/ui/modal';
 import CloseIcon from '@/assets/icons/CloseIcon';
 import { addImagesReview, deleteImagesReview, getImagesReview } from '@/services/images-review-bds';
 import { toast } from 'react-toastify';
@@ -15,7 +15,7 @@ interface ImagesType {
   url: string
 }
 
-function Slider({ coordinatesId }: { coordinatesId: number | null }) {
+function Slider({ coordinatesId, lat, lng }: { coordinatesId: number | null, lat?: number, lng?: number }) {
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -52,20 +52,24 @@ function Slider({ coordinatesId }: { coordinatesId: number | null }) {
     if (files.length === 0) return;
 
     try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
       if (coordinatesId) {
-        const formData = new FormData();
-        files.forEach((file) => {
-          formData.append('files', file);
-        });
         formData.append('coordinatesId', coordinatesId.toString());
-
-        const res = await addImagesReview(formData);
-        res.images.forEach((item: ImagesType) => {
-          setImages((prev) => [...prev, item]);
-        });
-        setIsOpenModalPreview(false);
-        toast.success('Thêm hình ảnh thành công');
       }
+      if (lat && lng) {
+        formData.append('lat', lat.toString());
+        formData.append('lng', lng.toString());
+      }
+
+      const res = await addImagesReview(formData);
+      res.images.forEach((item: ImagesType) => {
+        setImages((prev) => [...prev, item]);
+      });
+      setIsOpenModalPreview(false);
+      toast.success('Thêm hình ảnh thành công');
     } catch (err) {
       console.error('Error adding images review:', err);
       toast.error('Thêm hình ảnh thất bại');
@@ -166,24 +170,25 @@ function Slider({ coordinatesId }: { coordinatesId: number | null }) {
           <label htmlFor="file" className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded cursor-pointer">Thêm mới hình ảnh</label>
           <input multiple id="file" type="file" className="hidden" onChange={onFileChange} />
         </div>
-        <div className="container m-auto">
-          <div className="relative">
-            <button
-              ref={prevRef}
-              className="absolute left-[-12px] top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
-              aria-label="Previous slide"
-            >
-              <ArrowLeftIcon width={16} height={16} className="group-hover:scale-110 transition-transform" />
-            </button>
+        {images.length > 0 ? (
+          <div className="container m-auto">
+            <div className="relative">
+              <button
+                ref={prevRef}
+                className="absolute left-[-12px] top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
+                aria-label="Previous slide"
+              >
+                <ArrowLeftIcon width={16} height={16} className="group-hover:scale-110 transition-transform" />
+              </button>
 
-            <button
-              ref={nextRef}
-              className="absolute right-[-12px] top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
-              aria-label="Next slide"
-            >
-              <ArrowRightIcon width={16} height={16} className="group-hover:scale-110 transition-transform" />
-            </button>
-            {images.length > 0 ? (
+              <button
+                ref={nextRef}
+                className="absolute right-[-12px] top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
+                aria-label="Next slide"
+              >
+                <ArrowRightIcon width={16} height={16} className="group-hover:scale-110 transition-transform" />
+              </button>
+
               <Swiper
                 slidesPerView={1}
                 loop={true}
@@ -218,11 +223,12 @@ function Slider({ coordinatesId }: { coordinatesId: number | null }) {
                   </SwiperSlide>
                 ))}
               </Swiper>
-            ) : (
-              <p>Không có hình ảnh nào để hiển thị</p>
-            )}
+
+            </div>
           </div>
-        </div>
+        ) : (
+          <p>Không có hình ảnh nào để hiển thị</p>
+        )}
       </div>
     </>
   )

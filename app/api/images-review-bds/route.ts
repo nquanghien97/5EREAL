@@ -12,7 +12,9 @@ export async function POST(req: Request) {
     const files = Array.from(formData.values()).filter(
       (value): value is File => value instanceof File
     );
-    const coordinatesId = formData.get("coordinatesId") as string;
+    const coordinatesId = formData.get("coordinatesId") as string | null;
+    const lat = formData.get("lat") as string | null
+    const lng = formData.get("lng") as string | null
 
     if (!userId) {
       return NextResponse.json(
@@ -30,11 +32,24 @@ export async function POST(req: Request) {
 
     // upload và lấy tên file
     filenames = await uploadFile(files, "images-review-bds");
+    let newCoordinatesId: number;
+
+    if(!coordinatesId) {
+      const result = await prisma.coordinates.create({
+        data: {
+          userId: Number(userId),
+          lat: Number(lat),
+          lng: Number(lng),
+          note: "",
+        },
+      });
+      newCoordinatesId = result.id;
+    }
 
     const data = filenames.map((filename) => ({
       userId: Number(userId),
       url: `/images/images-review-bds/${filename}`,
-      coordinatesId: Number(coordinatesId),
+      coordinatesId: Number(coordinatesId) || newCoordinatesId,
     }));
 
     // transaction để đảm bảo consistency
@@ -47,7 +62,7 @@ export async function POST(req: Request) {
       return tx.images_review_bds.findMany({
         where: {
           userId: Number(userId),
-          coordinatesId: Number(coordinatesId),
+          coordinatesId: Number(coordinatesId) || newCoordinatesId,
           url: { in: data.map((d) => d.url) },
         },
       });

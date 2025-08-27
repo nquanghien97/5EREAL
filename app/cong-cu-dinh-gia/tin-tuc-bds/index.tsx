@@ -36,11 +36,11 @@ function BDSNews() {
 
   return (
     <div className="container m-auto mb-8">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">Xem tổng quan giá BĐS quanh khu vực</h2>
+      <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] mb-4 text-center uppercase">Xem tổng quan giá BĐS quanh khu vực</h2>
       <div className="flex gap-4 mb-4">
         <div>
-          <label htmlFor="news" className="mr-4">Nhập vị trí BDS bạn muốn xem giá:</label>
-          <input id='news' className="border border-gray-300 p-2 rounded-md" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+          {/* <label htmlFor="news" className="mr-4">Nhập vị trí BDS bạn muốn xem giá:</label> */}
+          <input id='news' placeholder='Nhập vị trí BDS bạn muốn xem giá' className="border border-gray-300 p-2 rounded-md min-w-[320px]" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
         </div>
         <button disabled={loading} onClick={onSubmit} className={loading ? 'bg-blue-500 cursor-not-allowed p-2 rounded-md' : 'bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-500 duration-300 flex items-center'}>
           {loading ? <LoadingIcon color='#fff' size='small' /> : 'Xem tổng quan giá'}

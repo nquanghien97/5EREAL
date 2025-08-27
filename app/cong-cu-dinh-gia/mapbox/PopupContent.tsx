@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Slider from "./Slider"
-import Modal from "../ui/modal"
+import Modal from "../../../components/ui/modal"
 import CloseIcon from "@/assets/icons/CloseIcon"
 
 export default function PopupContent({
@@ -8,13 +8,19 @@ export default function PopupContent({
   initialNote,
   onSave,
   onDelete,
-  onCancel
+  onCancel,
+  lat,
+  lng,
+  isCreateNewMark = false
 }: {
   coordinatesId: number | null
   initialNote?: string
   onSave: (note: string) => void
   onDelete: () => void
   onCancel: () => void
+  lat?: number
+  lng?: number
+  isCreateNewMark?: boolean
 }) {
   const [note, setNote] = useState(initialNote ?? '');
   const [isOpenModalDeleteMark, setIsOpenModalDeleteMark] = useState(false);
@@ -42,7 +48,7 @@ export default function PopupContent({
               onDelete();
             }}
           >
-            Xóa
+            Xóa đánh dấu
           </button>
           <button
             className="px-3 py-2 bg-gray-400 hover:bg-gray-500 text-white text-sm rounded cursor-pointer"
@@ -54,7 +60,7 @@ export default function PopupContent({
       </Modal>
       <div className="p-2">
         <div className="lg:flex gap-4 mb-4">
-          <Slider coordinatesId={coordinatesId} />
+          <Slider coordinatesId={coordinatesId} lat={lat} lng={lng} />
           <div className="border border-[#ccc] p-2 rounded-2xl flex flex-col items-center gap-2">
             <p className="text-center">Ghi chú</p>
             <textarea
@@ -69,18 +75,20 @@ export default function PopupContent({
                 onClick={() => onSave(note)}
                 className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded cursor-pointer"
               >
-                Lưu
+                Lưu ghi chú
               </button>
             </div>
           </div>
         </div>
         <div className="flex justify-center gap-4">
-          <button
-            onClick={() => setIsOpenModalDeleteMark(true)}
-            className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded cursor-pointer"
-          >
-            Xóa
-          </button>
+          {!isCreateNewMark && (
+            <button
+              onClick={() => setIsOpenModalDeleteMark(true)}
+              className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded cursor-pointer"
+            >
+              Xóa đánh dấu
+            </button>
+          )}
           <button
             onClick={onCancel}
             className="px-3 py-1 bg-gray-400 hover:bg-gray-500 text-white text-sm rounded cursor-pointer"

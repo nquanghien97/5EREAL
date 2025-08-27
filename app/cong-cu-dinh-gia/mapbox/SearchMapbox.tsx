@@ -58,8 +58,7 @@ function SearchMapbox({ mapRef }: { mapRef: React.RefObject<mapboxgl.Map | null>
 
 
   return (
-    <div className="flex items-center mb-2 mx-6 gap-2">
-      <p>Tìm kiếm</p>
+    <div className="flex items-center mb-2 gap-2">
       <div className="relative inline-block">
         <input
           type="text"
@@ -72,7 +71,7 @@ function SearchMapbox({ mapRef }: { mapRef: React.RefObject<mapboxgl.Map | null>
           }}
 
           placeholder="Tìm kiếm địa điểm..."
-          className="px-3 py-1 border rounded shadow text-sm w-[250px]"
+          className="border border-gray-300 p-2 rounded-md min-w-[320px]"
           onFocus={() => setIsTyping(true)}
           onBlur={() => setTimeout(() => setIsTyping(false), 200)} // Delay để click được suggestion
         />

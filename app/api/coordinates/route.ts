@@ -8,6 +8,26 @@ export async function POST(req: NextRequest) {
     if (!userId) {
       return NextResponse.json({ message: "Unauthorization" }, { status: 401 });
     }
+
+    const existingCoordinate = await prisma.coordinates.findFirst({
+      where: {
+        lat,
+        lng,
+        userId: Number(userId)
+      }
+    })
+
+    if (existingCoordinate) {
+      const data = await prisma.coordinates.update({
+        where: {
+          id: existingCoordinate.id
+        },
+        data: {
+          note,
+        }
+      })
+      return NextResponse.json({ data, message: "Coordinates saved successfully" }, { status: 200 });
+    }
     const data = await prisma.coordinates.create({
       data: {
         lat: Number(lat),
