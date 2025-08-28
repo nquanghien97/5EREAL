@@ -5,7 +5,7 @@ import MenuIcon from '@/assets/icons/MenuIcon';
 import { ListHeader } from '@/constants/ListHeader';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Auth from '../auth';
 import { useAuthStore } from '@/zustand/user';
@@ -22,6 +22,8 @@ function Header({ me }: HeaderProps) {
   const pathname = usePathname();
 
   const { user, setUser } = useAuthStore();
+
+  const router = useRouter();
   const currentUser = user === undefined ? me : user;
 
   useEffect(() => {
@@ -37,6 +39,7 @@ function Header({ me }: HeaderProps) {
   const onLogout = async () => {
     await LogoutUser();
     setUser(null); // Cập nhật Zustand -> UI đổi ngay
+    router.refresh()
   };
 
   return (

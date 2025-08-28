@@ -1,4 +1,4 @@
-export async function DinhGiaBDS(data: { name: string, area: number, price: number }) {
+export async function DinhGiaBDS(data: { name: string, area: string, price: string }) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dinh-gia-bds`, {
     method: 'POST',
     headers: {

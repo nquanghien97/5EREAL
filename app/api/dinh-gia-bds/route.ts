@@ -71,7 +71,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       results: JSON.parse(formatted),
-      resultsFromTavily: response.results,
     });
   } catch (err) {
     console.error(err);
