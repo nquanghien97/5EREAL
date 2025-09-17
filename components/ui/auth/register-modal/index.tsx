@@ -9,6 +9,8 @@ import EyeIcon from '@/assets/icons/EyeIcon'
 import { RegisterUserDTO } from '@/dto/user'
 import { RegisterUser } from '@/services/auth'
 import { useAuthStore } from '@/zustand/user'
+import LoadingIcon from '@/assets/icons/LoadingIcon'
+import { useRouter } from 'next/navigation'
 
 interface RegisterModalProps {
   onSwitchLoginModal: () => void
@@ -38,16 +40,23 @@ function RegisterModal(props: RegisterModalProps) {
   })
 
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const router = useRouter()
 
   const { setUser } = useAuthStore()
 
   const onSubmit = async (data: RegisterUserDTO) => {
     try {
+      setIsLoading(true)
       const res = await RegisterUser(data)
       setUser(res.user)
+      router.refresh()
       onClose()
     } catch (err) {
       console.log((err as Error).message)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -88,7 +97,9 @@ function RegisterModal(props: RegisterModalProps) {
           {errors.password && <p className="text-[red] text-sm">{errors.password.message}</p>}
         </div>
         <div className="flex justify-center mb-4">
-          <button className="bg-[#013d7b] text-white px-8 py-2 rounded-lg cursor-pointer hover:opacity-70 duration-300">Đăng ký</button>
+          <button disabled={isLoading} className={`${isLoading ? 'bg-[#013d7b] cursor-not-allowed' : 'bg-[#013d7b] hover:opacity-70 cursor-pointer'} text-white font-semibold py-2 px-8 rounded-lg duration-300`} type="submit">
+            {isLoading ? <LoadingIcon size='small' color='white' /> : 'Đăng ký'}
+          </button>
         </div>
         <div>
           <p className="text-center">

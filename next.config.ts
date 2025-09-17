@@ -14,13 +14,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'http',
-        hostname: '116.107.176.236',
+        hostname: '27.76.197.72',
         port: '3000',
         pathname: '/api/images/news/**',
       },
       {
         protocol: 'http',
-        hostname: '116.107.176.236',
+        hostname: '27.76.197.72',
       },
     ]
   },

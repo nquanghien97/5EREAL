@@ -11,7 +11,8 @@ export async function POST() {
     name: 'access_token',
     value: '',
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    // secure: process.env.NODE_ENV === 'production',
+    secure: false,
     sameSite: 'strict',
     path: '/',
     maxAge: -1, // xóa cookie ngay lập tức

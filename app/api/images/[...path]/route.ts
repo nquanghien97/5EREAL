@@ -13,7 +13,7 @@ export async function GET(
     const imageBuffer = await fs.promises.readFile(imagePath);
     const fileExtension = path.extname(imagePath).toLowerCase();
     
-    const response = new NextResponse(imageBuffer);
+    const response = new NextResponse(new Uint8Array(imageBuffer));
     
     switch (fileExtension) {
       case '.jpg':

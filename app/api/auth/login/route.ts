@@ -55,7 +55,8 @@ export async function POST(req: NextRequest) {
       name: 'access_token',
       value: accessToken,
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Chỉ secure ở môi trường production
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
       sameSite: 'strict',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 // 7 ngày

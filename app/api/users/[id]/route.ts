@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: number } }) {
-  const { id } = params
+export async function GET(req: Request, { params }: { params: Promise<{ id: number }> }) {
+  const { id } = await params
 
 
   if (!id) return NextResponse.json(
@@ -37,8 +37,8 @@ export async function GET(req: Request, { params }: { params: { id: number } }) 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: number } }) {
-  const { id } = params;
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: number }> }) {
+  const { id } = await params;
   if (!id) {
     return NextResponse.json(
       { message: 'User ID is required.' },
@@ -61,8 +61,8 @@ export async function DELETE(req: Request, { params }: { params: { id: number } 
   }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const { fullName } = await req.json();
 
   try {
