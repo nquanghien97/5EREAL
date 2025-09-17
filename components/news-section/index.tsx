@@ -11,10 +11,10 @@ async function NewsSection() {
   const otherNews = result.data.slice(1)
 
   return (
-    <section className="bg-[#fef7e5] py-4">
+    <section className="py-4">
       <div className="container m-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-8 text-center">TIN TỨC</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-8 text-center">TIN TỨC</h2>
         </div>
         <div className="flex gap-4 flex-col lg:flex-row lg:max-h-[600px]">
           <div className="relative lg:w-1/2 py-2">

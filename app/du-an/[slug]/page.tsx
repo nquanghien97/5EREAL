@@ -8,13 +8,13 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
   const { slug } = await params
   const project = (await getProjectsBySlug(slug))
   return (
-    <div className="bg-[#fef7e5]">
+    <div className="background-linear-yellow">
       <div className="">
         <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full" />
       </div>
-      <section className="bg-[#fef7e5] py-8">
+      <section className="py-8">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] text-center mb-2">TỔNG QUAN DỰ ÁN</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center mb-2">TỔNG QUAN DỰ ÁN</h2>
           <p className="text-[#0F3E5A] text-center font-bold text-lg mb-4">Tên pháp lý: {project.name}</p>
           <ul className="text-[#003c7a] mb-4 grid grid-cols-2">
             <li className="mb-4 lg:mb-2 max-lg:flex max-lg:items-center gap-2">

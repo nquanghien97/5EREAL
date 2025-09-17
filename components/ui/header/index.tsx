@@ -49,7 +49,7 @@ function Header({ me }: HeaderProps) {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 m-auto">
-              <Image src="/logo@3x.png" alt="logo@3x" width={140} height={140} />
+              <Image src="/logo-ngang.png" alt="logo-ngang" width={140} height={140} />
             </Link>
 
             {/* Desktop Navigation */}

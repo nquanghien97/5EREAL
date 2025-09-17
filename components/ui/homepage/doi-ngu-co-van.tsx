@@ -46,11 +46,11 @@ function DoiNguCoVan() {
 
   return (
     <section className="relative">
-      <div className="background-linear-blue h-1/2 w-full absolute bottom-0" />
+      <div className="bg-[url('/bgr-doi-ngu.png')] bg-[length:100%_100%] h-1/2 w-full absolute bottom-0" />
       <div className="container m-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-2 text-center">ĐỘI NGŨ CỐ VẤN</h2>
-          <p className="text-[#007AA7] font-semibold mb-8 text-center">Hơn 40 chuyên gia đầu ngành trong lĩnh vực BĐS</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-2 text-center">ĐỘI NGŨ CỐ VẤN</h2>
+          <p className="text-[#007AA7] text-xl font-semibold mb-8 text-center">Hơn 40 chuyên gia đầu ngành trong lĩnh vực BĐS</p>
         </div>
         <div className="relative">
           <button

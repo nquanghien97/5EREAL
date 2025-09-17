@@ -3,8 +3,8 @@ import React from 'react'
 
 function ThanhTuu() {
   return (
-    <section className="bg-[#fef7e5] py-8">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">THÀNH TỰU</h2>
+    <section className="py-8">
+      <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">THÀNH TỰU</h2>
       <div className="container m-auto px-4 mb-8">
         <div className="flex justify-around flex-col md:flex-row gap-4">
           <div className="flex flex-col items-center">

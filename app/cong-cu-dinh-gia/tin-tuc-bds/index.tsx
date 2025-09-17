@@ -40,7 +40,7 @@ function BDSNews() {
       <div className="flex gap-4 mb-4">
         <div>
           {/* <label htmlFor="news" className="mr-4">Nhập vị trí BDS bạn muốn xem giá:</label> */}
-          <input id='news' placeholder='Nhập vị trí BDS bạn muốn xem giá' className="border border-gray-300 p-2 rounded-md min-w-[320px]" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+          <input id='news' placeholder='Nhập vị trí BDS bạn muốn xem giá' className="bg-white border border-gray-300 p-2 rounded-md min-w-[320px]" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
         </div>
         <button disabled={loading} onClick={onSubmit} className={loading ? 'bg-blue-500 cursor-not-allowed p-2 rounded-md' : 'bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-500 duration-300 flex items-center'}>
           {loading ? <LoadingIcon color='#fff' size='small' /> : 'Xem tổng quan giá'}

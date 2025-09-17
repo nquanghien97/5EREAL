@@ -38,7 +38,7 @@ function OthersNewsSection(props: OthersNewsSectionProps) {
   }
   return (
     <div className="container m-auto px-4 mb-4">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">TIN TỨC KHÁC</h2>
+      <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">TIN TỨC KHÁC</h2>
       {data.length > 0 ? (
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

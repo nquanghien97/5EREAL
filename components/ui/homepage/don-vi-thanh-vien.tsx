@@ -3,15 +3,15 @@ import Image from 'next/image'
 
 function DonViThanhVien() {
   return (
-    <section className="bg-gradient-to-br from-[#fffbf2] to-[#d7a755] py-8">
+    <section className="bg-[url('/khung-don-vi.png')] bg-[length:100%_100%] from-[#fffbf2] to-[#d7a755] py-8">
       <div className="container m-auto px-4 mb-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-2 text-center">ĐƠN VỊ THÀNH VIÊN</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-2 text-center">ĐƠN VỊ THÀNH VIÊN</h2>
           <p className="text-[#007AA7] text-xl mb-8 text-justify lg:text-center">5E REAL là đơn vị phân phối chuyên sâu, trực thuộc hệ sinh thái Reatimes, gồm: Chủ đầu tư Reatimes Holding,Tạp chí điện tử BĐS Việt Nam Reatimes, Viện nghiên cứu BĐS Việt Nam (VIPREC) và Hiệp hội BĐS Việt Nam. Kế thừa sức mạnh từ nghiên cứu - truyền thông - kết nối chính sách, 5E mang đến sản phẩm đúng tầm, dịch vụ đúng tâm, tạo nên trải nghiệm giao dịch chuyên nghiệp và bền vững.</p>
         </div>
         <div className="relative">
           <div className="flex justify-center p-16">
-            <Image src="/don-vi-thanh-vien-1.png" alt="don-vi-thanh-vien-1" width={600} height={889} className="w-1/2" />
+            <Image src="/logo-tron.png" alt="logo-tron" width={600} height={889} className="w-1/2" />
           </div>
           <div className="absolute top-0 left-0 w-1/3 md:w-1/4">
             <Image src="/don-vi-thanh-vien-2.png" alt="don-vi-thanh-vien-2" width={400} height={606} className="w-full" />

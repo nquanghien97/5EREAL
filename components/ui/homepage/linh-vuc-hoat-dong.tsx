@@ -11,28 +11,28 @@ function LinhVucHoatDong() {
       title: "ĐẦU TƯ VÀ PHÁT TRIỂN DỰ ÁN",
       subtitle: "Định hình toàn bộ chiến lược Marketing và thương mại hóa",
       image: "/linh-vuc-1.png",
-      bgColor: "from-slate-800/80 to-slate-600/60",
+      bgColor: "bg-[rgba(20,67,97,0.6)]",
     },
     {
       id: 2,
       title: "PHÂN PHỐI BẤT ĐỘNG SẢN",
       subtitle: "Hệ thống phân phối chuyên nghiệp và hiệu quả",
       image: "/linh-vuc-2.jpg",
-      bgColor: "from-slate-800/80 to-slate-600/60",
+      bgColor: "bg-[rgba(20,67,97,0.6)]",
     },
     {
       id: 3,
       title: "ĐÀO TẠO ĐẦU TƯ & GIAO DỊCH BDS",
       subtitle: "Chương trình đào tạo chuyên sâu về đầu tư bất động sản",
       image: "/linh-vuc-3.jpg",
-      bgColor: "from-slate-800/80 to-slate-600/60",
+      bgColor: "bg-[rgba(20,67,97,0.6)]",
     },
     {
       id: 4,
       title: "THIẾT KẾ VÀ THI CÔNG CĂN HỘ",
       subtitle: "Dịch vụ thiết kế và thi công nội thất cao cấp",
       image: "/linh-vuc-4.jpg",
-      bgColor: "from-slate-800/80 to-slate-600/60",
+      bgColor: "bg-[rgba(20,67,97,0.6)]",
     },
   ]
 
@@ -47,7 +47,7 @@ function LinhVucHoatDong() {
       <div className="container mx-auto">
         {/* Section Title */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
         </div>
 
         {/* Services Gallery */}

@@ -51,3 +51,7 @@
     max-width: 480px !important;
   }
 }
+
+.background-linear-yellow {
+  background: linear-gradient(to right, #fef6e8, #fffcf6);
+}

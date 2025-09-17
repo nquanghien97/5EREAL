@@ -13,12 +13,12 @@ export const metadata: Metadata = {
 
 function page() {
   return (
-    <main>
+    <main className="background-linear-yellow">
       <section className="">
         <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full" />
       </section>
 
-      <section className="bg-[#fef7e5] pt-4">
+      <section className="pt-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center flex-col lg:flex-row gap-4">
             <Image src="/ve-chung-toi-1.png" alt="ve-chung-toi" width={600} height={400} className="lg:w-1/2 object-cover rounded-t-2xl" />
@@ -32,7 +32,7 @@ function page() {
         </div>
       </section>
 
-      <section className="bg-[#fef7e5] py-8">
+      <section className="py-8">
         <div className="container mx-auto px-4 py-8">
           <div className="flex gap-2 flex-col lg:flex-row mb-4">
             <div className="lg:hidden flex flex-col justify-center">
@@ -65,7 +65,7 @@ function page() {
       <ThanhTuu />
       <HeSinhThaiDaLinhVuc />
 
-      <section className="bg-[#fef7e5] py-8">
+      <section className="py-8">
         <div className="px-4 w-full lg:w-3/4 m-auto flex justify-center">
           <div className="px-16 bg-gradient-to-br from-[#157e9e] to-[#1a4c65] rounded-2xl py-8 w-full flex flex-col items-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2 text-center">ĐỐI TÁC</h2>

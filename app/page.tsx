@@ -41,13 +41,13 @@ export default async function Home() {
   ]
 
   return (
-    <main>
+    <main className="background-linear-yellow">
       <section className="mb-8">
-        <Image src="/banner-home.png" alt="banner-home" width={1831} height={916} className="w-full" />
+        <Image src="/banner-home.png" alt="banner-home" width={1831} height={916} unoptimized className="w-full" />
       </section>
       <section className="mb-16 px-4 container mx-auto">
         {/* Section Title */}
-        <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
+        <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
         {/* Tools Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">

@@ -47,8 +47,8 @@ function PhanPhoiBatDongSan({ showDots = true }: { showDots?: boolean }) {
       <div className="container mx-auto">
         {/* Section Title */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] text-center">PHÂN PHỐI BẤT ĐỘNG SẢN</h2>
-          <p className="text-[#007AA7] text-center mb-4">5E là đơn vị thầu phân phối chuyên nghiệp, kết nối sản phẩm đúng tầm với nhà đầu tư phù hợp.</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">PHÂN PHỐI BẤT ĐỘNG SẢN</h2>
+          <p className="text-[#007AA7] lg:text-xl text-center mb-4">5E là đơn vị thầu phân phối chuyên nghiệp, kết nối sản phẩm đúng tầm với nhà đầu tư phù hợp.</p>
         </div>
 
         {/* Services Gallery */}

@@ -71,7 +71,7 @@ function SearchMapbox({ mapRef }: { mapRef: React.RefObject<mapboxgl.Map | null>
           }}
 
           placeholder="Tìm kiếm địa điểm..."
-          className="border border-gray-300 p-2 rounded-md min-w-[320px]"
+          className="bg-white border border-gray-300 p-2 rounded-md min-w-[320px]"
           onFocus={() => setIsTyping(true)}
           onBlur={() => setTimeout(() => setIsTyping(false), 200)} // Delay để click được suggestion
         />

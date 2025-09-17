@@ -9,7 +9,7 @@ function Footer() {
         <div className="flex flex-col lg:flex-row">
           <div className="flex justify-center mb-4">
             <Link href="/" className="flex items-center space-x-3">
-              <Image src="/logo-3@3x.png" alt="logo" width={240} height={240} />
+              <Image src="/logo-doc.png" alt="logo-doc" width={240} height={240} />
             </Link>
           </div>
           <div className="lg:px-16 mb-4">

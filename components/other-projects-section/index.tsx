@@ -38,10 +38,10 @@ function OthersProjectsSection(props: OthersProjectsSectionProps) {
   }
   return (
     <div className="container m-auto px-4 mb-4">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">DỰ ÁN NẰM TRONG HỆ SINH THÁI 5EREAL</h2>
+      <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">DỰ ÁN NẰM TRONG HỆ SINH THÁI 5EREAL</h2>
       {data.length > 0 ? (
         <div className="flex flex-col items-center justify-center gap-4">
-          <div className={`grid grid-cols-1 ${data.length > 1 ? 'md:grid-cols-2' : ''} container mx-auto rounded-2xl overflow-hidden`}>
+          <div className={`grid grid-cols-1 gap-0.5 ${data.length > 1 ? 'md:grid-cols-2' : ''} container mx-auto rounded-2xl overflow-hidden`}>
             {data.map((project) => (
               <div
                 key={project.id}
@@ -50,7 +50,7 @@ function OthersProjectsSection(props: OthersProjectsSectionProps) {
                 {/* Background Image with Overlay */}
                 <div className="relative">
                   <Image
-                    src={`/cong-cu-${project.id}.jpg`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${project.thumbnailUrl}`}
                     alt={project.name}
                     width={600}
                     height={400}

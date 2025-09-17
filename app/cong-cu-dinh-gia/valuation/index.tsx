@@ -58,17 +58,17 @@ function Valuation() {
           <div className="flex gap-2">
             <div className="flex-1">
               <p className="mb-1 text-[#0F3E5A]">Địa chỉ Bất Động Sản</p>
-              <input type="text" {...register("name")} placeholder="Nhập địa chỉ bất động sản" className="border border-gray-300 p-2 rounded-md w-full outline-0" />
+              <input type="text" {...register("name")} placeholder="Nhập địa chỉ bất động sản" className="bg-white border border-gray-300 p-2 rounded-md w-full outline-0" />
               {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             </div>
             <div className="flex-1">
               <p className="mb-1 text-[#0F3E5A]">Diện tích Bất Động Sản</p>
-              <input type="text" {...register("area")} placeholder="Nhập diện tích bất động sản (m2)" className="border border-gray-300 p-2 rounded-md w-full outline-0" />
+              <input type="text" {...register("area")} placeholder="Nhập diện tích bất động sản (m2)" className="bg-white border border-gray-300 p-2 rounded-md w-full outline-0" />
               {errors.area && <p className="text-red-500">{errors.area.message}</p>}
             </div>
             <div className="flex-1">
               <p className="mb-1 text-[#0F3E5A]">Giá Bất Động Sản</p>
-              <input type="text" {...register("price")} placeholder="Nhập giá bất động sản (VNĐ)" className="border border-gray-300 p-2 rounded-md w-full outline-0" />
+              <input type="text" {...register("price")} placeholder="Nhập giá bất động sản (VNĐ)" className="bg-white border border-gray-300 p-2 rounded-md w-full outline-0" />
               {errors.price && <p className="text-red-500">{errors.price.message}</p>}
             </div>
           </div>

@@ -3,8 +3,8 @@ import React from 'react'
 
 function HeSinhThaiDaLinhVuc() {
   return (
-    <section className="bg-[#fef7e5] py-8">
-      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3E5A] mb-4 text-center">HỆ SINH THÁI ĐA LĨNH VỰC</h2>
+    <section className="py-8">
+      <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">HỆ SINH THÁI ĐA LĨNH VỰC</h2>
       <div className="container m-auto px-4 mb-8">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 p-4 max-lg:mb-4 relative">
