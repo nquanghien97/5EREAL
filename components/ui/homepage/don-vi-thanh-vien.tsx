@@ -3,7 +3,10 @@ import Image from 'next/image'
 
 function DonViThanhVien() {
   return (
-    <section className="bg-[url('/khung-don-vi.png')] bg-[length:100%_100%] from-[#fffbf2] to-[#d7a755] py-8">
+    <section className="from-[#fffbf2] to-[#d7a755] py-8 relative">
+      <div className="absolute left-0 right-0 bottom-0 z-0 h-1/2">
+        <Image src="/khung-don-vi.png" alt="khung-don-vi" layout="fill" objectFit="cover" className="" />
+      </div>
       <div className="container m-auto px-4 mb-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-2 text-center">ĐƠN VỊ THÀNH VIÊN</h2>
