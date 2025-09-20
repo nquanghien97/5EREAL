@@ -40,7 +40,7 @@ function LinhVucHoatDong() {
   return (
     <main className="background-linear-yellow">
       <section className="">
-        <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full" />
+        <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </section>
 
       <section>

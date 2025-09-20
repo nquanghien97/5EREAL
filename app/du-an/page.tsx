@@ -20,7 +20,7 @@ async function DuAn() {
   return (
     <main>
       <section className="">
-        <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full" />
+        <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </section>
 
       <section>

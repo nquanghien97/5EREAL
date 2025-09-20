@@ -35,7 +35,7 @@ function BDSNews() {
   }
 
   return (
-    <div className="container m-auto mb-8">
+    <div className="container m-auto mb-8 scroll-mt-[68px]" id="tin-tuc-bds">
       <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] mb-4 text-center uppercase">Xem tổng quan giá BĐS quanh khu vực</h2>
       <div className="flex gap-4 mb-4">
         <div>

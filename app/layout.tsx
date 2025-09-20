@@ -45,7 +45,7 @@ export default async function RootLayout({
 }>) {
   const me = await getServerUser()
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={`${montserrat.className} antialiased`}
       >

@@ -18,25 +18,25 @@ export default async function Home() {
       id: "1",
       title: "Lưu & quản lý thông tin BDS đã xem thông minh",
       description: "Hệ thống lưu trữ và quản lý thông minh các bất động sản đã xem",
-      link: "/tools/smart-management",
+      link: "/cong-cu-dinh-gia/#map-bds",
     },
     {
       id: "2",
       title: "Thiết lập bản đồ giá so sánh",
       description: "Công cụ tạo bản đồ giá cả để so sánh các khu vực",
-      link: "/tools/price-map",
+      link: "/cong-cu-dinh-gia/#dinh-gia-bds",
     },
     {
       id: "3",
       title: "Tư vấn giá mua/bán trên dữ liệu thực tế KH đã khảo sát",
       description: "Tư vấn giá cả dựa trên dữ liệu khảo sát thực tế từ khách hàng",
-      link: "/tools/price-consultation",
+      link: "/cong-cu-dinh-gia/#dinh-gia-bds",
     },
     {
       id: "4",
       title: "Dự báo tiềm năng tăng giá và khuyến cáo thời điểm bán",
       description: "Phân tích và dự báo xu hướng giá cả, tư vấn thời điểm giao dịch",
-      link: "/tools/price-forecast",
+      link: "/cong-cu-dinh-gia/#tin-tuc-bds",
     },
   ]
 
@@ -79,7 +79,7 @@ export default async function Home() {
                     <h3 className="text-xl font-semibold text-white leading-tight">{tool.title}</h3>
 
                     <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors group-hover:translate-x-1 transform duration-200">
-                      <Link href="#" className="flex items-center">
+                      <Link href={tool.link} className="flex items-center">
                         <span className="mr-2 text-xl">Xem chi tiết</span>
                         <ArrowRightIcon className="w-4 h-4" />
                       </Link>

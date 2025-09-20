@@ -188,7 +188,7 @@ function MapBox({ initCoordinates }: MapBoxProps) {
   }, [createCustomMarkerElement, createPopupContent, initCoordinates, openPopupForNewMarker])
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 scroll-mt-[68px]" id="map-bds">
       <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] mb-4 text-center uppercase">Xem và lưu thông tin BĐS của bạn</h2>
       <div className="flex justify-between container m-auto">
         <SearchMapbox mapRef={mapRef} />
