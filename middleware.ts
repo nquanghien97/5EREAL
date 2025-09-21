@@ -12,7 +12,10 @@ const excludedRoutes: ExcludeRoute[] = [
   { path: '/api/news', method: 'GET' },
   { path: '/api/images', method: 'GET' },
   { path: '/api/projects', method: 'GET' },
-  { path: /^\/api\/projects(\/.*)?$/, method: 'GET' }
+  { path: /^\/api\/projects(\/.*)?$/, method: 'GET' },
+  { path: '/api/job', method: 'GET' },
+  { path: '/api/job', method: 'POST' },
+  { path: 'job-suggestions', method: 'GET' },
 ];
 
 const ALLOWED_ORIGIN = '*'

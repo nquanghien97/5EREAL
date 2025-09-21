@@ -8,7 +8,7 @@ function HeSinhThaiDaLinhVuc() {
       <div className="container m-auto px-4 mb-8">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/2 p-4 max-lg:mb-4 relative">
-            <Image src="/ve-chung-toi-4.png" alt="ve-chung-toi" width={600} height={400} className="w-full" />
+            <Image src="/logo-tron.png" alt="ve-chung-toi" width={600} height={400} className="w-full" />
             <div className="absolute top-0 left-0 w-1/3 md:w-1/3">
               <Image src="/don-vi-thanh-vien-2.png" alt="don-vi-thanh-vien-2" width={400} height={606} className="w-full" />
             </div>

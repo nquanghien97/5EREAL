@@ -68,7 +68,8 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const page = parseInt(url.searchParams.get('page') ?? '1', 10);
   const pageSize = parseInt(url.searchParams.get('pageSize') ?? '10', 10);
-  const excludeProjectsSlug = url.searchParams.get('excludeProjectsSlug')
+  const excludeProjectsSlug = url.searchParams.get('excludeProjectsSlug');
+  const search = url.searchParams.get('search') || undefined;
 
   const skip = (page - 1) * pageSize;
   const take = pageSize;
@@ -76,9 +77,18 @@ export async function GET(req: Request) {
     const projects = await prisma.projects.findMany({
       skip,
       take,
-      where: excludeProjectsSlug ? {
-        slug: { not: excludeProjectsSlug }
-      } : {}
+      where: {
+        ...(
+          excludeProjectsSlug ? {
+            slug: { not: excludeProjectsSlug }
+          } : {}
+        ),
+        ...(search ? {
+          name: { contains: search }
+        } : {})
+      },
+      orderBy: { createdAt: 'desc'
+      }
     })
     const total = await prisma.news.count({
       where: excludeProjectsSlug ? {

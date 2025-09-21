@@ -21,14 +21,14 @@ function page() {
       <section className="pt-4">
         <div className="container mx-auto px-4">
           <div className="flex items-center flex-col lg:flex-row gap-4">
-            <Image src="/ve-chung-toi-1.png" alt="ve-chung-toi" width={600} height={400} className="lg:w-1/2 object-cover rounded-t-2xl" />
+            <Image src="/ve-chung-toi-1.png" alt="ve-chung-toi" width={1800} height={400} className="lg:w-1/2 object-cover rounded-t-2xl" />
             <div className="lg:w-1/2 py-4 lg:px-16">
               <p className="text-xl text-justify leading-8 text-[#007AA7]">Công ty CP Đầu tư và Dịch vụ BĐS 5E REAL là đơn vị phân phối bất động sản chuyên sâu, trực thuộc hệ sinh thái Reatimes Holding – nơi quy tụ sức mạnh toàn diện từ truyền thông, nghiên cứu đến kết nối chính sách. Với lợi thế từ Tạp chí Reatimes, Viện Nghiên cứu BĐS Việt Nam, và sự bảo trợ chuyên môn từ Hiệp hội BĐS Việt Nam, 5E không chỉ mang đến sản phẩm “đúng tầm” mà còn kiến tạo trải nghiệm giao dịch “đúng tâm”, minh bạch, hiệu quả và chuyên nghiệp.</p>
             </div>
           </div>
         </div>
         <div>
-          <Image src="/ve-chung-toi-2.png" alt="ve-chung-toi" width={600} height={400} className="w-full object-cover rounded-b-2xl mt-4" />
+          <Image src="/ve-chung-toi-2.png" alt="ve-chung-toi" width={4000} height={400} className="w-full object-cover rounded-b-2xl mt-4" />
         </div>
       </section>
 

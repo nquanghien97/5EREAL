@@ -32,7 +32,7 @@ function ThanhTuu() {
             </div>
           </div>
           <div className="flex flex-col items-center">
-            <Image src="/thanh-tuu-5.png" alt="thanh-tuu-5" width={300} height={200} className="object-cover rounded-2xl mb-4" />
+            <Image src="/thanh-tuu-1.png" alt="thanh-tuu-1" width={300} height={200} className="object-cover rounded-2xl mb-4" />
             <div className="flex items-end flex-1 justify-center">
               <p className="font-bold text-[#d2a932] text-xl text-center">2020 - Giải vàng BĐS</p>
             </div>

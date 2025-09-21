@@ -83,3 +83,35 @@ model images_review_bds {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
+
+model job_category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  job job[]
+}
+
+enum JOB_TYPE {
+  Full_time
+  Part_time
+  Intern
+  Contract
+  Freelancer
+}
+
+model job {
+  id                    Int          @id @default(autoincrement())
+  job_name              String
+  location              String
+  time_open             String
+  time_close            String
+  job_type              JOB_TYPE
+  salary                String
+  job_description       String       @db.LongText
+  number_of_recruitment Int
+  created_at            DateTime     @default(now())
+  slug                  String       @unique(map: "Job_slug_key")
+  categoryId            Int?
+  category              job_category? @relation(fields: [categoryId], references: [id])
+}

@@ -15,10 +15,18 @@ function Footer() {
           <div className="lg:px-16 mb-4">
             <p className="mb-4 text-xl uppercase font-bold bg-text-yellow">Về 5E REAL</p>
             <ul>
-              <li className="py-2">Giới thiệu</li>
-              <li className="py-2">Dự án</li>
-              <li className="py-2">Truyền thông</li>
-              <li className="py-2">Tuyển dụng</li>
+              <li className="py-2">
+                <Link href="/ve-chung-toi">Giới thiệu</Link>
+              </li>
+              <li className="py-2">
+                <Link href="/du-an">Dự án</Link>
+              </li>
+              {/* <li className="py-2">
+                <Link href="/truyen-thong">Truyền thông</Link>
+              </li> */}
+              <li className="py-2">
+                <Link href="/tuyen-dung">Tuyển dụng</Link>
+              </li>
             </ul>
           </div>
           <div className="lg:px-16">
