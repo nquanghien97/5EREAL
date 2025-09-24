@@ -29,7 +29,7 @@ function LinhVucHoatDong() {
       subtitle: "Chương trình đào tạo chuyên sâu về đầu tư bất động sản",
       image: "/linh-vuc-3.jpg",
       bgColor: "bg-[rgba(20,67,97,0.6)]",
-      href: "/linh-vuc-hoat-dong/giao-dich-dau-tu-va-giao-dich-bds"
+      href: "/linh-vuc-hoat-dong/dao-tao-dau-tu-va-giao-dich-bds"
     },
     {
       id: 4,

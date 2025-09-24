@@ -75,3 +75,8 @@
   line-height: 1.6;
   color: #333;
 }
+
+.clamp-html * {
+  display: inline !important;
+  line-height: 1.5; /* để tránh dính chữ */
+}

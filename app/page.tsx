@@ -43,7 +43,7 @@ export default async function Home() {
   return (
     <main className="background-linear-yellow">
       <section className="mb-8">
-        <Image src="/banner-home.png" alt="banner-home" width={1831} height={916} unoptimized className="w-full max-h-[600px] object-center" />
+        <Image src="/banner-home.png" alt="banner-home" width={1831} height={916} unoptimized className="w-full object-cover" />
       </section>
       <section className="mb-16 px-4 container mx-auto">
         {/* Section Title */}
