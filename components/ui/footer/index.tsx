@@ -18,9 +18,9 @@ function Footer() {
               <li className="py-2">
                 <Link href="/ve-chung-toi">Giới thiệu</Link>
               </li>
-              <li className="py-2">
+              {/* <li className="py-2">
                 <Link href="/du-an">Dự án</Link>
-              </li>
+              </li> */}
               {/* <li className="py-2">
                 <Link href="/truyen-thong">Truyền thông</Link>
               </li> */}

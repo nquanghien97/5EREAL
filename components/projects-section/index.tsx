@@ -24,7 +24,7 @@ function ProjectsSection({ response }: { response: { data: ProjectsEntity[] } })
           {response.data.map((project) => (
             <div
               key={project.id}
-              className="group relative overflow-hidden shadow-lg hover:shadow-xl"
+              className="group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-white"
             >
               {/* Background Image with Overlay */}
               <div className="relative">

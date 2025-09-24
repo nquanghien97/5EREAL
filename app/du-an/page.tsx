@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import NewsSection from '@/components/news-section'
+// import Link from 'next/link'
+// import NewsSection from '@/components/news-section'
 import { Metadata } from 'next'
 import { getProjectsByPrisma } from '@/services/projects'
 import { ProjectsEntity } from '@/entities/projects'
@@ -15,17 +15,18 @@ export const metadata: Metadata = {
 async function DuAn() {
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
   const response: { data: ProjectsEntity[] } = await res.json()
-  const firstProject = response.data[0]
-  const secondProject = response.data[1]
+  // const firstProject = response.data[0]
+  // const secondProject = response.data[1]
+  // const othersProjects = response.data.slice(2)
   return (
     <main>
-      <section className="">
+      <section className="mb-8">
         <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </section>
 
-      <section>
-        <div className="container mx-auto px-4 py-8">
-          {/* firt project */}
+      {/* <section className="px-4 mb-8">
+        <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">DỰ ÁN NỔI BẬT</h2>
+        <div className="container mx-auto">
           {firstProject && (
             <div className="flex items-center flex-col lg:flex-row gap-8 mb-8">
               <div className="w-full lg:w-3/5">
@@ -114,11 +115,11 @@ async function DuAn() {
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       <ProjectsSection response={response} />
 
-      <NewsSection />
+      {/* <NewsSection /> */}
     </main>
   )
 }

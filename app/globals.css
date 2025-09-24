@@ -55,3 +55,23 @@
 .background-linear-yellow {
   background: linear-gradient(to right, #fef6e8, #fffcf6);
 }
+
+.content_news img {
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.content_news h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center !important;
+}
+
+.content_news p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #333;
+}

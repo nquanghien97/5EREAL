@@ -18,7 +18,8 @@ export async function getFirstNews() {
 
 export async function getNewsBySlug(slug: string): Promise<NewsEntity> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/news/${slug}`)
-  return res.json()
+  const data = await res.json()
+  return data.data
 }
 
 export async function getNewsByPrisma({ page = 1, pageSize = 3, excludeNewsSlug }: { page: number, pageSize: number, excludeNewsSlug?: string }) {

@@ -24,9 +24,9 @@ export const ListHeader = [
     title: 'Tin tức',
     href: '/tin-tuc',
   },
-  {
-    id: 6,
-    title: 'Tuyển dụng',
-    href: '/tuyen-dung',
-  }
+  // {
+  //   id: 6,
+  //   title: 'Tuyển dụng',
+  //   href: '/tuyen-dung',
+  // }
 ]

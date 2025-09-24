@@ -1,73 +1,55 @@
 import React from 'react'
 import Image from 'next/image'
-import PhanPhoiBatDongSan from '@/components/ui/linh-vuc-hoat-dong/phan-phoi-bat-dong-san'
+// import PhanPhoiBatDongSan from '@/components/ui/linh-vuc-hoat-dong/phan-phoi-bat-dong-san'
 import NewsSection from '@/components/news-section'
 import { Metadata } from 'next'
-
-const tools = [
-  {
-    id: "1",
-    title: "Khảo sát và định vị",
-    description: "Phân tích thị trường, xác định tệp khách",
-    link: "/tools/smart-management",
-  },
-  {
-    id: "2",
-    title: "Khảo sát và định vị",
-    description: "Phân tích thị trường, xác định tệp khách",
-    link: "/tools/price-map",
-  },
-  {
-    id: "3",
-    title: "Khảo sát và định vị",
-    description: "Phân tích thị trường, xác định tệp khách",
-    link: "/tools/price-consultation",
-  },
-  {
-    id: "4",
-    title: "Khảo sát và định vị",
-    description: "Phân tích thị trường, xác định tệp khách",
-    link: "/tools/price-forecast",
-  },
-]
+import { getProjectsByPrisma } from '@/services/projects'
+import { ProjectsEntity } from '@/entities/projects'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Lĩnh vực hoạt động',
   description: 'Lĩnh vực hoạt động'
 }
 
-function LinhVucHoatDong() {
+async function LinhVucHoatDong() {
+
+  const res = await getProjectsByPrisma({ page: 1, pageSize: 4 });
+  const response: { data: ProjectsEntity[] } = await res.json()
+
   return (
     <main className="background-linear-yellow">
-      <section className="">
+      <section className="mb-8">
         <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </section>
 
-      <section>
-        <div className="container mx-auto px-4 py-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">ĐẦU TƯ VÀ PHÁT TRIỂN DỰ ÁN</h2>
+      <section className="px-4 mb-8">
+        <div className="container mx-auto">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">DỰ ÁN</h2>
           <p className="text-[#007AA7] lg:text-xl text-center mb-4">5E tham gia từ sớm cùng chủ đầu tư để định hình chiến lược thương mại và truyền thông cho dự án.</p>
           <div className="mb-16 px-4 container mx-auto">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
-              {tools.map((tool) => (
+              {response.data.map((project) => (
                 <div
-                  key={tool.id}
+                  key={project.id}
                   className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                 >
                   {/* Background Image with Overlay */}
                   <div className="">
-                    <Image
-                      src={`/cong-cu-${tool.id}.jpg`}
-                      alt={tool.title}
-                      width={600}
-                      height={400}
-                      className="w-full object-cover rounded-t-2xl"
-                      loading="lazy"
-                    />
+                    <Link href={`/du-an/${project.slug}`}>
+                      <Image
+                        src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnailUrl}
+                        alt={project.name}
+                        width={600}
+                        height={400}
+                        className="w-full object-cover rounded-t-2xl"
+                        loading="lazy"
+                      />
+                    </Link>
                     <div className="w-full p-4 flex flex-col items-center gap-2 justify-between">
-                      <h3 className="text-xl font-semibold text-[#0F3E5A] leading-tight">{tool.title}</h3>
-                      <p className="text-[#d2a932]">{tool.description}</p>
+                      <h3 className="text-xl font-semibold text-[#0F3E5A] leading-tight">{project.name}</h3>
+                      <div className="line-clamp-2 text-[#d2a932] text-center" dangerouslySetInnerHTML={{ __html: `${project.content} ...` }} />
                     </div>
                   </div>
                 </div>
@@ -77,9 +59,9 @@ function LinhVucHoatDong() {
         </div>
       </section>
 
-      <PhanPhoiBatDongSan showDots={false} />
+      {/* <PhanPhoiBatDongSan showDots={false} /> */}
 
-      <section className="py-16">
+      <section className="mb-8">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">ĐÀO TẠO ĐẦU TƯ & GIAO DỊCH BĐS</h2>
           <p className="text-[#007AA7] lg:text-xl text-center mb-4">Xây dựng cộng đồng nhà đầu tư hiểu biết, minh bạch và thực chiến. Cấp chứng chỉ chính quy với các lớp học môi giới.</p>

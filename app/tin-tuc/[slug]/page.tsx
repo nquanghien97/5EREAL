@@ -1,4 +1,5 @@
 import OthersNewsSection from '@/components/others-news-section'
+import { getNewsBySlug } from '@/services/news'
 import { Metadata } from 'next'
 import React from 'react'
 
@@ -9,9 +10,13 @@ export const metadata: Metadata = {
 
 async function DetailNews({ params }: { params: Promise<{ slug: string, page: string, pageSize: string }> }) {
   const { slug } = await params
+
+  const res = await getNewsBySlug(slug)
   return (
     <div>
-      <div className="text-center py-4">chi tiết tin tức {slug}</div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="content_news" dangerouslySetInnerHTML={{ __html: res.content }} />
+      </div>
       <OthersNewsSection slug={slug}  />
     </div>
   )

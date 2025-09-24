@@ -4,8 +4,8 @@ import prisma from "../../../../lib/prisma"
 import { NextResponse } from "next/server";
 import { getUserFromCookie } from "@/lib/getUserFromCookie";
 
-export async function PUT(req: Request, { params }: { params: { param: number } }) {
-  const { param } = params;
+export async function PUT(req: Request, { params }: { params: Promise<{ param: number }> }) {
+  const { param } = await params;
   const { job_name, location, time_open, time_close, job_type, salary, job_description, number_of_recruitment, categoryId } = await req.json();
   const slug = createSlug(job_name);
   try {
@@ -66,8 +66,8 @@ export async function PUT(req: Request, { params }: { params: { param: number } 
   }
 }
 
-export async function GET(req: Request, { params }: { params: { param: number | string } }) {
-  const { param } = params
+export async function GET(req: Request, { params }: { params: Promise<{ param: number | string }> }) {
+  const { param } = await params
   try {
     if (!isNaN(Number(param))) {
       const job = await prisma.job.findUnique({
@@ -107,8 +107,8 @@ export async function GET(req: Request, { params }: { params: { param: number | 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { param: number } }) {
-  const { param } = params
+export async function DELETE(req: Request, { params }: { params: Promise<{ param: number }> }) {
+  const { param } = await params
   try {
     const user = await getUserFromCookie();
     const userId = user?.userId;

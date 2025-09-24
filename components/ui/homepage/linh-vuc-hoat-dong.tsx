@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 function LinhVucHoatDong() {
@@ -12,6 +13,7 @@ function LinhVucHoatDong() {
       subtitle: "Định hình toàn bộ chiến lược Marketing và thương mại hóa",
       image: "/linh-vuc-1.png",
       bgColor: "bg-[rgba(20,67,97,0.6)]",
+      href: "/linh-vuc-hoat-dong/dau-tu-va-phat-trien-du-an"
     },
     {
       id: 2,
@@ -19,6 +21,7 @@ function LinhVucHoatDong() {
       subtitle: "Hệ thống phân phối chuyên nghiệp và hiệu quả",
       image: "/linh-vuc-2.jpg",
       bgColor: "bg-[rgba(20,67,97,0.6)]",
+      href: "/linh-vuc-hoat-dong/phan-phoi-bat-dong-san"
     },
     {
       id: 3,
@@ -26,6 +29,7 @@ function LinhVucHoatDong() {
       subtitle: "Chương trình đào tạo chuyên sâu về đầu tư bất động sản",
       image: "/linh-vuc-3.jpg",
       bgColor: "bg-[rgba(20,67,97,0.6)]",
+      href: "/linh-vuc-hoat-dong/giao-dich-dau-tu-va-giao-dich-bds"
     },
     {
       id: 4,
@@ -33,6 +37,7 @@ function LinhVucHoatDong() {
       subtitle: "Dịch vụ thiết kế và thi công nội thất cao cấp",
       image: "/linh-vuc-4.jpg",
       bgColor: "bg-[rgba(20,67,97,0.6)]",
+      href: "/linh-vuc-hoat-dong/thiet-ke-va-thi-cong-can-ho"
     },
   ]
 
@@ -55,7 +60,7 @@ function LinhVucHoatDong() {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className="relative cursor-pointer overflow-hidden will-change-transform"
+              className="relative overflow-hidden will-change-transform"
               style={{
                 width: getItemWidth(index),
                 transition: "width 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -107,9 +112,9 @@ function LinhVucHoatDong() {
                   >
                     <p className="text-gray-200 leading-relaxed text-sm mb-3">{service.subtitle}</p>
 
-                    <button className="px-4 py-2 bg-yellow-500 text-slate-800 font-semibold rounded-lg hover:bg-yellow-400 transition-colors duration-200 text-sm">
+                    <Link href={service.href} className="text-slate-800 font-semibold text-sm px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-400 transition-colors duration-200 inline-block">
                       Tìm hiểu thêm
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

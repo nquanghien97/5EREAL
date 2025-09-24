@@ -2,9 +2,9 @@ import { getUserFromCookie } from "@/lib/getUserFromCookie";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function PUT(req: Request, { params }: { params: { id: number } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: number }> }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const { name } = await req.json()
     if (!id) return NextResponse.json({
       success: false,
@@ -51,9 +51,9 @@ export async function PUT(req: Request, { params }: { params: { id: number } }) 
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: number } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: number }> }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     if (!id) return NextResponse.json({
       success: false,
       message: "Missing id"
