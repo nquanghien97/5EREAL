@@ -30,7 +30,7 @@ function DonViThanhVien() {
           </div>
         </div>
       </div>
-      <div className="px-4 w-full lg:w-3/4 m-auto flex justify-center">
+      <div className="px-4 w-full lg:w-3/4 m-auto flex justify-center relative">
         <div className="px-16 bg-gradient-to-br from-[#157e9e] to-[#1a4c65] rounded-2xl py-8 w-full flex flex-col items-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2 text-center">ĐỐI TÁC</h2>
           <div className="flex gap-4 justify-center">

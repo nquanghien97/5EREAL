@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '5ereal.h2group.top'
+        hostname: '5ereal.vn'
       },
       {
         protocol: 'http',
