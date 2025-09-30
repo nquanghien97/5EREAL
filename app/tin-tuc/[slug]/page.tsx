@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 async function DetailNews({ params }: { params: Promise<{ slug: string, page: string, pageSize: string }> }) {
   const { slug } = await params
-
+  if(!slug) return null
   const res = await getNewsBySlug(slug)
   return (
     <div>

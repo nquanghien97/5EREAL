@@ -6,6 +6,7 @@ import OthersProjectsSection from '@/components/other-projects-section'
 
 async function DetailProject({ params }: { params: Promise<{ slug: string, page: string, pageSize: string }> }) {
   const { slug } = await params
+  if(!slug) return null
   const project = await getProjectsBySlug(slug)
   return (
     <div className="background-linear-yellow">
