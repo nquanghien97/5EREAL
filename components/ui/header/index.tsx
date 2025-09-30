@@ -28,9 +28,11 @@ function Header({ me }: HeaderProps) {
 
   useEffect(() => {
     (async () => {
-      await getMe()
+      if(me) {
+        await getMe()
+      }
     })()
-  }, [])
+  }, [me])
   // Gán user từ server (SSR) vào Zustand lần đầu
   useEffect(() => {
     if (me) setUser(me);
@@ -49,7 +51,7 @@ function Header({ me }: HeaderProps) {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3 m-auto">
-              <Image src="/logo-ngang.png" alt="logo-ngang" width={140} height={140} />
+              <Image src="/logo-ngang.png" alt="logo-ngang" width={140} height={140} priority className="w-auto h-auto" />
             </Link>
 
             {/* Desktop Navigation */}

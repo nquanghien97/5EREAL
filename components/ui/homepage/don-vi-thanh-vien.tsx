@@ -5,7 +5,7 @@ function DonViThanhVien() {
   return (
     <section className="from-[#fffbf2] to-[#d7a755] py-8 relative">
       <div className="absolute left-0 right-0 bottom-0 z-0 h-1/2">
-        <Image src="/khung-don-vi.png" alt="khung-don-vi" layout="fill" objectFit="cover" className="" />
+        <Image src="/khung-don-vi.png" alt="khung-don-vi" fill className="" />
       </div>
       <div className="container m-auto px-4 mb-8">
         <div className="text-center mb-8">

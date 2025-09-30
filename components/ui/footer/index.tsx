@@ -34,7 +34,7 @@ function Footer() {
             <p className="mb-4 uppercase font-bold text-xl">CÔNG TY CỔ PHẦN TƯ VẤN VÀ PHÁT TRIỂN KINH DOANH BẤT ĐỘNG SẢN 5E</p>
             <ul>
               <li className="py-2">
-                <Image src="/location.png" alt="location" width={20} height={20} className="inline-block mr-2" />
+                <Image src="/location.png" alt="location" width={20} height={20} className="inline-block mr-2 w-auto h-auto" />
                 <span>Tầng 8, Tòa 221B Trần Đăng Ninh, Cầu Giấy, Hà Nội</span>
               </li>
               <li className="py-2">

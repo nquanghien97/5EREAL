@@ -8,6 +8,7 @@ import NewsSection from "@/components/news-section";
 import { getProjectsByPrisma } from "@/services/projects";
 import { ProjectsEntity } from "@/entities/projects";
 import ProjectsSection from "@/components/projects-section";
+import FadeIn from "@/components/framer-motion/FadeIn";
 
 export default async function Home() {
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
@@ -42,74 +43,87 @@ export default async function Home() {
 
   return (
     <main className="background-linear-yellow">
-      <section className="mb-8">
+      <section className="mb-8 z-0">
         <Image src="/banner-home.png" alt="banner-home" width={1831} height={916} unoptimized className="w-full object-cover" />
       </section>
-      <section className="mb-16 px-4 container mx-auto">
-        {/* Section Title */}
-        <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
-        {/* Tools Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
-          {tools.map((tool) => (
-            <div
-              key={tool.id}
-              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              {/* Background Image with Overlay */}
-              <div className="relative">
-                <Image
-                  src={`/cong-cu-${tool.id}.jpg`}
-                  alt={tool.title}
-                  width={600}
-                  height={400}
-                  className="w-full object-cover rounded-t-2xl"
-                  loading="lazy"
-                />
-                <div className="bg-black opacity-40 z-10 absolute inset-0" />
-                {/* Content */}
-                <div className="absolute background-linear-blue bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
-                  {/* Number Badge */}
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="text-6xl font-bold text-white/90 leading-none">0{tool.id}</div>
-                  </div>
+      <FadeIn>
+        <section className="mb-16 px-4 container mx-auto">
+          {/* Section Title */}
+          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
-                  {/* Title and CTA */}
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-semibold text-white leading-tight">{tool.title}</h3>
+          {/* Tools Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
+            {tools.map((tool) => (
+              <div
+                key={tool.id}
+                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                {/* Background Image with Overlay */}
+                <div className="relative">
+                  <Image
+                    src={`/cong-cu-${tool.id}.jpg`}
+                    alt={tool.title}
+                    width={600}
+                    height={400}
+                    className="w-full object-cover rounded-t-2xl"
+                    loading="lazy"
+                  />
+                  <div className="bg-black opacity-40 z-10 absolute inset-0" />
+                  {/* Content */}
+                  <div className="absolute background-linear-blue bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
+                    {/* Number Badge */}
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="text-6xl font-bold text-white/90 leading-none">0{tool.id}</div>
+                    </div>
 
-                    <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors group-hover:translate-x-1 transform duration-200">
-                      <Link href={tool.link} className="flex items-center">
-                        <span className="mr-2 text-xl">Xem chi tiết</span>
-                        <ArrowRightIcon className="w-4 h-4" />
-                      </Link>
-                    </button>
+                    {/* Title and CTA */}
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-semibold text-white leading-tight">{tool.title}</h3>
+
+                      <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors group-hover:translate-x-1 transform duration-200">
+                        <Link href={tool.link} className="flex items-center">
+                          <span className="mr-2 text-xl">Xem chi tiết</span>
+                          <ArrowRightIcon className="w-4 h-4" />
+                        </Link>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      </FadeIn>
 
-      <section className="mb-24 px-4">
-        <div className="container mx-auto relative">
-          <Image src="/dau1@3x.png" alt="dau1@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute top-0 left-0" />
-          <Image src="/logo-2@3x.png" alt="5E REAL" width={1084} height={438} loading="lazy" className="w-1/2 m-auto" />
-          <p className="text-xl text-[#007AA7] text-justify mb-6">
-            5E - đối tác chiến lược trong phát triển và thương mại hóa bất động sản. Không đơn thuẩn là một đơn vị phân phối, 5E chủ động tham gia từ khâu nghiên cứu thị trường, tư vấn định vị sản phẩm đến xây dựng chiến lược ra hàng phù hợp từng phân khúc. Với tệp khách hàng sẵn có, hệ thống phân loại thông minh và cộng đồng nhà đầu tư được nuôi dưỡng chuyên nghiệp, 5E tạo nên bàn tay kép dẫn dắt thị trường - đúng điều khách cần, tròn điều chủ muốn.
-          </p>
-          <Image src="/dau2@3x.png" alt="dau2@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute bottom-[-5rem] right-0" />
-        </div>
-      </section>
+      <FadeIn>
+        <section className="mb-24 px-4">
+          <div className="container mx-auto relative">
+            <Image src="/dau1@3x.png" alt="dau1@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute top-0 left-0" />
+            <Image src="/logo-2@3x.png" alt="5E REAL" width={1084} height={438} loading="lazy" className="w-1/2 m-auto" />
+            <p className="text-xl text-[#007AA7] text-justify mb-6">
+              5E - đối tác chiến lược trong phát triển và thương mại hóa bất động sản. Không đơn thuẩn là một đơn vị phân phối, 5E chủ động tham gia từ khâu nghiên cứu thị trường, tư vấn định vị sản phẩm đến xây dựng chiến lược ra hàng phù hợp từng phân khúc. Với tệp khách hàng sẵn có, hệ thống phân loại thông minh và cộng đồng nhà đầu tư được nuôi dưỡng chuyên nghiệp, 5E tạo nên bàn tay kép dẫn dắt thị trường - đúng điều khách cần, tròn điều chủ muốn.
+            </p>
+            <Image src="/dau2@3x.png" alt="dau2@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute bottom-[-5rem] right-0" />
+          </div>
+        </section>
+      </FadeIn>
 
-      <LinhVucHoatDong />
+      <FadeIn>
+        <LinhVucHoatDong />
+      </FadeIn>
 
       <ProjectsSection response={projectsResponse} />
 
-      <DoiNguCoVan />
-      <DonViThanhVien />
-      <NewsSection />
+      <FadeIn>
+        <DoiNguCoVan />
+      </FadeIn>
+      <FadeIn>
+        <DonViThanhVien />
+      </FadeIn>
+      <FadeIn>
+        <NewsSection />
+      </FadeIn>
     </main>
   );
 }

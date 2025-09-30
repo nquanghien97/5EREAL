@@ -67,7 +67,7 @@ function OthersProjectsSection(props: OthersProjectsSectionProps) {
                     {/* Title and CTA */}
                     <div className="space-y-4">
                       <div className="flex items-center space-x-2 mb-4">
-                        <Image src="/location.png" alt="location" width={20} height={20} />
+                        <Image src="/location.png" alt="location" width={20} height={20} className="w-auto h-auto" />
                         <p className="text-xl font-semibold text-white leading-tight">{project.location}</p>
                       </div>
                       <button className="inline-flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors">
