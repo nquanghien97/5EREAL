@@ -13,10 +13,10 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
   return (
     <div className="background-linear-yellow">
       <div className="">
-        <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full" />
+        <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnailUrl} alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </div>
       <section className="py-8">
-        <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center mb-2">TỔNG QUAN DỰ ÁN</h2>
           <p className="text-[#0F3E5A] text-center font-bold text-lg mb-4">Tên pháp lý: {project.name}</p>
           <ul className="text-[#003c7a] mb-4 grid grid-cols-2">
@@ -50,7 +50,7 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
             </li>
           </ul>
           <div>
-            <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnailUrl} alt={project.name} width={1792} height={1200} className="w-full rounded-2xl" />
+            <div className="content_projects text-[#003c7a]" dangerouslySetInnerHTML={{ __html: project.content }} />
           </div>
         </div>
       </section>

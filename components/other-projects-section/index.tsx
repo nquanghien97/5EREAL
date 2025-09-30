@@ -17,7 +17,7 @@ function OthersProjectsSection(props: OthersProjectsSectionProps) {
   const [data, setData] = useState<ProjectsEntity[]>([]);
   const [paging, setPaging] = useState({
     page: 1,
-    pageSize: 3,
+    pageSize: 4,
     total: 0
   })
 
