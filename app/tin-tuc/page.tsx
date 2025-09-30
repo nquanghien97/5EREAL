@@ -17,6 +17,9 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
   const { page = 1, pageSize = 6 } = await searchParams
   const response: { data: NewsEntity[], paging: { page: number, pageSize: number, total: number} } = await getNews({ page: Number(page), pageSize: Number(pageSize) })
   const responseFirstNews: { data: NewsEntity[] } = await getFirstNews()
+  if (response.data.length === 0) {
+    return <p className="text-center">Không có dữ liệu</p>
+  }
   const firstNews = responseFirstNews.data[0]
   const otherNews = response.data.slice(1)
   return (
