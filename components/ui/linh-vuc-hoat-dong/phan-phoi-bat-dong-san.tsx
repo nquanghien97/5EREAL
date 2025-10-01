@@ -44,7 +44,7 @@ function PhanPhoiBatDongSan({ showDots = true }: { showDots?: boolean }) {
 
   return (
     <section className="px-4">
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">PHÂN PHỐI BẤT ĐỘNG SẢN</h2>

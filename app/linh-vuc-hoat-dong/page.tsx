@@ -24,12 +24,12 @@ async function LinhVucHoatDong() {
       </section>
 
       <section className="px-4 mb-8">
-        <div className="container mx-auto">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">DỰ ÁN</h2>
           <p className="text-[#007AA7] lg:text-xl text-center mb-4">5E tham gia từ sớm cùng chủ đầu tư để định hình chiến lược thương mại và truyền thông cho dự án.</p>
-          <div className="mb-16 px-4 container mx-auto">
+          <div className="mb-16 px-4 mx-auto">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto">
               {response.data.map((project) => (
                 <div
                   key={project.id}
@@ -62,7 +62,7 @@ async function LinhVucHoatDong() {
       {/* <PhanPhoiBatDongSan showDots={false} /> */}
 
       <section className="mb-8">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">ĐÀO TẠO ĐẦU TƯ & GIAO DỊCH BĐS</h2>
           <p className="text-[#007AA7] lg:text-xl text-center mb-4">Xây dựng cộng đồng nhà đầu tư hiểu biết, minh bạch và thực chiến. Cấp chứng chỉ chính quy với các lớp học môi giới.</p>
           <div>
@@ -72,7 +72,7 @@ async function LinhVucHoatDong() {
       </section>
 
       <section>
-        <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex gap-4 lg:flex-row flex-col">
             <div className="flex flex-col gap-2 flex-1 lg:hidden">
               <div className="flex-1 flex flex-col justify-center items-center">

@@ -40,9 +40,7 @@ function Slider({ coordinatesId, lat, lng }: { coordinatesId: number | null, lat
   }, [coordinatesId])
 
   const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('File change event:', e);
     if (e.target.files && e.target.files.length > 0) {
-      console.log('Selected files:', e.target.files);
       setFiles(Array.from(e.target.files));
       setIsOpenModalPreview(true);
     }
@@ -103,7 +101,7 @@ function Slider({ coordinatesId, lat, lng }: { coordinatesId: number | null, lat
         }}>
           <CloseIcon />
         </div>
-        <div className="p-4 container m-auto flex flex-wrap">
+        <div className="p-4 max-w-7xl m-auto flex flex-wrap">
           {files.map((file, index) => (
             <div key={index} className="mb-4 max-w-1/3 p-4">
               <Image src={URL.createObjectURL(file)} alt={file.name} width={740} height={740} className="rounded-2xl" />
@@ -171,7 +169,7 @@ function Slider({ coordinatesId, lat, lng }: { coordinatesId: number | null, lat
           <input multiple id="file" type="file" className="hidden" onChange={onFileChange} />
         </div>
         {images.length > 0 ? (
-          <div className="container m-auto">
+          <div className="max-w-7xl m-auto">
             <div className="relative">
               <button
                 ref={prevRef}

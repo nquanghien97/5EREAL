@@ -8,7 +8,7 @@ import FadeIn from '../framer-motion/FadeIn'
 function ProjectsSection({ response }: { response: { data: ProjectsEntity[] } }) {
   return (
     <section className="px-4 mb-8">
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto">
         <FadeIn>
           <div>
             <div className="flex flex-col lg:flex-row mb-4 ">
@@ -26,11 +26,11 @@ function ProjectsSection({ response }: { response: { data: ProjectsEntity[] } })
           </div>
         </FadeIn>
         <FadeIn>
-          <div className={`grid grid-cols-1 ${response.data.length > 1 ? 'md:grid-cols-2' : ''} container mx-auto rounded-2xl overflow-hidden`}>
+          <div className={`grid grid-cols-1 ${response.data.length > 1 ? 'md:grid-cols-2' : ''} max-w-7xl mx-auto rounded-2xl overflow-hidden`}>
             {response.data.map((project) => (
               <div
                 key={project.id}
-                className="group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-white"
+                className="group relative overflow-hidden shadow-lg hover:shadow-xl border-2 border-white rounded-2xl"
               >
                 {/* Background Image with Overlay */}
                 <div className="relative">
@@ -43,10 +43,10 @@ function ProjectsSection({ response }: { response: { data: ProjectsEntity[] } })
                     loading="lazy"
                   />
                   {/* Content */}
-                  <div className="absolute background-linear-black bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
+                  <div className="absolute background-linear-blue bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
                     {/* Number Badge */}
                     <div className="flex items-start justify-between mb-4">
-                      <div className="text-6xl font-bold text-white/90 leading-none">{project.name}</div>
+                      <div className="text-4xl font-bold text-white/90 leading-none">{project.name}</div>
                     </div>
 
                     {/* Title and CTA */}

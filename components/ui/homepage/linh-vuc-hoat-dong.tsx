@@ -49,13 +49,13 @@ function LinhVucHoatDong() {
 
   return (
     <section className="mb-8 px-4">
-      <div className="container mx-auto">
+      <div className="max-w-7xl mx-auto max-lg:hidden">
         {/* Section Title */}
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
         </div>
 
-        {/* Services Gallery */}
+        {/* Services Gallery Desktop */}
         <div className="flex gap-2 h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
           {services.map((service, index) => (
             <div
@@ -110,7 +110,7 @@ function LinhVucHoatDong() {
                       transition: "max-height 0.4s ease-in-out, opacity 0.3s ease-in-out",
                     }}
                   >
-                    <p className="text-gray-200 leading-relaxed text-sm mb-3">{service.subtitle}</p>
+                    <p className="text-gray-200 leading-relaxed text-sm mb-3 max-lg:hidden">{service.subtitle}</p>
 
                     <Link href={service.href} className="text-slate-800 font-semibold text-sm px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-400 transition-colors duration-200 inline-block">
                       Tìm hiểu thêm
@@ -141,6 +141,61 @@ function LinhVucHoatDong() {
                 }`}
               aria-label={`View service ${index + 1}`}
             />
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto lg:hidden">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-5xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
+        </div>
+        <div className="grid grid-cols-2 gap-2 rounded-2xl overflow-hidden shadow-2xl">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="relative overflow-hidden will-change-transform"
+            >
+              {/* Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center will-change-transform"
+                style={{
+                  backgroundImage: `url(${service.image})`,
+                }}
+              />
+
+              {/* Gradient Overlay */}
+              <div
+                className={`inset-0 bg-gradient-to-t ${service.bgColor} absolute`}
+                style={{
+                  opacity: 0.9,
+                  transition: "opacity 0.3s ease-in-out",
+                }}
+              />
+
+              {/* Content */}
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <div className="transform will-change-transform">
+                  <h3
+                    className="font-bold text-white mb-3 will-change-transform text-2xl"
+                    style={{
+                      transition: "font-size 0.3s ease-in-out",
+                    }}
+                  >
+                    {service.title}
+                  </h3>
+
+                  <div
+                    className="overflow-hidden will-change-transform"
+                  >
+                    <p className="text-gray-200 leading-relaxed text-sm mb-3 max-lg:hidden">{service.subtitle}</p>
+
+                    <Link href={service.href} className="text-slate-800 font-semibold text-sm px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-400 transition-colors duration-200 inline-block">
+                      Tìm hiểu thêm
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

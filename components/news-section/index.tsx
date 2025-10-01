@@ -15,7 +15,7 @@ async function NewsSection() {
 
   return (
     <section className="py-4">
-      <div className="container m-auto px-4">
+      <div className="max-w-7xl m-auto px-4">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-8 text-center">TIN TỨC</h2>
         </div>

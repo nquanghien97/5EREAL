@@ -21,7 +21,7 @@ function page() {
 
       <section className="pt-4">
         <FadeIn>
-          <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center flex-col lg:flex-row gap-4">
               <Image src="/ve-chung-toi-1.png" alt="ve-chung-toi" width={1800} height={400} className="lg:w-1/2 object-cover rounded-t-2xl" />
               <div className="lg:w-1/2 py-4 lg:px-16">
@@ -38,7 +38,7 @@ function page() {
       </section>
 
       <section className="py-8">
-        <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <FadeIn>
             <div className="flex gap-2 flex-col lg:flex-row mb-4">
               <div className="lg:hidden flex flex-col justify-center">

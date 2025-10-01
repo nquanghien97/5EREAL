@@ -19,7 +19,7 @@ function ListNews(props: ListNewsProps) {
   const router = useRouter()
   return (
     <section className="mb-4">
-      <div className="container m-auto px-4 mb-4">
+      <div className="max-w-7xl m-auto px-4 mb-4">
         {data.length > 0 ? (
           <div className="flex gap-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

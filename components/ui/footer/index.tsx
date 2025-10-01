@@ -5,7 +5,7 @@ import Image from 'next/image'
 function Footer() {
   return (
     <footer className="background-header text-white">
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row">
           <div className="flex justify-center mb-4">
             <Link href="/" className="flex items-center space-x-3">

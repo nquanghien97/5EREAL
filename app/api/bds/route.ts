@@ -31,7 +31,6 @@ export async function POST(req: Request) {
   });
 
   const json = await res.json();
-  console.log({ json })
   const content = json?.choices?.[0]?.message?.content || 'Không thể định giá.';
 
   return NextResponse.json({ result: content });

@@ -48,12 +48,12 @@ export default async function Home() {
       </section>
 
       <FadeIn>
-        <section className="mb-16 px-4 container mx-auto">
+        <section className="mb-16 px-4 max-w-7xl mx-auto">
           {/* Section Title */}
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-12 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
           {/* Tools Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
             {tools.map((tool) => (
               <div
                 key={tool.id}
@@ -97,8 +97,8 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="mb-24 px-4">
-          <div className="container mx-auto relative">
+        <section className="mb-8 lg:mb-24 px-4">
+          <div className="max-w-7xl mx-auto relative">
             <Image src="/dau1@3x.png" alt="dau1@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute top-0 left-0" />
             <Image src="/logo-2@3x.png" alt="5E REAL" width={1084} height={438} loading="lazy" className="w-1/2 m-auto" />
             <p className="text-xl text-[#007AA7] text-justify mb-6">

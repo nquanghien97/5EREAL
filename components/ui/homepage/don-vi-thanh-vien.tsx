@@ -4,10 +4,10 @@ import Image from 'next/image'
 function DonViThanhVien() {
   return (
     <section className="from-[#fffbf2] to-[#d7a755] py-8 relative">
-      <div className="absolute left-0 right-0 bottom-0 z-0 h-1/2">
+      <div className="absolute left-0 right-0 bottom-[15%] z-0 h-1/2">
         <Image src="/khung-don-vi.png" alt="khung-don-vi" fill className="" />
       </div>
-      <div className="container m-auto px-4 mb-8">
+      <div className="max-w-7xl m-auto px-4 mb-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-2 text-center">HỆ SINH THÁI</h2>
           <p className="text-[#007AA7] text-xl mb-8 text-justify lg:text-center">5E REAL là đơn vị phân phối chuyên sâu, trực thuộc hệ sinh thái Reatimes, gồm: Chủ đầu tư Reatimes Holding,Tạp chí điện tử BĐS Việt Nam Reatimes, Viện nghiên cứu BĐS Việt Nam (VIPREC) và Hiệp hội BĐS Việt Nam. Kế thừa sức mạnh từ nghiên cứu - truyền thông - kết nối chính sách, 5E mang đến sản phẩm đúng tầm, dịch vụ đúng tâm, tạo nên trải nghiệm giao dịch chuyên nghiệp và bền vững.</p>

@@ -30,7 +30,7 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
       </section>
 
       <section>
-        <div className="container m-auto px-4">
+        <div className="max-w-7xl m-auto px-4">
           {response.data.length > 0 ?
             (
               response.data.map(news => (

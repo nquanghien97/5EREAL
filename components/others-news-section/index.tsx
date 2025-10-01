@@ -37,7 +37,7 @@ function OthersNewsSection(props: OthersNewsSectionProps) {
     setPaging({...paging, page})
   }
   return (
-    <div className="container m-auto px-4 mb-4">
+    <div className="max-w-7xl m-auto px-4 mb-4">
       <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">TIN TỨC KHÁC</h2>
       {data.length > 0 ? (
         <div className="flex flex-col items-center justify-center gap-4">

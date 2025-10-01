@@ -50,7 +50,7 @@ function Valuation() {
   }
 
   return (
-    <div className="container m-auto mb-8 scroll-mt-[68px]" id="dinh-gia-bds">
+    <div className="max-w-7xl m-auto mb-8 scroll-mt-[68px]" id="dinh-gia-bds">
       <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] text-center uppercase">Định giá Bất Động Sản</h2>
       <div className="mb-4">
         <p className="text-center text-[#0F3E5A] text-lg mb-4">Sử dụng công cụ dưới đây để định giá bất động sản của bạn.</p>

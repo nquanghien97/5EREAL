@@ -23,7 +23,6 @@ function SearchMapbox({ mapRef }: { mapRef: React.RefObject<mapboxgl.Map | null>
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?autocomplete=true&access_token=${process.env.NEXT_PUBLIC_ACCESS_TOKEN_MAPBOX}`
       )
       const data = await res.json()
-      console.log('Suggestions:', data.features)
       setSuggestions(data.features)
     } catch (err) {
       console.error('Error fetching suggestions:', err)
