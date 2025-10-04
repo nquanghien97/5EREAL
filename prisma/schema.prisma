@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.0.x"]
 }
 
@@ -51,6 +51,19 @@ model news {
   createdAt    DateTime @default(now())
   authorId     Int
   author       user     @relation(fields: [authorId], references: [id])
+
+  images_content images_content[]
+}
+
+model images_content {
+  id         Int       @id @default(autoincrement())
+  url        String
+  newsId     Int?
+  news       news?     @relation(fields: [newsId], references: [id])
+  projectsId Int?
+  projects   projects? @relation(fields: [projectsId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model projects {
@@ -71,6 +84,8 @@ model projects {
   author           user     @relation(fields: [authorId], references: [id])
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
+  images_content images_content[]
 }
 
 model images_review_bds {
@@ -101,17 +116,17 @@ enum JOB_TYPE {
 }
 
 model job {
-  id                    Int          @id @default(autoincrement())
+  id                    Int           @id @default(autoincrement())
   job_name              String
   location              String
   time_open             String
   time_close            String
   job_type              JOB_TYPE
   salary                String
-  job_description       String       @db.LongText
+  job_description       String        @db.LongText
   number_of_recruitment Int
-  created_at            DateTime     @default(now())
-  slug                  String       @unique(map: "Job_slug_key")
+  created_at            DateTime      @default(now())
+  slug                  String        @unique(map: "Job_slug_key")
   categoryId            Int?
   category              job_category? @relation(fields: [categoryId], references: [id])
 }

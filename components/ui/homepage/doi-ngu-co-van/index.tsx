@@ -3,10 +3,9 @@
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
-import ArrowLeftIcon from '@/assets/icons/ArrowLeftIcon';
-import ArrowRightIcon from '@/assets/icons/ArrowRightIcon';
 import { useRef, useState } from 'react';
 import Detail from './Detail';
+import PlayIcon from '@/assets/icons/PlayIcon';
 
 type Employment = {
   id: number;
@@ -76,28 +75,28 @@ function DoiNguCoVan() {
 
   return (
     <>
-      <section className="relative">
+      <section className="relative mb-8">
         <div className="bg-[url('/bgr-doi-ngu.png')] bg-[length:100%_100%] h-1/2 w-full absolute bottom-0" />
         <div className="max-w-7xl m-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-2 text-center">ĐỘI NGŨ CỐ VẤN</h2>
-            <p className="text-[#007AA7] text-xl font-semibold mb-8 text-center">Hơn 40 chuyên gia đầu ngành trong lĩnh vực BĐS</p>
+            <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-4 text-center">ĐỘI NGŨ CỐ VẤN</h2>
+            <p className="text-[1.25rem] lg:text-[1.75rem] text-[#19366A] mb-8 text-center">Hơn 40 chuyên gia đầu ngành trong lĩnh vực BĐS</p>
           </div>
           <div className="relative">
             <button
               ref={prevRef}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
+              className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
               aria-label="Previous slide"
             >
-              <ArrowLeftIcon className="group-hover:scale-110 transition-transform" />
+              <PlayIcon className="rotate-180 group-hover:scale-110 transition-transform fill-current" />
             </button>
 
             <button
               ref={nextRef}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
+              className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
               aria-label="Next slide"
             >
-              <ArrowRightIcon className="group-hover:scale-110 transition-transform" />
+              <PlayIcon className="group-hover:scale-110 transition-transform fill-current" />
             </button>
             <Swiper
               slidesPerView={1}
@@ -114,7 +113,7 @@ function DoiNguCoVan() {
                 }
               }}
               autoplay={{
-                delay: 4000,
+                delay: 2000,
                 disableOnInteraction: false,
               }}
               breakpoints={{

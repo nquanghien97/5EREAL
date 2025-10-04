@@ -1,11 +1,12 @@
 import React from 'react'
+import Link from 'next/link'
+import NewsSection from '@/components/news-section'
 import Image from 'next/image'
-// import Link from 'next/link'
-// import NewsSection from '@/components/news-section'
 import { Metadata } from 'next'
 import { getProjectsByPrisma } from '@/services/projects'
 import { ProjectsEntity } from '@/entities/projects'
 import ProjectsSection from '@/components/projects-section'
+import Banner from '@/components/Banner'
 
 export const metadata: Metadata = {
   title: 'Dự án',
@@ -15,22 +16,27 @@ export const metadata: Metadata = {
 async function DuAn() {
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
   const response: { data: ProjectsEntity[] } = await res.json()
-  // const firstProject = response.data[0]
-  // const secondProject = response.data[1]
+  const firstProject = response.data[0]
+  const secondProject = response.data[1]
   // const othersProjects = response.data.slice(2)
   return (
     <main>
-      <section className="mb-8">
-        <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
-      </section>
+      <Banner
+        bannerImage="/banner-du-an.png"
+        title="DỰ ÁN"
+        description={["Tâm điểm mới phía Nam Hà Nội", "Kết nối giao thương - Đón đầu thịnh vượng"]}
+        style='secondary'
+      />
 
-      {/* <section className="px-4 mb-8">
-        <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">DỰ ÁN NỔI BẬT</h2>
+      <section className="px-4 mb-8">
         <div className="container mx-auto">
           {firstProject && (
             <div className="flex items-center flex-col lg:flex-row gap-8 mb-8">
-              <div className="w-full lg:w-3/5">
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + firstProject.thumbnailUrl} alt={firstProject.name} width={600} height={400} className="w-full object-cover rounded-2xl" />
+              <div className="w-full lg:w-3/5 relative">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-4 w-3/4 bg-gradient-to-l from-[#155a84] to-[#104565]">
+                  <p className="bg-text-yellow lgtext-xl font-bold text-center">Tên pháp lý: {secondProject.name}</p>
+                </div>
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + firstProject.thumbnailUrl} alt={firstProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">
@@ -59,7 +65,7 @@ async function DuAn() {
                     <p>{firstProject.numberOfUnits} căn</p>
                   </li>
                   <li className="mb-4 lg:mb-2 max-lg:flex max-lg:items-center gap-2">
-                    <p className="font-bold text-lg">Chủ đầu tư:</p>
+                    <p className="font-bold text-lg whitespace-nowrap">Chủ đầu tư:</p>
                     <p>{firstProject.investor}</p>
                   </li>
                   <button className="py-2 px-8 bg-gradient-to-r from-[#feedbf] to-[#c29551] rounded-full font-bold cursor-pointer hover:opacity-80 duration-300">
@@ -71,8 +77,11 @@ async function DuAn() {
           )}
           {secondProject && (
             <div className="flex items-center flex-col lg:flex-row gap-8">
-              <div className="w-full lg:w-3/5 lg:hidden">
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + secondProject.thumbnailUrl} alt={secondProject.name} width={600} height={400} className="w-full object-cover rounded-2xl" />
+              <div className="w-full lg:w-3/5 lg:hidden relative">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-4 w-3/4 bg-gradient-to-l from-[#155a84] to-[#104565]">
+                  <p className="bg-text-yellow lg:text-xl font-bold text-center">Tên pháp lý: {secondProject.name}</p>
+                </div>
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + secondProject.thumbnailUrl} alt={secondProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">
@@ -101,25 +110,31 @@ async function DuAn() {
                     <p>{secondProject.numberOfUnits} căn</p>
                   </li>
                   <li className="mb-4 lg:mb-2 max-lg:flex max-lg:items-center gap-2">
-                    <p className="font-bold text-lg">Chủ đầu tư:</p>
+                    <p className="font-bold text-lg whitespace-nowrap">Chủ đầu tư:</p>
                     <p>{secondProject.investor}</p>
                   </li>
+                  <button className="py-2 px-8 bg-gradient-to-r from-[#feedbf] to-[#c29551] rounded-full font-bold cursor-pointer hover:opacity-80 duration-300">
+                    <Link href={`/du-an/${secondProject.slug}`}>Xem thêm</Link>
+                  </button>
                 </ul>
-                <button className="py-2 px-8 bg-gradient-to-r from-[#feedbf] to-[#c29551] rounded-full font-bold cursor-pointer hover:opacity-80 duration-300">
-                  <Link href={`/du-an/${secondProject.slug}`}>Xem thêm</Link>
-                </button>
               </div>
-              <div className="w-full lg:w-3/5 max-lg:hidden">
+              <div className="w-full lg:w-3/5 max-lg:hidden relative">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-4 w-3/4 bg-gradient-to-l from-[#155a84] to-[#104565]">
+                  <p className="bg-text-yellow lg:text-xl font-bold text-center">Tên pháp lý: {secondProject.name}</p>
+                </div>
                 <Image src="/du-an-3.png" alt="du-an-3" width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
               </div>
             </div>
           )}
         </div>
-      </section> */}
+      </section>
 
-      <ProjectsSection response={response} />
+      <ProjectsSection
+        response={response}
+        description="Công ty CP Đầu tư và Dịch vụ BĐS 5E REAL là đơn vị phân phối bất động sản chuyên sâu, trực thuộc hệ sinh thái Reatimes Holding – nơi quy tụ sức mạnh toàn diện từ truyền thông, nghiên cứu đến kết nối chính sách. Với lợi thế từ Tạp chí Reatimes, Viện Nghiên cứu BĐS Việt Nam, và sự bảo trợ chuyên môn từ Hiệp hội BĐS Việt Nam, 5E không chỉ mang đến sản phẩm “đúng tầm” mà còn kiến tạo trải nghiệm giao dịch “đúng tâm”, minh bạch, hiệu quả và chuyên nghiệp."
+      />
 
-      {/* <NewsSection /> */}
+      <NewsSection />
     </main>
   )
 }

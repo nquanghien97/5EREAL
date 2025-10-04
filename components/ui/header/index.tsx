@@ -60,7 +60,7 @@ function Header({ me }: HeaderProps) {
                 <Link
                   key={index}
                   href={item.href}
-                  className={`hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase ${pathname === item.href ? 'text-[#d29015]' : 'text-white'
+                  className={`hover:text-[#d29015] transition-colors duration-200 text-lg font-semibold tracking-wide uppercase ${pathname === item.href ? 'text-[#d29015]' : 'text-white'
                     }`}
                 >
                   {item.title}
@@ -74,7 +74,7 @@ function Header({ me }: HeaderProps) {
                 <p>Xin chào {currentUser.fullName}</p>
                 <div>
                   <button
-                    className="hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase text-white cursor-pointer"
+                    className="hover:text-[#d29015] transition-colors duration-200 text-lg font-semibold tracking-wide uppercase text-white cursor-pointer"
                     onClick={onLogout}
                   >
                     Đăng xuất
@@ -84,7 +84,7 @@ function Header({ me }: HeaderProps) {
             ) : (
               <div className="max-lg:hidden">
                 <button
-                  className="hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase text-white cursor-pointer"
+                  className="hover:text-[#d29015] transition-colors duration-200 text-lg font-semibold tracking-wide uppercase text-white cursor-pointer"
                   onClick={() => setIsLoginOpen(true)}
                 >
                   Đăng nhập
@@ -116,7 +116,7 @@ function Header({ me }: HeaderProps) {
                   <Link
                     key={index}
                     href={item.href}
-                    className={`text-white hover:text-yellow-500 hover:bg-slate-700 font-medium text-sm tracking-wide py-3 px-4 rounded-md transform transition-all duration-200 ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+                    className={`${pathname === item.href ? 'text-[#d29015]' : 'text-white'} hover:bg-slate-700 font-medium text-sm tracking-wide py-3 px-4 rounded-md transform transition-all duration-200 ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
                       }`}
                     style={{ transitionDelay: `${index * 50}ms` }}
                     onClick={() => setIsMenuOpen(false)}

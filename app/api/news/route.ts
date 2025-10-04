@@ -20,6 +20,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const title = formData.get('title') as string;
     const content = formData.get('content') as string;
+    const urls = formData.getAll('urls') as string[];
     const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
     const slug = createSlug(title);
 
@@ -36,6 +37,14 @@ export async function POST(req: Request) {
         thumbnailUrl: `/images/news/${filenames[0]}`
       }
     })
+
+    if (urls.length > 0) {
+      await prisma.images_news.updateMany({
+        where: { url: { in: urls } },
+        data: { newsId: newNews.id }
+      });
+    }
+
     return NextResponse.json({ newNews }, { status: 200 })
   } catch (err) {
     if (filenames.length > 0) {

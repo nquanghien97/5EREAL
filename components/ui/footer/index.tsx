@@ -7,12 +7,12 @@ function Footer() {
     <footer className="background-header text-white">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-4 lg:w-1/5">
             <Link href="/" className="flex items-center space-x-3">
               <Image src="/logo-doc.png" alt="logo-doc" width={240} height={240} />
             </Link>
           </div>
-          <div className="lg:px-16 mb-4">
+          <div className="lg:px-16 lg:w-1/5 mb-4">
             <p className="mb-4 text-xl uppercase font-bold bg-text-yellow">Về 5E REAL</p>
             <ul>
               <li className="py-2">
@@ -29,7 +29,7 @@ function Footer() {
               </li> */}
             </ul>
           </div>
-          <div className="lg:px-16">
+          <div className="lg:px-16 lg:w-3/5">
             <p className="mb-4 text-xl uppercase font-bold bg-text-yellow">LIÊN HỆ</p>
             <p className="mb-4 uppercase font-bold text-xl">CÔNG TY CỔ PHẦN TƯ VẤN VÀ PHÁT TRIỂN KINH DOANH BẤT ĐỘNG SẢN 5E</p>
             <ul>

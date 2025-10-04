@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html, body {
+  line-height: 1.6 !important;
+}
+
 .background-header {
   background: linear-gradient(to right, #0f3e5a, #14547a, #14557d);
 }
@@ -8,9 +12,29 @@
   background: linear-gradient(
     to top,
     rgba(20, 67, 97, 0.8),
-    rgba(97, 166, 201, 0.8),
+    rgba(20, 67, 97, 0.8),
     rgba(166, 200, 217, 0)
   );
+}
+
+.border-gradient-yellow {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden; /* để cắt gradient theo border-radius */
+}
+
+.border-gradient-yellow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 6px; /* độ dày border */
+  border-radius: inherit;
+  background: linear-gradient(to right, #d09b4e, #fddd9b, #fffee5);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
 }
 
 .background-linear-black {
@@ -26,6 +50,10 @@
   background: linear-gradient(to right, #D09B4E, #FDDD9B, #FFFEE5);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
+}
+
+.bg-yellow {
+  background: linear-gradient(to right, #efcf7f, #ecd497, #ece9e3, #e1ad45);
 }
 
 /* mxp-box */

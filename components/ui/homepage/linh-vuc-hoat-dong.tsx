@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
+import Image from 'next/image'
+import PlayIcon from '@/assets/icons/PlayIcon'
 
 function LinhVucHoatDong() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
@@ -49,16 +51,17 @@ function LinhVucHoatDong() {
 
   return (
     <section className="mb-8 px-4">
-      <div className="max-w-7xl mx-auto max-lg:hidden">
+      <div className="max-lg:hidden">
         {/* Section Title */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
+          <h2 className="text-3xl md:text-5xl font-[800] text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
         </div>
 
         {/* Services Gallery Desktop */}
-        <div className="flex gap-2 h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="flex gap-2 h-96 md:h-[500px] overflow-hidden shadow-2xl">
           {services.map((service, index) => (
-            <div
+            <Link
+              href={service.href}
               key={service.id}
               className="relative overflow-hidden will-change-transform"
               style={{
@@ -91,17 +94,17 @@ function LinhVucHoatDong() {
               />
 
               {/* Content */}
-              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
-                <div className="transform will-change-transform">
+              <div className="relative z-10 h-full flex flex-col justify-end">
+                <div className="transform will-change-transform p-6 background-linear-blue">
                   <h3
-                    className="font-bold text-white mb-3 will-change-transform text-2xl"
+                    className="font-bold text-white mb-2 will-change-transform text-2xl"
                     style={{
                       transition: "font-size 0.3s ease-in-out",
                     }}
                   >
                     {service.title}
                   </h3>
-
+                  <div className={`h-[2px] bg-[#c3b97c] mb-2 ${hoveredIndex === index ? "w-1/2" : "w-full"}`} />
                   <div
                     className="overflow-hidden will-change-transform"
                     style={{
@@ -110,11 +113,7 @@ function LinhVucHoatDong() {
                       transition: "max-height 0.4s ease-in-out, opacity 0.3s ease-in-out",
                     }}
                   >
-                    <p className="text-gray-200 leading-relaxed text-sm mb-3 max-lg:hidden">{service.subtitle}</p>
-
-                    <Link href={service.href} className="text-slate-800 font-semibold text-sm px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-400 transition-colors duration-200 inline-block">
-                      Tìm hiểu thêm
-                    </Link>
+                    <p className="text-gray-200 leading-relaxed mb-3 max-lg:hidden">{service.subtitle}</p>
                   </div>
                 </div>
               </div>
@@ -127,7 +126,7 @@ function LinhVucHoatDong() {
                   transition: "opacity 0.3s ease-in-out",
                 }}
               />
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -145,57 +144,47 @@ function LinhVucHoatDong() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto lg:hidden">
+      <div className="lg:hidden">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
+          <h2 className="text-3xl md:text-5xl font-[800] text-[#013d7b] mb-8 text-center">LĨNH VỰC HOẠT ĐỘNG</h2>
         </div>
-        <div className="grid grid-cols-2 gap-2 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="flex flex-col gap-2 overflow-hidden shadow-2xl">
           {services.map((service) => (
-            <div
+            <Link
+              href={service.href}
               key={service.id}
               className="relative overflow-hidden will-change-transform"
             >
               {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center will-change-transform"
-                style={{
-                  backgroundImage: `url(${service.image})`,
-                }}
-              />
-
-              {/* Gradient Overlay */}
-              <div
-                className={`inset-0 bg-gradient-to-t ${service.bgColor} absolute`}
-                style={{
-                  opacity: 0.9,
-                  transition: "opacity 0.3s ease-in-out",
-                }}
+              <Image
+                src={service.image}
+                alt={service.title}
+                // layout="fill"
+                width={1920}
+                height={1080}
+                className="object-cover w-full"
               />
 
               {/* Content */}
-              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+              <div className="z-10 flex flex-col justify-end p-6 md:p-8 background-linear-blue absolute inset-0 top-1/2">
                 <div className="transform will-change-transform">
                   <h3
-                    className="font-bold text-white mb-3 will-change-transform text-2xl"
+                    className="font-bold text-white mb-3 will-change-transform text-lg lg:text-2xl"
                     style={{
                       transition: "font-size 0.3s ease-in-out",
                     }}
                   >
                     {service.title}
                   </h3>
-
-                  <div
-                    className="overflow-hidden will-change-transform"
-                  >
-                    <p className="text-gray-200 leading-relaxed text-sm mb-3 max-lg:hidden">{service.subtitle}</p>
-
-                    <Link href={service.href} className="text-slate-800 font-semibold text-sm px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-400 transition-colors duration-200 inline-block">
-                      Tìm hiểu thêm
-                    </Link>
+                  <div className="flex items-center gap-2 text-[#c3b97c] hover:text-white transition-colors duration-200">
+                    <span>Xem chi tiết</span>
+                    <div className="p-2 bg-white rounded-full flex items-center justify-center text-[#d29015] transition-colors duration-200">
+                      <PlayIcon width={24} height={24} fill="currentColor" className="fill-current"/>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

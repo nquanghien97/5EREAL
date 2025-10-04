@@ -5,9 +5,8 @@ function ArrowRightIcon(props: React.SVGProps<SVGSVGElement>) {
     ...rest
   } = props;
   return (
-    <svg {...rest} data-v-14c8c335="" xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right-icon lucide-arrow-right lucide-icon customizable">
-      <path d="M5 12h14"></path>
-      <path d="m12 5 7 7-7 7"></path>
+    <svg {...rest} width={width} height={height} focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z"></path>
     </svg>
   );
 }

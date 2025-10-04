@@ -5,6 +5,7 @@ import { NewsEntity } from '@/entities/news'
 import ListNews from './ListNews'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import Banner from '@/components/Banner'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,9 +26,12 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
 
   return (
     <main>
-      <section className="mb-8">
-        <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
-      </section>
+      <Banner
+        bannerImage='/banner-ve-chung-toi.png'
+        title='TIN TỨC'
+        description='Cập nhật tin tức, sự kiện nổi bật về thị trường bất động sản'
+        style='secondary'
+      />
 
       <section>
         <div className="max-w-7xl m-auto px-4">
@@ -36,7 +40,7 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
               response.data.map(news => (
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:h-[320px] mb-4" key={news.id}>
                   <div className="lg:w-2/5">
-                    <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnailUrl}`} alt={news.title} width={600} height={400} className="object-cover w-full h-full max-h-[280px] rounded-lg" />
+                    <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnailUrl}`} alt={news.title} width={600} height={400} className="object-cover w-full h-full max-h-[280px]" />
                   </div>
                   <div className="lg:w-3/5 h-full flex flex-col">
                     <h2 className="text-[#0F3E5A] font-bold text-xl mb-2">{news.title}</h2>

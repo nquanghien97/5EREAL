@@ -17,7 +17,7 @@ async function NewsSection() {
     <section className="py-4">
       <div className="max-w-7xl m-auto px-4">
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-8 text-center">TIN TỨC</h2>
+          <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-8 text-center">TIN TỨC</h2>
         </div>
         <div className="flex gap-4 flex-col lg:flex-row lg:max-h-[600px]">
           {firstNews ? (
