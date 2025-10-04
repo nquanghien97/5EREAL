@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     })
 
     if (urls.length > 0) {
-      await prisma.images_news.updateMany({
+      await prisma.images_content.updateMany({
         where: { url: { in: urls } },
         data: { newsId: newNews.id }
       });

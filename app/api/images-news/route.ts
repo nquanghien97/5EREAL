@@ -27,7 +27,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ newsI
         { status: 404 }
       );
     }
-    const images = await prisma.images_news.findMany({
+    const images = await prisma.images_content.findMany({
       where: {
         newsId: +newsId
       }
