@@ -46,7 +46,7 @@ model news {
   id        Int      @id @default(autoincrement())
   title     String
   slug      String   @unique
-  summary   String
+  summary   String   @db.LongText
   thumbnail String
   isHotNews Boolean  @default(false)
   createdAt DateTime @default(now())
