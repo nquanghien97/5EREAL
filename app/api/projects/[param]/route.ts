@@ -1,187 +1,51 @@
-// import prisma from "@/lib/db";
-import { createSlug } from "@/utils/createSlug";
 import prisma from "../../../../lib/prisma"
 import { NextResponse } from "next/server";
-import { deleteFile, uploadFile } from "@/utils/fileUpload";
-import { getUserFromCookie } from "@/lib/getUserFromCookie";
 
-export async function PUT(req: Request, { params }: { params: Promise<{ param: number }> }) {
-  let filenames: string[] = [];
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ param: string }> }
+) {
   try {
     const { param } = await params;
+
     if (!param) {
       return NextResponse.json(
-        {
-          message: 'projects params is required',
-        },
+        { message: "Thiếu tham số bài viết" },
         { status: 400 }
       );
     }
-    const oldProjects = await prisma.projects.findUnique({
-      where: { id: +param },
-    });
-    const user = await getUserFromCookie();
-    const userId = user?.userId;
-    const role = user?.role;
-    if (!userId || !role || role !== 'ADMIN') {
-      return NextResponse.json(
-        { message: 'Bạn không có quyền thực hiện hành động này' },
-        { status: 403 }
-      );
-    }
 
-    const formData = await req.formData();
-    const name = formData.get('name') as string;
-    const slug = createSlug(name);
-    const location = formData.get('location') as string;
-    const totalArea = parseInt(formData.get('totalArea') as string, 10);
-    const constructionRate = parseFloat(formData.get('constructionRate') as string);
-    const floorHeightMin = parseInt(formData.get('floorHeightMin') as string, 10);
-    const floorHeightMax = parseInt(formData.get('floorHeightMax') as string, 10);
-    const type = formData.get('type') as string;
-    const numberOfUnits = parseInt(formData.get('numberOfUnits') as string, 10);
-    const investor = formData.get('investor') as string;
-    const content = formData.get('content') as string;
-    const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
+    // Kiểm tra nếu param là số (id) hay chuỗi (slug)
+    const isNumeric = /^\d+$/.test(param);
 
-    if (files.length === 0) {
-      const updatedProjects = await prisma.$transaction(async (tx) => {
-        const projects = await tx.projects.update({
-          where: { id: +param },
-          data: {
-            name,
-            location,
-            totalArea,
-            constructionRate,
-            floorHeightMin,
-            floorHeightMax,
-            type,
-            numberOfUnits,
-            investor,
-            content,
-            slug
-          },
-        });
+    const where = isNumeric
+      ? { id: Number(param) }
+      : { slug: param };
 
-        return projects;
-      });
-      return NextResponse.json(
-        { updatedProjects },
-        { status: 200 }
-      );
-    }
-    await deleteFile(oldProjects?.thumbnailUrl || '');
-
-    filenames = await uploadFile(files, "projects");
-    const updatedProjects = await prisma.$transaction(async (tx) => {
-      const projects = await tx.projects.update({
-        where: { id: +param },
-        data: {
-          name,
-          location,
-          totalArea,
-          constructionRate,
-          floorHeightMin,
-          floorHeightMax,
-          type,
-          numberOfUnits,
-          investor,
-          content,
-          thumbnailUrl: `/images/projects/${filenames[0]}`,
-          slug
+    const news = await prisma.projects.findUnique({
+      where,
+      include: {
+        author: {
+          select: { id: true, fullName: true },
         },
-      });
-      return projects;
-    })
-    return NextResponse.json(
-      { updatedProjects },
-      { status: 200 }
-    );
-
-  } catch (err) {
-    if (filenames.length > 0) {
-      await deleteFile(filenames[0]);
-    }
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
-    }
-  }
-}
-
-export async function GET(req: Request, { params }: { params: Promise<{ param: number | string }> }) {
-  try {
-    const { param } = await params;
-    if (!isNaN(Number(param))) {
-      const projects = await prisma.projects.findUnique({
-        where: {
-          id: +param
-        }
-      })
-      return NextResponse.json(
-        {
-          data: projects,
-        },
-        { status: 200 }
-      )
-    } else {
-      const projects = await prisma.projects.findUnique({
-        where: {
-          slug: param.toString()
-        }
-      })
-      return NextResponse.json(
-        {
-          data: projects,
-        },
-        { status: 200 }
-      )
-    }
-
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
-    }
-  }
-}
-
-export async function DELETE(req: Request, { params }: { params: Promise<{ param: number }> }) {
-  try {
-    const { param } = await params;
-    const user = await getUserFromCookie();
-    const userId = user?.userId;
-    const role = user?.role;
-    if (!userId || !role || role !== 'ADMIN') {
-      return NextResponse.json(
-        { message: 'Bạn không có quyền thực hiện hành động này' },
-        { status: 403 }
-      );
-    }
-    const projects = await prisma.projects.findUnique({
-      where: {
-        id: +param
-      }
-    })
-    await prisma.projects.delete({
-      where: {
-        id: +param
-      }
-    })
-    await deleteFile(projects?.thumbnailUrl || "")
-    return NextResponse.json(
-      {
-        message: 'Xóa Dự án thành công',
+        project_sections: true,
+        project_images: true
       },
-      { status: 200 }
-    );
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
+    });
+
+    if (!news) {
+      return NextResponse.json(
+        { message: "Không tìm thấy bài viết" },
+        { status: 404 }
+      );
     }
+
+    return NextResponse.json({ data: news });
+  } catch (error) {
+    console.error("GET /api/news/[param] error:", error);
+    return NextResponse.json(
+      { message: "Không thể lấy thông tin bài viết" },
+      { status: 500 }
+    );
   }
 }

@@ -1,8 +1,10 @@
+import { SECTION_TYPE } from "@prisma/client"
 import { UserEntity } from "./user"
 
 export interface ProjectsEntity {
   id: number
   name: string
+  fullName: string
   slug: string
   location: string
   totalArea: number //Diện tích (m2)
@@ -18,4 +20,31 @@ export interface ProjectsEntity {
   author: UserEntity
   createdAt: Date
   updatedAt: Date
+
+  project_sections: ProjectsSectionsEntity[]
+  project_images: ProjectsSectionsEntity[]
+}
+
+export interface ProjectsSectionsEntity {
+  id: number
+  projectId: number
+  type: SECTION_TYPE
+  description?: string
+  title: string
+  content: string
+  imageUrl: string
+  orderIndex: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ProjectsImageEntity {
+  id: number,
+  projectId: number,
+  type: SECTION_TYPE,
+  sectionId: number,
+  imageUrl: string,
+  caption: string,
+  orderIndex: number,
+  createdAt: Date
 }

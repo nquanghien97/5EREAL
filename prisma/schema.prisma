@@ -43,49 +43,103 @@ model coordinates {
 }
 
 model news {
-  id           Int      @id @default(autoincrement())
-  title        String
-  slug         String   @unique
-  content      String   @db.LongText
-  thumbnailUrl String
-  createdAt    DateTime @default(now())
-  authorId     Int
-  author       user     @relation(fields: [authorId], references: [id])
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  summary   String
+  thumbnail String
+  isHotNews Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId  Int
+  author    user     @relation(fields: [authorId], references: [id])
 
-  images_content images_content[]
+  news_sections news_sections[]
 }
 
-model images_content {
-  id         Int       @id @default(autoincrement())
-  url        String
-  newsId     Int?
-  news       news?     @relation(fields: [newsId], references: [id])
-  projectsId Int?
-  projects   projects? @relation(fields: [projectsId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+model news_sections {
+  id         Int      @id @default(autoincrement())
+  newsId     Int
+  imageUrl   String?
+  content    String?  @db.LongText
+  caption    String?
+  orderIndex Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  news news @relation(fields: [newsId], references: [id])
+
+  @@unique([newsId, orderIndex])
+  @@index([newsId])
 }
 
 model projects {
-  id               Int      @id @default(autoincrement())
-  name             String
-  slug             String   @unique
-  location         String
-  totalArea        Int //Diện tích (m2)
-  constructionRate Float // Mật độ xây dựng (%)
-  floorHeightMin   Int // Số tầng thấp nhất
-  floorHeightMax   Int // Số tầng cao nhất
-  type             String // Loại hình bất động sản
-  numberOfUnits    Int // Tổng số căn
-  investor         String // Tên chủ đầu tư
-  thumbnailUrl     String // URL ảnh đại diện
-  content          String   @db.LongText // Nội dung mô tả chi tiết (HTML/Markdown)
-  authorId         Int
-  author           user     @relation(fields: [authorId], references: [id])
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                    Int      @id @default(autoincrement())
+  name                  String
+  description           String
+  fullName              String
+  slug                  String   @unique
+  location              String
+  totalArea             Int
+  constructionRate      Float
+  floorHeightMin        Int
+  floorHeightMax        Int
+  type                  String
+  numberOfUnits         Int
+  investor              String
+  thumbnailUrl          String
+  backgroundOverviewUrl String?
+  authorId              Int
+  author                user     @relation(fields: [authorId], references: [id])
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
-  images_content images_content[]
+  // Quan hệ tới các section chi tiết
+  project_sections project_sections[]
+
+  project_images project_images[]
+}
+
+enum SECTION_TYPE {
+  TIEN_ICH
+  THU_VIEN_HINH_ANH
+  NORMAL
+}
+
+model project_sections {
+  id          Int          @id @default(autoincrement())
+  projectId   Int
+  type        SECTION_TYPE
+  title       String? // tiêu đề section: "Tổng quan dự án", "Tiện ích", ...
+  description String?
+  content     String?      @db.LongText // HTML/Markdown
+  imageUrl    String? // nếu có 1 ảnh chính
+  orderIndex  Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  project        projects         @relation(fields: [projectId], references: [id])
+  project_images project_images[]
+
+  @@unique([projectId, orderIndex])
+  @@index([projectId])
+}
+
+model project_images {
+  id         Int          @id @default(autoincrement())
+  projectId  Int
+  type       SECTION_TYPE
+  sectionId  Int? // có thể null nếu ảnh thuộc toàn project chứ không thuộc section nào
+  imageUrl   String
+  caption    String?
+  orderIndex Int
+  createdAt  DateTime     @default(now())
+
+  project projects          @relation(fields: [projectId], references: [id])
+  section project_sections? @relation(fields: [sectionId], references: [id])
+
+  @@index([projectId])
+  @@index([sectionId])
 }
 
 model images_review_bds {
@@ -97,36 +151,4 @@ model images_review_bds {
   coordinates   coordinates @relation(fields: [coordinatesId], references: [id])
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-}
-
-model job_category {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-
-  job job[]
-}
-
-enum JOB_TYPE {
-  Full_time
-  Part_time
-  Intern
-  Contract
-  Freelancer
-}
-
-model job {
-  id                    Int           @id @default(autoincrement())
-  job_name              String
-  location              String
-  time_open             String
-  time_close            String
-  job_type              JOB_TYPE
-  salary                String
-  job_description       String        @db.LongText
-  number_of_recruitment Int
-  created_at            DateTime      @default(now())
-  slug                  String        @unique(map: "Job_slug_key")
-  categoryId            Int?
-  category              job_category? @relation(fields: [categoryId], references: [id])
 }

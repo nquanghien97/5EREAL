@@ -23,7 +23,7 @@ async function NewsSection() {
           {firstNews ? (
             <div className="relative lg:w-1/2 py-2">
             <Link href={`/tin-tuc/${firstNews.slug}`}>
-              <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${firstNews.thumbnailUrl}`} alt={firstNews.title} width={600} height={400} className="object-cover w-full h-full rounded-lg" />
+              <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${firstNews.thumbnail}`} alt={firstNews.title} width={600} height={400} className="object-cover w-full h-full rounded-lg" />
             </Link>
             <div className="absolute bottom-2 rounded-b-lg left-0 right-0 background-linear-black p-8">
               <p className="text-[#d2a932] font-bold mb-2">{new Date(firstNews.createdAt).toLocaleDateString()}</p>
@@ -42,7 +42,7 @@ async function NewsSection() {
                     className="w-1/2 h-full block"
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnailUrl}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail}`}
                       alt={news.title}
                       width={600}
                       height={400}

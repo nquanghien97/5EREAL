@@ -8,6 +8,15 @@ html, body {
   background: linear-gradient(to right, #0f3e5a, #14547a, #14557d);
 }
 
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #d29015 !important;
+}
+
 .background-linear-blue {
   background: linear-gradient(
     to top,
@@ -127,4 +136,8 @@ html, body {
 .content_projects p {
   margin-bottom: 1rem;
   line-height: 1.6;
+}
+
+.mySwiper .swiper-wrapper {
+  width: 50%;
 }

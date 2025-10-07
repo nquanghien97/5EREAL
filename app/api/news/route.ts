@@ -6,103 +6,166 @@ import { getUserFromCookie } from "@/lib/getUserFromCookie";
 import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
-  let filenames: string[] = [];
+  const uploadedFiles: string[] = [];
+
   try {
     const user = await getUserFromCookie();
-    const userId = user?.userId;
-    const role = user?.role;
-    if (!userId || !role || role !== 'ADMIN') {
+    if (!user || user.role !== "ADMIN") {
       return NextResponse.json(
-        { message: 'Bạn không có quyền thực hiện hành động này' },
+        { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }
       );
     }
-    const formData = await req.formData();
-    const title = formData.get('title') as string;
-    const content = formData.get('content') as string;
-    const urls = formData.getAll('urls') as string[];
-    const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
-    const slug = createSlug(title);
 
-    if (files.length === 0) {
-      return NextResponse.json({ message: "Không file nào được chọn" }, { status: 400 });
+    const formData = await req.formData();
+    const title = formData.get("title") as string;
+    const summary = formData.get("summary") as string;
+    const isHotNews = formData.get("isHotNews") === "true";
+    const thumbnail = formData.get("thumbnail") as File | null;
+
+    if (!title || !summary) {
+      return NextResponse.json({ message: "Thiếu dữ liệu bắt buộc" }, { status: 400 });
     }
-    filenames = await uploadFile(files, "news");
+
+    const slug = createSlug(title);
+    let thumbnailUrl: string = "";
+
+    // Upload thumbnail nếu có
+    if (thumbnail) {
+      const [filename] = await uploadFile([thumbnail], "news");
+      thumbnailUrl = `/images/news/${filename}`;
+      uploadedFiles.push(thumbnailUrl);
+    }
+
+    // Tạo news chính
     const newNews = await prisma.news.create({
       data: {
         title,
-        content,
+        summary,
         slug,
-        authorId: Number(userId),
-        thumbnailUrl: `/images/news/${filenames[0]}`
-      }
-    })
+        authorId: Number(user.userId),
+        thumbnail: thumbnailUrl,
+        isHotNews,
+      },
+    });
 
-    if (urls.length > 0) {
-      await prisma.images_content.updateMany({
-        where: { url: { in: urls } },
-        data: { newsId: newNews.id }
+    // Duyệt qua tất cả các section
+    const sections = [];
+    let i = 0;
+    while (true) {
+      const sectionData = formData.get(`section_${i}`);
+      if (!sectionData) break;
+
+      const section = JSON.parse(sectionData as string);
+      const file = formData.get(`section_image_${i}`) as File | null;
+
+      let imageUrl: string | null = null;
+      if (file) {
+        const [filename] = await uploadFile([file], "news/sections");
+        imageUrl = `/images/news/sections/${filename}`;
+        uploadedFiles.push(imageUrl);
+      }
+
+      sections.push({
+        orderIndex: Number(section.orderIndex),
+        caption: section.caption || null,
+        content: section.content || null,
+        imageUrl,
+        newsId: newNews.id,
+      });
+
+      i++;
+    }
+
+    if (sections.length > 0) {
+      await prisma.news_sections.createMany({
+        data: sections,
       });
     }
 
-    return NextResponse.json({ newNews }, { status: 200 })
+    return NextResponse.json(
+      { message: "Tạo bài viết thành công", news: newNews },
+      { status: 200 }
+    );
   } catch (err) {
-    if (filenames.length > 0) {
-      await Promise.all(filenames.map((filename) => deleteFile(`/images/news/${filename}`)));
+    // Xóa file nếu lỗi
+    if (uploadedFiles.length > 0) {
+      await Promise.all(uploadedFiles.map(path => deleteFile(path)));
     }
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 })
-    } else {
-      return NextResponse.json({ message: "Có lỗi xảy ra" }, { status: 500 })
-    }
+
+    console.error("Lỗi tạo news:", err);
+    return NextResponse.json(
+      { message: "Có lỗi xảy ra khi tạo bài viết" },
+      { status: 500 }
+    );
   }
 }
 
 export async function GET(req: Request) {
-  const url = new URL(req.url);
-  const page = parseInt(url.searchParams.get('page') ?? '1', 10);
-  const pageSize = parseInt(url.searchParams.get('pageSize') ?? '10', 10);
-  const excludeNewsSlug = url.searchParams.get('excludeNewsSlug')
-  const search = url.searchParams.get('search')
-
-  const skip = (page - 1) * pageSize;
-  const take = pageSize;
-
-  const whereCondition: Prisma.newsWhereInput = {
-    ...(excludeNewsSlug ? { slug: { not: excludeNewsSlug } } : {}),
-    ...(search && {
-      OR: [
-        { title: { contains: search } },
-        { content: { contains: search } },
-      ],
-    }),
-  }
-
   try {
-    const news = await prisma.news.findMany({
-      skip,
-      take,
-      where: whereCondition
-    })
-    const total = await prisma.news.count({
-      where: whereCondition
-    })
-    return NextResponse.json(
-      {
-        data: news,
-        paging: {
-          page,
-          pageSize,
-          total
-        }
-      },
-      { status: 200 }
-    )
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 })
-    } else {
-      return NextResponse.json({ message: "Có lỗi xảy ra" }, { status: 500 })
+    const { searchParams } = new URL(req.url);
+
+    const page = Number(searchParams.get("page") || 0);
+    const pageSize = Number(searchParams.get("pageSize") || 0);
+    const search = searchParams.get("search") || "";
+    const excludeNewsSlug = searchParams.get("excludeNewsSlug") || "";
+
+    const where: Prisma.newsWhereInput = {};
+
+    // 🔹 Lọc theo title nếu có search
+    if (search) {
+      where.title = {
+        contains: search,
+      };
     }
+
+    // 🔹 Loại trừ 1 bài theo slug
+    if (excludeNewsSlug) {
+      where.slug = {
+        not: excludeNewsSlug,
+      };
+    }
+
+    // 🔹 Nếu không có page/pageSize → lấy toàn bộ
+    if (!page || !pageSize) {
+      const news = await prisma.news.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        include: {
+          author: { select: { id: true, fullName: true } },
+        },
+      });
+      return NextResponse.json({ data: news, total: news.length });
+    }
+
+    // 🔹 Nếu có phân trang
+    const skip = (page - 1) * pageSize;
+    const [news, total] = await Promise.all([
+      prisma.news.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        include: {
+          author: { select: { id: true, fullName: true } },
+        },
+        skip,
+        take: pageSize,
+      }),
+      prisma.news.count({ where }),
+    ]);
+
+    return NextResponse.json({
+      data: news,
+      paging: {
+        total,
+        page,
+        pageSize,
+      }
+    });
+  } catch (error) {
+    console.error("GET /api/news error:", error);
+    return NextResponse.json(
+      { message: "Không thể lấy danh sách bài viết" },
+      { status: 500 }
+    );
   }
 }

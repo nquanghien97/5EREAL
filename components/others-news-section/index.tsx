@@ -44,7 +44,7 @@ function OthersNewsSection(props: OthersNewsSectionProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map(news => (
               <div key={news.id} className="flex flex-col group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnailUrl}`} alt={news.title} width={600} height={400} className="object-cover w-full max-h-[300px]" />
+                <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail}`} alt={news.title} width={600} height={400} className="object-cover w-full max-h-[300px]" />
                 <div className="bg-[#0F3E5A] p-4 flex-1">
                   <p className="text-white text-xl">{news.title}</p>
                   <Link href={`/tin-tuc/${news.slug}`} className="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300 transition-colors group-hover:translate-x-1 transform duration-200">

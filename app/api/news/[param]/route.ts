@@ -1,162 +1,59 @@
-// import prisma from "@/lib/db";
-import { createSlug } from "@/utils/createSlug";
-import prisma from "../../../../lib/prisma"
 import { NextResponse } from "next/server";
-import { deleteFile, uploadFile } from "@/utils/fileUpload";
-import { getUserFromCookie } from "@/lib/getUserFromCookie";
+import prisma from "@/lib/prisma";
 
-export async function PUT(req: Request, { params }: { params: Promise<{ param: number }> }) {
-  let filenames: string[] = [];
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ param: string }> }
+) {
   try {
     const { param } = await params;
+
     if (!param) {
       return NextResponse.json(
-        {
-          message: 'news ID is required',
-        },
+        { message: "Thiếu tham số bài viết" },
         { status: 400 }
       );
     }
-    const user = await getUserFromCookie();
-    const userId = user?.userId;
-    const role = user?.role;
-    if (!userId || !role || role !== 'ADMIN') {
-      return NextResponse.json(
-        { message: 'Bạn không có quyền thực hiện hành động này' },
-        { status: 403 }
-      );
-    }
-    const oldNews = await prisma.news.findUnique({
-      where: { id: +param },
+
+    // Kiểm tra nếu param là số (id) hay chuỗi (slug)
+    const isNumeric = /^\d+$/.test(param);
+
+    const where = isNumeric
+      ? { id: Number(param) }
+      : { slug: param };
+
+    const news = await prisma.news.findUnique({
+      where,
+      include: {
+        author: {
+          select: { id: true, fullName: true },
+        },
+        news_sections: {
+          orderBy: { orderIndex: "asc" },
+          select: {
+            id: true,
+            orderIndex: true,
+            caption: true,
+            imageUrl: true,
+            content: true,
+          },
+        },
+      },
     });
 
-    const formData = await req.formData();
-    const title = formData.get('title') as string;
-    const content = formData.get('content') as string;
-    const files = Array.from(formData.values()).filter((value): value is File => value instanceof File);
-    const slug = createSlug(title);
-    if (files.length === 0) {
-      const updatedNews = await prisma.$transaction(async (tx) => {
-        const news = await tx.news.update({
-          where: { id: +param },
-          data: {
-            title,
-            content,
-            slug
-          },
-        });
-
-        return news;
-      });
+    if (!news) {
       return NextResponse.json(
-        { updatedNews },
-        { status: 200 }
+        { message: "Không tìm thấy bài viết" },
+        { status: 404 }
       );
     }
-    await deleteFile(oldNews?.thumbnailUrl || '');
 
-    filenames = await uploadFile(files, "news");
-    const updatednews = await prisma.$transaction(async (tx) => {
-      const news = await tx.news.update({
-        where: { id: +param },
-        data: {
-          title,
-          content,
-          thumbnailUrl: `/images/news/${filenames[0]}`,
-          slug
-        },
-      });
-      return news;
-    })
+    return NextResponse.json({ data: news });
+  } catch (error) {
+    console.error("GET /api/news/[param] error:", error);
     return NextResponse.json(
-      { updatednews },
-      { status: 200 }
+      { message: "Không thể lấy thông tin bài viết" },
+      { status: 500 }
     );
-
-  } catch (err) {
-    if (filenames.length > 0) {
-      await deleteFile(filenames[0]);
-    }
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
-    }
-  }
-}
-
-export async function GET(req: Request, { params }: { params: Promise<{ param: number | string }> }) {
-  const { param } = await params;
-  try {
-    if (!isNaN(Number(param))) {
-      const news = await prisma.news.findUnique({
-        where: {
-          id: +param
-        }
-      })
-      return NextResponse.json(
-        {
-          data: news,
-        },
-        { status: 200 }
-      )
-    } else {
-      const news = await prisma.news.findUnique({
-        where: {
-          slug: param.toString()
-        }
-      })
-      return NextResponse.json(
-        {
-          data: news,
-        },
-        { status: 200 }
-      )
-    }
-
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
-    }
-  }
-}
-
-export async function DELETE(req: Request, { params }: { params: Promise<{ param: number }> }) {
-  try {
-    const { param } = await params;
-    const user = await getUserFromCookie();
-    const userId = user?.userId;
-    const role = user?.role;
-    if (!userId || !role || role !== 'ADMIN') {
-      return NextResponse.json(
-        { message: 'Bạn không có quyền thực hiện hành động này' },
-        { status: 403 }
-      );
-    }
-    const news = await prisma.news.findUnique({
-      where: {
-        id: +param
-      }
-    })
-    await prisma.news.delete({
-      where: {
-        id: +param
-      }
-    })
-    await deleteFile(news?.thumbnailUrl || "")
-    return NextResponse.json(
-      {
-        message: 'Xóa Tin tức thành công',
-      },
-      { status: 200 }
-    );
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 });
-    } else {
-      return NextResponse.json({ message: 'Có lỗi xảy ra' }, { status: 500 });
-    }
   }
 }
