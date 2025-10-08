@@ -22,7 +22,7 @@ function page() {
         description="Đối tác chiến lược trong phát triển và thương mại hóa bất động sản"
       />
 
-      <section className="mb-8">
+      <section className="mb-16">
         <FadeIn>
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center flex-col lg:flex-row gap-4">
@@ -77,7 +77,7 @@ function page() {
       <ThanhTuu />
       <HeSinhThaiDaLinhVuc />
 
-      <section className="mb-8">
+      <section className="mb-16">
         <div className="px-4 w-full lg:w-3/4 m-auto flex justify-center">
           <div className="px-16 bg-gradient-to-br from-[#157e9e] to-[#1a4c65] rounded-2xl py-8 w-full flex flex-col items-center border-gradient-yellow">
             <h2 className="text-3xl lg:text-5xl font-[800] text-white mb-4 text-center">ĐỐI TÁC</h2>

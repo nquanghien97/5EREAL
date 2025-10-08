@@ -50,7 +50,7 @@ function PhanPhoiBatDongSan({ showDots = true }: { showDots?: boolean }) {
   }
 
   return (
-    <section className="px-4 mb-8">
+    <section className="px-4 mb-16">
       <div className="max-w-7xl mx-auto max-lg:hidden">
         {/* Section Title */}
         <div className="text-center mb-8">

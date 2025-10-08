@@ -4,7 +4,7 @@ import React from 'react'
 function GiaTriCotLoi() {
   return (
     <FadeIn>
-      <section className="mb-8">
+      <section className="mb-16">
         <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-8 text-center">GIÁ TRỊ CỐT LÕI</h2>
         <div className="px-4 mb-8 bg-[url('/nen@3x.png')] bg-[length:100%_100%] bg-no-repeat py-8">
           <ul className="flex flex-wrap flex-col lg:flex-row justify-center gap-4 px-4">

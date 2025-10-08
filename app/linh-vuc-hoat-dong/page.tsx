@@ -37,7 +37,7 @@ async function LinhVucHoatDong() {
               {response.data.map((project) => (
                 <div
                   key={project.id}
-                  className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                  className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-gradient-yellow"
                 >
                   {/* Background Image with Overlay */}
                   <div className="">
@@ -53,7 +53,8 @@ async function LinhVucHoatDong() {
                     </Link>
                     <div className="w-full p-4 flex flex-col items-center gap-2 justify-between">
                       <h3 className="text-xl font-semibold text-[#0F3E5A] leading-tight">{project.name}</h3>
-                      <div className="line-clamp-2 text-[#d2a932] text-center" dangerouslySetInnerHTML={{ __html: `${project.content} ...` }} />
+                      {/* <div className="line-clamp-2 text-[#d2a932] text-center" dangerouslySetInnerHTML={{ __html: `${project.content} ...` }} /> */}
+                      <p className="line-clamp-2 text-[#d2a932] text-center">{project.description}</p>
                     </div>
                   </div>
                 </div>
@@ -65,10 +66,10 @@ async function LinhVucHoatDong() {
 
       <PhanPhoiBatDongSan showDots={false} />
 
-      <section className="mb-8">
+      <section className="mb-16">
         <div>
           <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-4 text-center">ĐÀO TẠO ĐẦU TƯ & GIAO DỊCH BĐS</h2>
-          <p className="text-[1.25rem] px-4 lg:text-[1.5rem] text-[#19366A] text-justify mb-4">Xây dựng cộng đồng nhà đầu tư hiểu biết, minh bạch và thực chiến. Cấp chứng chỉ chính quy với các lớp học môi giới.</p>
+          <p className="text-[1.25rem] px-4 lg:text-[1.5rem] text-[#19366A] mb-4 text-center">Xây dựng cộng đồng nhà đầu tư hiểu biết, minh bạch và thực chiến. Cấp chứng chỉ chính quy với các lớp học môi giới.</p>
           <div className="bg-[url('/nen@3x.png')] bg-[length:100%_100%] bg-no-repeat py-8">
             <div className=" max-w-7xl mx-auto px-4">
               <div className="relative">
@@ -100,7 +101,7 @@ async function LinhVucHoatDong() {
       </section>
 
       <section>
-        <div className="max-w-7xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-16">
           <div className="flex gap-4 lg:flex-row flex-col">
             <div className="flex flex-col gap-2 flex-1 lg:hidden">
               <div className="flex-1 flex flex-col justify-center items-center">
@@ -122,8 +123,8 @@ async function LinhVucHoatDong() {
             </div>
             <div className="flex flex-col gap-2 flex-1 max-lg:hidden">
               <div className="flex-1 flex flex-col justify-center items-center">
-                <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center">Thiết kế và thi công căn hộ</h2>
-                <p className="text-[#007AA7] text-center mb-4">Tối ưu hóa công năng và giá trị thương mại sau mua.</p>
+                <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] text-center mb-4">Thiết kế và thi công căn hộ</h2>
+                <p className="text-[#19366A] text-[1.25rem] text-center mb-4">Tối ưu hóa công năng và giá trị thương mại sau mua.</p>
               </div>
               <Image src="/cong-cu-4.jpg" alt="cong-cu-4" width={600} height={400} className="rounded-2xl object-cover" />
             </div>

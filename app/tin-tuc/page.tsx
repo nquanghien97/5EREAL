@@ -45,7 +45,7 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
                   <div className="lg:w-3/5 h-full flex flex-col">
                     <h2 className="text-[#0F3E5A] font-bold text-xl mb-2">{news.title}</h2>
                     <p className="text-[#d2a932] font-bold mb-2">{new Date(news.createdAt).toLocaleDateString()}</p>
-                    {/* <div dangerouslySetInnerHTML={{ __html: news.content.replace(/<img[^>]*>/g, "") }} className="clamp-html line-clamp-4 text-[#007AA7] mb-4" /> */}
+                    <div dangerouslySetInnerHTML={{ __html: news.summary }} className="clamp-html line-clamp-4 text-[#007AA7] mb-4" />
                     <div>
                       <Link href={`tin-tuc/${news.slug}`} className="inline-flex py-2 px-8 text-[#007AA7] bg-gradient-to-r from-[#feedbf] to-[#c29551] rounded-full font-semibold cursor-pointer hover:opacity-80 duration-300">
                         Xem chi tiết

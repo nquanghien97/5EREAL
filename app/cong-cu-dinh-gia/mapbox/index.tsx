@@ -14,6 +14,7 @@ import SearchMapbox from './SearchMapbox'
 import ReactDOM from 'react-dom/client'
 import PopupContent from './PopupContent'
 import SelectMarkerSaved from './SelectMarkerSaved'
+import MapPin from '@/assets/icons/MapPinIcon'
 
 interface MapBoxProps {
   initCoordinates: {
@@ -29,12 +30,6 @@ function MapBox({ initCoordinates }: MapBoxProps) {
   const mapRef = useRef<mapboxgl.Map | null>(null)
   const markersRef = useRef<{ marker: mapboxgl.Marker; id: number }[]>([])
 
-  const getDistanceThresholdByZoom = (zoom: number): number => {
-    if (zoom >= 14) return 100
-    if (zoom >= 11) return 300
-    return 800
-  }
-
   const createCustomMarkerElement = useCallback((note: string, color = '#EF4444') => {
     const wrapper = document.createElement('div')
     wrapper.className = 'flex flex-col items-center'
@@ -46,10 +41,11 @@ function MapBox({ initCoordinates }: MapBoxProps) {
       note?.length > 30 ? note.slice(0, 30) + '…' : note || '(Chưa có ghi chú)'
     wrapper.appendChild(label)
 
-    const icon = document.createElement('div')
-    icon.className = 'w-4 h-4 rounded-full shadow-md border-2 border-white'
-    icon.style.backgroundColor = color
-    wrapper.appendChild(icon)
+    // Render the MapPin React component to a DOM node and append it
+    const iconContainer = document.createElement('div')
+    // Use React 18's createRoot to render the icon
+    ReactDOM.createRoot(iconContainer).render(<MapPin color={color} />)
+    wrapper.appendChild(iconContainer)
 
     return { wrapper, label }
   }, [])
@@ -119,6 +115,8 @@ function MapBox({ initCoordinates }: MapBoxProps) {
             .setPopup(realPopup)
             .addTo(mapRef.current!)
 
+          wrapper.addEventListener('click', (e) => e.stopPropagation())
+
           const popupContent = createPopupContent(result.data.id, label, newMarker, realPopup, note)
           realPopup.setDOMContent(popupContent)
 
@@ -159,6 +157,8 @@ function MapBox({ initCoordinates }: MapBoxProps) {
         .setPopup(popup)
         .addTo(mapRef.current!)
 
+      wrapper.addEventListener('click', (e) => e.stopPropagation())
+
       const popupContent = createPopupContent(id, label, marker, popup, note)
       popup.setDOMContent(popupContent)
 
@@ -167,8 +167,7 @@ function MapBox({ initCoordinates }: MapBoxProps) {
 
     mapRef.current.on('click', async (e) => {
       const [lng, lat] = [e.lngLat.lng, e.lngLat.lat]
-      const zoom = mapRef.current?.getZoom() || 10
-      const threshold = getDistanceThresholdByZoom(zoom)
+      const threshold = 1
 
       for (const { marker } of markersRef.current) {
         const mLngLat = marker.getLngLat()

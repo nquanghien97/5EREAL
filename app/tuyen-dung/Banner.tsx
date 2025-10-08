@@ -12,7 +12,7 @@ function Banner() {
   const nextRef = useRef(null);
 
   return (
-    <section className="m-auto w-full mb-8 relative">
+    <section className="m-auto w-full mb-16 relative">
       <button
         ref={prevRef}
         className="swiper-button-prev-custom absolute left-2 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-[#d29015] hover:bg-[#d29015] hover:text-white group disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer border border-[#d29015]"
@@ -45,10 +45,34 @@ function Banner() {
         }}
       >
         <SwiperSlide>
-          <Image src="/linh-vuc-2.jpg" alt="linh-vuc-2" width={1831} height={916} className="w-full max-h-[300px] lg:max-h-[600px] object-cover" />
+          <div className="reletive">
+            <Image src="/linh-vuc-2.jpg" alt="linh-vuc-2" width={1831} height={916} className="w-full max-h-[300px] lg:max-h-[600px] object-cover" />
+            <div className="absolute inset-0 lg:top-1/2 background-linear-blue" />
+            <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
+              <div>
+                {<h2 className="text-2xl text-center lg:text-4xl font-bold pb-2">TUYỂN DỤNG</h2>}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="max-lg:hidden w-1/2 h-[4px] bg-white" />
+                <p className="text-sm lg:text-xl max-w-lg max-lg:text-center px-2">Tham gia cùng chúng tôi</p>
+              </div>
+            </div>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <Image src="/linh-vuc-3.jpg" alt="linh-vuc-3" width={1920} height={400} className="w-full max-h-[300px] lg:max-h-[600px]" />
+          <div className="relative">
+            <Image src="/linh-vuc-3.jpg" alt="linh-vuc-3" width={1920} height={400} className="w-full max-h-[300px] lg:max-h-[600px]" />
+            <div className="absolute inset-0 lg:top-1/2 background-linear-blue" />
+            <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
+              <div>
+                {<h2 className="text-2xl text-center lg:text-4xl font-bold pb-2">TUYỂN DỤNG</h2>}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="max-lg:hidden w-1/2 h-[4px] bg-white" />
+                <p className="text-sm lg:text-xl max-w-lg max-lg:text-center px-2">Tham gia cùng chúng tôi</p>
+              </div>
+            </div>
+          </div>
         </SwiperSlide>
       </Swiper>
     </section>

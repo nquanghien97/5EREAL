@@ -5,7 +5,7 @@ import React from 'react'
 function HeSinhThaiDaLinhVuc() {
   return (
     <FadeIn>
-      <section className="mb-8">
+      <section className="mb-16">
         <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-4 text-center">HỆ SINH THÁI ĐA LĨNH VỰC</h2>
         <div className="max-w-7xl m-auto px-4 mb-8">
           <div className="flex flex-col lg:flex-row">

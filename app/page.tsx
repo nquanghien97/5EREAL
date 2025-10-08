@@ -106,11 +106,11 @@ export default async function Home() {
       </FadeIn>
 
       <FadeIn>
-        <section className="mb-8 px-4">
+        <section className="mb-16 px-4">
           <div className="max-w-7xl mx-auto relative">
             <Image src="/dau1@3x.png" alt="dau1@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute top-0 left-0" />
             <Image src="/logo-2@3x.png" alt="5E REAL" width={1084} height={438} loading="lazy" className="w-full mb-2 lg:w-1/2 m-auto" />
-            <p className="text-[1.25rem] lg:text-[1.75rem] text-[#19366A] text-justify mb-6">
+            <p className="text-[1.25rem] lg:text-[1.5rem] text-[#19366A] text-justify mb-6">
               5E - đối tác chiến lược trong phát triển và thương mại hóa bất động sản. Không đơn thuẩn là một đơn vị phân phối, 5E chủ động tham gia từ khâu nghiên cứu thị trường, tư vấn định vị sản phẩm đến xây dựng chiến lược ra hàng phù hợp từng phân khúc. Với tệp khách hàng sẵn có, hệ thống phân loại thông minh và cộng đồng nhà đầu tư được nuôi dưỡng chuyên nghiệp, 5E tạo nên bàn tay kép dẫn dắt thị trường - đúng điều khách cần, tròn điều chủ muốn.
             </p>
             <Image src="/dau2@3x.png" alt="dau2@3x" width={625} height={550} loading="lazy" className="w-16 m-auto hidden lg:block absolute bottom-0 right-[-4rem]" />

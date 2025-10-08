@@ -73,7 +73,7 @@ function Valuation() {
             </div>
           </div>
           <button disabled={loading} type="submit" className={`${loading ? 'bg-[#0F3E5A] text-white py-2 px-8 cursor-not-allowed rounded-md mt-4' : 'bg-[#0F3E5A] text-white py-2 px-8 cursor-pointer hover:opacity-75 duration-300 rounded-md mt-4'}`}>
-            {loading ? <LoadingIcon size='small' color='white' /> : 'Định giá'}
+            {loading ? <div className="flex items-center"><span>Tiến trình có thể mất một vài phút, vui lòng chờ</span><LoadingIcon size='small' color='white' /></div> : 'Định giá'}
           </button>
         </form>
       </div>

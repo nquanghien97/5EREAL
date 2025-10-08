@@ -6,7 +6,7 @@ import SliderThanhTuu from './slider-thanh-tuu'
 function ThanhTuu() {
   return (
     <FadeIn>
-      <section className="mb-8 max-lg:hidden">
+      <section className="mb-16 max-lg:hidden">
         <h2 className="text-3xl md:text-5xl font-bold text-[#0F3E5A] mb-4 text-center">THÀNH TỰU</h2>
         <div className="max-w-7xl m-auto px-4 mb-8">
           <div className="flex flex-col items-center gap-4">

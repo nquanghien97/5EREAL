@@ -3,10 +3,10 @@ import Image from 'next/image'
 
 function Banner({ bannerImage, title, description, style = 'primary' }: { bannerImage?: string, title?: string, description?: string[] | string, style?: 'primary' | 'secondary' }) {
   return (
-    <section className="mb-8 z-0 relative">
+    <section className="mb-16 z-0 relative">
       <Image src={bannerImage || "/banner-home.png"} alt="banner-home" width={1831} height={916} unoptimized className="w-full lg:max-h-[600px] object-cover" />
       <div className="absolute inset-0 lg:top-1/2 background-linear-blue" />
-      <div className={`absolute lg:left-[10%] bottom-[10%] text-white ${style === 'secondary' && 'flex flex-col lg:flex-row lg:gap-4 w-full'}`}>
+      <div className={`absolute lg:left-[10%] bottom-[10%] text-white ${style === 'secondary' && 'flex flex-col lg:flex-row lg:gap-4'}`}>
         <div>
           {title && <h2 className="text-2xl text-center lg:text-4xl font-bold pb-2">{title}</h2>}
           {style === 'secondary' && <div className="max-lg:hidden w-full h-[4px] bg-white" />}
@@ -15,7 +15,7 @@ function Banner({ bannerImage, title, description, style = 'primary' }: { banner
           <div className="flex items-center gap-2">
             {style === 'primary' && <div className="max-lg:hidden w-1/2 h-[4px] bg-white" />}
             {Array.isArray(description) ? (
-              <ul className={`text-sm lg:text-xl max-w-lg max-lg:flex justify-center items-center flex-col w-full`}>
+              <ul className={`text-sm lg:text-xl max-w-lg max-lg:flex justify-center items-center flex-col`}>
                 {description.map((desc, index) => (
                   <li key={index}>{desc}</li>
                 ))}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat } from 'next/font/google'
+import { Be_Vietnam_Pro } from 'next/font/google'
 import "./globals.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -11,10 +11,9 @@ import { verifyToken } from "@/utils/token";
 import prisma from "@/lib/prisma";
 import { ToastContainer } from 'react-toastify';
 
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  display: 'swap',
+const beVietNam = Be_Vietnam_Pro({
+  subsets: ['vietnamese'],
+  weight: '500'
 })
 
 export const metadata: Metadata = {
@@ -47,7 +46,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${montserrat.className} antialiased`}
+        className={`${beVietNam.className} antialiased`}
       >
         <Header me={me} />
         {children}

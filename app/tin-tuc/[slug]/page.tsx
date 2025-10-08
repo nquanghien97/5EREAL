@@ -50,7 +50,7 @@ async function DetailNews({ params }: { params: Promise<{ slug: string, page: st
               <ClockIcon width={16} height={16} fill="currentColor" />
               <p className="text-sm">{formatDate(res.createdAt)}</p>
             </div>
-            <div className="text-[1.25rem]" dangerouslySetInnerHTML={{ __html: res.summary }} />
+            <div dangerouslySetInnerHTML={{ __html: res.summary }} />
           </div>
           <div className="flex-1 max-lg:hidden">
             <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + res.thumbnail} alt={res.title} width={1920} height={1080} className="w-full" />
@@ -68,7 +68,7 @@ async function DetailNews({ params }: { params: Promise<{ slug: string, page: st
                 </figcaption>
               )}
               {section.content && (
-                <div className="text-[#19366A] text-[1.25rem] lg:text-[1.5rem]" dangerouslySetInnerHTML={{ __html: section.content }} />
+                <div className="text-[#19366A]" dangerouslySetInnerHTML={{ __html: section.content }} />
               )}
             </section>
           ))}

@@ -7,7 +7,7 @@ import PlayIcon from '@/assets/icons/PlayIcon'
 
 function ProjectsSection({ response, description }: { response: { data: ProjectsEntity[] }, description: string }) {
   return (
-    <section className="px-4 mb-8">
+    <section className="px-4 mb-16">
       <div className="max-w-7xl mx-auto">
         <FadeIn>
           <div>

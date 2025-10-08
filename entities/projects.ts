@@ -15,8 +15,8 @@ export interface ProjectsEntity {
   numberOfUnits: number // Tổng số căn
   investor: number // Tên chủ đầu tư
   thumbnailUrl: string // URL ảnh đại diện
-  content: string   // Nội dung mô tả chi tiết (HTML/Markdown)
   authorId: number
+  description: string
   author: UserEntity
   createdAt: Date
   updatedAt: Date

@@ -38,7 +38,7 @@ html, body {
   inset: 0;
   padding: 6px; /* độ dày border */
   border-radius: inherit;
-  background: linear-gradient(to right, #d09b4e, #fddd9b, #fffee5);
+  background: linear-gradient(to right, #d09b4e, #fddd9b, #fffee5, #d09b4e, #fddd9b);
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
     linear-gradient(#fff 0 0);
