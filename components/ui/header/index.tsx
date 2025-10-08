@@ -55,7 +55,7 @@ function Header({ me }: HeaderProps) {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex justify-center items-center space-x-8 flex-1 h-full">
+            <nav className="hidden lg:flex justify-center items-center 2xl:space-x-8 xl:space-x-4 lg:space-x-2 flex-1 h-full">
               {ListHeader.map((item, index) => (
                 <Link
                   key={index}
@@ -70,9 +70,9 @@ function Header({ me }: HeaderProps) {
 
             {/* Auth */}
             {currentUser ? (
-              <div className="max-lg:hidden flex gap-4">
+              <div className="max-lg:hidden flex flex-col 2xl:flex-row gap-2 2xl:gap-4">
                 <p>Xin chào {currentUser.fullName}</p>
-                <div>
+                <div className="flex justify-center">
                   <button
                     className="hover:text-[#d29015] transition-colors duration-200 xl:text-base lg:text-xs tracking-wide uppercase text-white cursor-pointer"
                     onClick={onLogout}
