@@ -189,7 +189,7 @@ function MapBox({ initCoordinates }: MapBoxProps) {
   return (
     <div className="mb-8 scroll-mt-[68px]" id="map-bds">
       <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] mb-4 text-center uppercase">Xem và lưu thông tin BĐS của bạn</h2>
-      <div className="flex justify-between max-w-7xl m-auto">
+      <div className="flex flex-col lg:flex-row justify-between max-w-7xl m-auto px-4 max-lg:mb-4">
         <SearchMapbox mapRef={mapRef} />
         <SelectMarkerSaved listCoordinates={initCoordinates} mapRef={mapRef} />
       </div>

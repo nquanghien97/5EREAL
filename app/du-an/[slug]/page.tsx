@@ -38,7 +38,7 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">TỔNG QUAN DỰ ÁN</h2>
           <p className="text-[#0F3E5A] text-center font-bold text-lg mb-4">Tên pháp lý: {project.fullName}</p>
-          <ul className="text-[#003c7a] mb-4 grid grid-cols-2">
+          <ul className="text-[#003c7a] mb-4 grid grid-cols-1 lg:grid-cols-2">
             <li className="mb-4 lg:mb-2 max-lg:flex max-lg:items-center gap-2">
               <p className="font-bold text-lg">Vị trí:</p>
               <p>{project.location}</p>
@@ -72,15 +72,18 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
       </section>
 
       {dataProjectSection.map(section => (
-        <div key={section.id} className="flex max-w-7xl m-auto px-4 mb-8 gap-4">
+        <div key={section.id} className="flex flex-col lg:flex-row max-w-7xl m-auto px-4 mb-8 gap-4">
+          <div className="flex-1 lg:hidden">
+            <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt="image_section" width={1920} height={1080} className="rounded-xl" />
+          </div>
           {section.orderIndex % 2 !== 0 && (
-            <div className="text-[#19366A] text-[1.25rem] flex-1" dangerouslySetInnerHTML={{ __html: section.content }} />
+            <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content }} />
           )}
-          <div className="flex-1">
+          <div className="flex-1 max-lg:hidden">
             <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt="image_section" width={1920} height={1080} className="rounded-xl" />
           </div>
           {section.orderIndex % 2 === 0 && (
-            <div className="text-[#19366A] text-[1.25rem] flex-1" dangerouslySetInnerHTML={{ __html: section.content }} />
+            <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content }} />
           )}
         </div>
       ))}
@@ -88,7 +91,7 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
       <section className="max-w-7xl m-auto px-4 mb-8">
         <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">TIỆN ÍCH</h2>
         <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataTienIchWithImages.description}</p>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3">
           {dataTienIchWithImages.images.map((image, index) => (
             <div key={index} className="h-[280px] w-full">
               <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + image.imageUrl} alt="image" width={1920} height={1080} className="border !h-full !w-full object-cover" />

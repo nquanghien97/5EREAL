@@ -52,10 +52,10 @@ function Valuation() {
   return (
     <div className="max-w-7xl m-auto mb-8 scroll-mt-[68px]" id="dinh-gia-bds">
       <h2 className="text-2xl md:text-3xl font-bold text-[#0F3E5A] text-center uppercase">Định giá Bất Động Sản</h2>
-      <div className="mb-4">
+      <div className="mb-4 px-4">
         <p className="text-center text-[#0F3E5A] text-lg mb-4">Sử dụng công cụ dưới đây để định giá bất động sản của bạn.</p>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <div className="flex-1">
               <p className="mb-1 text-[#0F3E5A]">Địa chỉ Bất Động Sản</p>
               <input type="text" {...register("name")} placeholder="Nhập địa chỉ bất động sản" className="bg-white border border-gray-300 p-2 rounded-md w-full outline-0" />

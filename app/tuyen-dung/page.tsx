@@ -14,57 +14,57 @@ async function CoHoiKinhDoanh() {
       <section className="max-w-7xl m-auto px-4 mb-16">
         <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center max-lg:mb-4 mb-8">Vì sao bạn lựa chọn 5E REAL</h2>
         <ul className="flex flex-wrap">
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-1.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-1.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-3.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-3.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-2.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-2.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-4.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-4.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-5.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-5.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
-          <li className="w-1/3 px-4 mb-7">
+          <li className="w-full lg:w-1/3 px-4 mb-7">
             <div className="mb-2">
-              <Image src="/benefit-img-6.gif" alt="" width={500} height={500} className="w-[120px]" />
+              <Image src="/benefit-img-6.gif" alt="" width={500} height={500} className="w-[120px] m-auto" unoptimized />
             </div>
             <div>
-              <h3 className="uppercase font-bold mb-2 text-[1.5rem]">Danh tiếng công ty</h3>
+              <h3 className="uppercase font-bold mb-2 text-[1.5rem] text-center">Danh tiếng công ty</h3>
               <p className="text-[#19366A] text-[1.25rem]">Tầm vóc và danh tiếng doanh nghiệp được lan tỏa không chỉ ở nội bộ mà còn ghi dấu trên cả thị trường lao động</p>
             </div>
           </li>
