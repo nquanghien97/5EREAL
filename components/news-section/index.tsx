@@ -58,7 +58,7 @@ async function NewsSection() {
                       <ClockIcon width={16} height={16} fill='#d2a932' />
                       <p className="text-[#d2a932] font-semibold">{new Date(firstNews.createdAt).toLocaleDateString()}</p>
                     </div>
-                    <h3 className="text-xl text-[#0F3E5A] bg-opacity-70 font-semibold">{news.title}</h3>
+                    <h3 className="text-lg text-[#0F3E5A] bg-opacity-70 font-semibold">{news.title}</h3>
                   </div>
                 </div>
               </div>

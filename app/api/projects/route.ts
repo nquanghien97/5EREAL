@@ -9,7 +9,11 @@ export async function POST(req: Request) {
   const uploadedFiles: string[] = [];
   try {
     const user = await getUserFromCookie();
-    if (!user || user.role !== "ADMIN") {
+
+    if (!user) {
+      return NextResponse.json({ message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!" }, { status: 401 })
+    }
+    if (user.role !== "ADMIN") {
       return NextResponse.json({ message: "Không có quyền truy cập" }, { status: 403 });
     }
 

@@ -13,7 +13,7 @@ import { ToastContainer } from 'react-toastify';
 
 const beVietNam = Be_Vietnam_Pro({
   subsets: ['vietnamese'],
-  weight: '500'
+  weight: '200'
 })
 
 export const metadata: Metadata = {
