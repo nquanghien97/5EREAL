@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-html, body {
+html,
+body {
   line-height: 1.6 !important;
 }
 
@@ -18,41 +19,39 @@ html, body {
 }
 
 .background-linear-blue {
-  background: linear-gradient(
-    to top,
-    rgba(20, 67, 97, 0.8),
-    rgba(20, 67, 97, 0.8),
-    rgba(166, 200, 217, 0)
-  );
+  background: linear-gradient(to top,
+      rgba(20, 67, 97, 0.8),
+      rgba(20, 67, 97, 0.8),
+      rgba(166, 200, 217, 0));
 }
 
 .border-gradient-yellow {
   position: relative;
   border-radius: 16px;
-  overflow: hidden; /* để cắt gradient theo border-radius */
+  overflow: hidden;
+  /* để cắt gradient theo border-radius */
 }
 
 .border-gradient-yellow::before {
   content: "";
   position: absolute;
   inset: 0;
-  padding: 6px; /* độ dày border */
+  padding: 6px;
+  /* độ dày border */
   border-radius: inherit;
   background: linear-gradient(to right, #d09b4e, #fddd9b, #fffee5, #d09b4e, #fddd9b);
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask-composite: exclude;
 }
 
 .background-linear-black {
-  background: linear-gradient(
-    to top,
-    rgba(23, 22, 22, 0.8),
-    rgba(109, 108, 108, 0.8),
-    rgba(0, 0, 0, 0)
-  );
+  background: linear-gradient(to top,
+      rgba(23, 22, 22, 0.8),
+      rgba(109, 108, 108, 0.8),
+      rgba(0, 0, 0, 0));
 }
 
 .bg-text-yellow {
@@ -93,29 +92,15 @@ html, body {
   background: linear-gradient(to right, #fef6e8, #fffcf6);
 }
 
-.content_news img {
-  max-width: 100%;
-  height: auto;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.content_news h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center !important;
-}
-
-.content_news p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  color: #333;
+.content_section ul {
+  list-style-type: disc;
+  padding-left: 1rem;
 }
 
 .clamp-html * {
   display: inline !important;
-  line-height: 1.5; /* để tránh dính chữ */
+  line-height: 1.5;
+  /* để tránh dính chữ */
 }
 
 .content_projects img {

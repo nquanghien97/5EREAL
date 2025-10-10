@@ -60,15 +60,15 @@ async function DetailNews({ params }: { params: Promise<{ slug: string, page: st
           {res.news_sections.map(section => (
             <section key={section.orderIndex} className="mb-8">
               {section.imageUrl && (
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt={section.caption || ''} width={1920} height={1080} />
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt={section.caption || ''} width={1920} height={1080} className="mb-2" />
               )}
               {section.imageUrl && section.caption && (
-                <figcaption className="text-[#19366A] my-2 text-center italic">
+                <figcaption className="text-[#19366A] mb-2 text-center italic">
                   <p>{section?.caption}</p>
                 </figcaption>
               )}
               {section.content && (
-                <div className="text-[#19366A] text-justify" dangerouslySetInnerHTML={{ __html: section.content }} />
+                <div className="text-[#19366A] text-justify content_section" dangerouslySetInnerHTML={{ __html: section.content }} />
               )}
             </section>
           ))}
