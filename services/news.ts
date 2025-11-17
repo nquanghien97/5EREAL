@@ -29,6 +29,12 @@ export async function getNewsByPrisma({ page = 1, pageSize = 3, excludeNewsSlug 
     const news = await prisma.news.findMany({
       skip,
       take,
+      include: {
+        thumbnail: true,
+        author: {
+          select: { id: true, fullName: true },
+        },
+      },
       where: excludeNewsSlug ? {
         slug: { not: excludeNewsSlug }
       } : {}
