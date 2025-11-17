@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 async function LinhVucHoatDong() {
 
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 });
-  const response: { data: ProjectsEntity[] } = await res.json()
+  const response: { projects: ProjectsEntity[] } = await res.json()
+  console.log(response)
 
   return (
     <main className="background-linear-yellow">
@@ -34,30 +35,27 @@ async function LinhVucHoatDong() {
           <div className="mb-16 px-4 mx-auto">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto">
-              {response.data.map((project) => (
-                <div
-                  key={project.id}
-                  className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-gradient-yellow"
-                >
-                  {/* Background Image with Overlay */}
-                  <div className="">
-                    <Link href={`/du-an/${project.slug}`}>
-                      <Image
-                        src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnail.url}
-                        alt={project.name}
-                        width={600}
-                        height={400}
-                        className="w-full object-cover rounded-t-2xl"
-                        loading="lazy"
-                      />
-                    </Link>
+              {response.projects.map((project) => (
+                <Link key={project.id} href={`/du-an/${project.slug}`}>
+                  <div
+                    className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-gradient-yellow"
+                  >
+                    {/* Background Image with Overlay */}
+                    <Image
+                      src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnail.url}
+                      alt={project.name}
+                      width={600}
+                      height={400}
+                      className="w-full object-cover rounded-t-2xl"
+                      loading="lazy"
+                    />
                     <div className="w-full p-4 flex flex-col items-center gap-2 justify-between">
                       <h3 className="text-xl font-semibold text-[#0F3E5A] leading-tight">{project.name}</h3>
                       {/* <div className="line-clamp-2 text-[#d2a932] text-center" dangerouslySetInnerHTML={{ __html: `${project.content} ...` }} /> */}
                       <p className="line-clamp-2 text-[#d2a932] text-center">{project.description}</p>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
