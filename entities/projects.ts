@@ -1,50 +1,57 @@
-import { SECTION_TYPE } from "@prisma/client"
-import { UserEntity } from "./user"
+import { MediaEntity } from "./media"
 
 export interface ProjectsEntity {
   id: number
   name: string
+  description: string
   fullName: string
   slug: string
   location: string
-  totalArea: number //Diện tích (m2)
-  constructionRate: number // Mật độ xây dựng (%)
-  floorHeightMin: number // Số tầng thấp nhất
-  floorHeightMax: number // Số tầng cao nhất
-  type: number // Loại hình bất động sản
-  numberOfUnits: number // Tổng số căn
-  investor: number // Tên chủ đầu tư
-  thumbnailUrl: string // URL ảnh đại diện
+  totalArea: number
+  constructionRate: number
+  floorHeightMin: number
+  floorHeightMax: number
+  type: string
+  numberOfUnits: number
+  investor: string
+  thumbnailId: number
+  thumbnail: MediaEntity                    // Populated relation
+  backgroundOverviewId: number | null
+  backgroundOverview: MediaEntity | null    // Populated relation
   authorId: number
-  description: string
-  author: UserEntity
+  author: {
+    id: number
+    fullName: string
+    email: string
+  }
   createdAt: Date
   updatedAt: Date
-
-  project_sections: ProjectsSectionsEntity[]
-  project_images: ProjectsSectionsEntity[]
+  sections: ProjectsSectionsEntity[]
 }
 
+export type SECTION_TYPE = "TIEN_ICH" | "THU_VIEN_HINH_ANH" | "NORMAL"
+
 export interface ProjectsSectionsEntity {
+  projectId: number
+  id: number
+  type: SECTION_TYPE
+  title: string | null
+  caption?: string
+  description: string | null
+  content?: string
+  image?: MediaEntity
+  imageUrl?: string
+  orderIndex: number
+  section_images: ProjectsImagesEntity[]
+}
+
+export interface ProjectsImagesEntity {
   id: number
   projectId: number
   type: SECTION_TYPE
-  description?: string
-  title: string
-  content: string
-  imageUrl: string
+  image: MediaEntity
+  caption?: string
   orderIndex: number
   createdAt: Date
   updatedAt: Date
-}
-
-export interface ProjectsImageEntity {
-  id: number,
-  projectId: number,
-  type: SECTION_TYPE,
-  sectionId: number,
-  imageUrl: string,
-  caption: string,
-  orderIndex: number,
-  createdAt: Date
 }

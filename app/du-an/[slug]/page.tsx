@@ -11,28 +11,20 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
     <div>Không tìm thấy dự án</div>
   )
   const project = await getProjectsBySlug(slug)
-  const dataProjectSection = project.project_sections.filter(item => item.type === 'NORMAL')
+  if(!project) return (
+    <p className='text-center p-6 text-xl'>Dự án không tồn tại</p>
+  )
+  const dataProjectSection = project.sections.filter(item => item.type === 'NORMAL')
 
   // dataTienIch
-  const dataTienIch = project.project_sections.find(section => section.type === 'TIEN_ICH');
-  const imagesTienIch = project.project_images.filter(image => image.type === 'TIEN_ICH');
-  const dataTienIchWithImages = {
-    ...dataTienIch,
-    images: imagesTienIch
-  };
+  const dataTienIch = project.sections.find(section => section.type === 'TIEN_ICH');
 
   // dataThuVienHinhAnh
-  const dataThuVienHinhAnh = project.project_sections.find(section => section.type === 'TIEN_ICH');
-  const imagesThuVienHinhAnh = project.project_images.filter(image => image.type === 'TIEN_ICH');
-  const dataThuVienHinhAnhWithImages = {
-    ...dataThuVienHinhAnh,
-    images: imagesThuVienHinhAnh
-  };
-
+  const dataThuVienHinhAnh = project.sections.find(section => section.type === 'THU_VIEN_HINH_ANH');
   return (
     <div className="background-linear-yellow">
       <div className="">
-        <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnailUrl} alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
+        <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + project.thumbnail.url} alt="banner-du-an" width={1831} height={916} className="w-full max-h-[600px] object-cover" />
       </div>
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4">
@@ -71,40 +63,48 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
         </div>
       </section>
 
-      {dataProjectSection.map(section => (
-        <div key={section.id} className="flex flex-col lg:flex-row max-w-7xl m-auto px-4 mb-8 gap-4">
-          <div className="flex-1 lg:hidden">
-            <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt="image_section" width={1920} height={1080} className="rounded-xl" />
-          </div>
-          {section.orderIndex % 2 !== 0 && (
-            <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content }} />
-          )}
-          <div className="flex-1 max-lg:hidden">
-            <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt="image_section" width={1920} height={1080} className="rounded-xl" />
-          </div>
-          {section.orderIndex % 2 === 0 && (
-            <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content }} />
-          )}
-        </div>
-      ))}
-
-      <section className="max-w-7xl m-auto px-4 mb-8">
-        <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">TIỆN ÍCH</h2>
-        <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataTienIchWithImages.description}</p>
-        <div className="grid grid-cols-1 lg:grid-cols-3">
-          {dataTienIchWithImages.images.map((image, index) => (
-            <div key={index} className="h-[280px] w-full">
-              <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + image.imageUrl} alt="image" width={1920} height={1080} className="border !h-full !w-full object-cover" />
+      {dataProjectSection ? (
+        dataProjectSection.map(section => (
+          <div key={section.id} className="flex flex-col lg:flex-row max-w-7xl m-auto px-4 mb-8 gap-4">
+            {section.section_images.map(s => (
+              <div className="flex-1 lg:hidden" key={s.id}>
+                <Image src={section.image ? process.env.NEXT_PUBLIC_API_BASE_URL + section.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl" />
+              </div>
+            ))}
+            {section.orderIndex % 2 !== 0 && (
+              <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content || '' }} />
+            )}
+            <div className="flex-1 max-lg:hidden">
+              <Image src={section.image ? process.env.NEXT_PUBLIC_API_BASE_URL + section.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl mb-1" />
+              <p className="text-[#19366A] text-center">{section.caption}</p>
             </div>
-          ))}
-        </div>
-      </section>
+            {section.orderIndex % 2 === 0 && (
+              <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content || '' }} />
+            )}
+          </div>
+        ))) : null}
 
-      <section className="max-w-7xl m-auto px-4 mb-8">
+      {dataTienIch?.section_images.length !== 0 && (
+        <section className="max-w-7xl m-auto px-4 mb-16">
+          <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">TIỆN ÍCH</h2>
+          <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataTienIch?.title}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3">
+            {dataTienIch?.section_images.map((image, index) => (
+              <div key={index} className="h-[280px] w-full">
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + image.image.url} alt="image" width={1920} height={1080} className="border !h-full !w-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {dataThuVienHinhAnh?.section_images.length !== 0 && (
+        <section className="max-w-7xl m-auto px-4 mb-8">
         <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">THƯ VIỆN HÌNH ẢNH</h2>
-        <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataThuVienHinhAnhWithImages.description}</p>
-        <Slider listImages={dataThuVienHinhAnhWithImages.images} />
+        <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataThuVienHinhAnh?.title}</p>
+        <Slider listImages={dataThuVienHinhAnh?.section_images} />
       </section>
+      )}
 
       {/* <OthersProjectsSection slug={slug} /> */}
 

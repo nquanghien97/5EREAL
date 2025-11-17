@@ -16,13 +16,18 @@ export const metadata: Metadata = {
 
 async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, pageSize: string }> }) {
   const { page = 1, pageSize = 20 } = await searchParams
-  const response: { data: NewsEntity[], paging: { page: number, pageSize: number, total: number } } = await getNews({ page: Number(page), pageSize: Number(pageSize) })
+  const response: { news: NewsEntity[], paging: { page: number, pageSize: number, total: number } } = await getNews({ page: Number(page), pageSize: Number(pageSize) })
   // const responseFirstNews: { data: NewsEntity[] } = await getFirstNews()
   // if (response.data.length === 0) {
   //   return <p className="text-center">Không có dữ liệu</p>
   // }
   // const firstNews = responseFirstNews.data[0]
-  const lastThreeNews = response.data.splice(-3)
+  let lastThreeNews: NewsEntity[] = []
+  if (response.news.length >= 3) {
+    lastThreeNews = response.news.splice(-3)
+  } else {
+    lastThreeNews = []
+  }
 
   return (
     <main>
@@ -35,12 +40,12 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
 
       <section className="mb-8">
         <div className="max-w-7xl m-auto px-4">
-          {response.data.length > 0 ?
+          {response.news.length > 0 ?
             (
-              response.data.map(news => (
+              response.news.map(news => (
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:h-[320px] mb-4" key={news.id}>
                   <div className="lg:w-2/5">
-                    <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail}`} alt={news.title} width={600} height={400} className="object-cover w-full h-full max-h-[280px]" />
+                    <Image src={news.thumbnail ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail.url}` : '/example-img-1.jpg'} alt={news.title} width={600} height={400} className="object-cover w-full h-full max-h-[280px]" />
                   </div>
                   <div className="lg:w-3/5 h-full flex flex-col">
                     <h2 className="text-[#0F3E5A] font-bold text-xl mb-2">{news.title}</h2>

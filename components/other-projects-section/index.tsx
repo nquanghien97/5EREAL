@@ -50,7 +50,7 @@ function OthersProjectsSection(props: OthersProjectsSectionProps) {
                 {/* Background Image with Overlay */}
                 <div className="relative">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${project.thumbnailUrl}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${project.thumbnail.url}`}
                     alt={project.name}
                     width={600}
                     height={400}

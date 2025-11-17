@@ -2,50 +2,91 @@
 import { getUserFromCookie } from "@/lib/getUserFromCookie";
 import prisma from "@/lib/prisma";
 import { createSlug } from "@/utils/createSlug";
-import { deleteFile, uploadFile } from "@/utils/fileUpload";
-import { SECTION_TYPE } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
+
+enum SECTION_TYPE {
+  TIEN_ICH = "TIEN_ICH",
+  THU_VIEN_HINH_ANH = "THU_VIEN_HINH_ANH",
+  NORMAL = "NORMAL"
+}
+
+interface SectionImageInput {
+  id?: number // Có ID = existing, không có = new
+  imageId: number
+  orderIndex?: number
+}
+
+interface SectionInput {
+  id?: number // Có ID = update, không có = create
+  type: SECTION_TYPE
+  title?: string | null
+  caption?: string | null
+  description?: string | null
+  content?: string | null
+  orderIndex?: number
+  section_images?: SectionImageInput[]
+}
+
+interface UpdateProjectBody {
+  name: string
+  description: string
+  fullName: string
+  location: string
+  totalArea: number
+  constructionRate: number
+  floorHeightMin: number
+  floorHeightMax: number
+  type: string
+  numberOfUnits: number
+  investor: string
+  thumbnailId: number
+  backgroundOverviewId?: number | null
+  sections?: SectionInput[]
+}
 
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ param: string }> }
 ) {
   try {
-    const { param } = await params;
-    const projectId = Number(param);
-
+    const { param } = await params
+    let whereCondition: Prisma.projectsWhereUniqueInput
+    if (isNaN(Number(param))) {
+      whereCondition = {
+        slug: param
+      }
+    } else {
+      whereCondition = {
+        id: Number(param)
+      }
+    }
     const project = await prisma.projects.findUnique({
-      where: { id: projectId },
+      where: whereCondition,
       include: {
-        project_sections: {
+        thumbnail: true,
+        author: { select: { id: true, fullName: true } },
+        sections: {
           orderBy: { orderIndex: "asc" },
           include: {
-            project_images: {
-              orderBy: { orderIndex: "asc" },
-            },
-          },
-        },
-        project_images: {
-          where: { sectionId: null }, // ảnh không thuộc section nào
-          orderBy: { orderIndex: "asc" },
+            section_images: {
+              include: {
+                image: true
+              }
+            }
+          }
         },
       },
-    });
+    })
 
     if (!project) {
-      return NextResponse.json(
-        { message: "Không tìm thấy dự án" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Không tìm thấy bài viết" }, { status: 404 })
     }
 
-    return NextResponse.json({ project }, { status: 200 });
+    return NextResponse.json({ project, message: 'Lấy thông tin bài viết thành công!' }, { status: 200 })
   } catch (err) {
-    console.error("GET /projects/[id] lỗi:", err);
-    return NextResponse.json(
-      { message: "Lỗi server" },
-      { status: 500 }
-    );
+    console.error("Lỗi lấy projects:", err)
+    return NextResponse.json({ message: "Lỗi khi lấy bài viết" }, { status: 500 })
   }
 }
 
@@ -53,204 +94,321 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ param: string }> }
 ) {
-  const uploadedFiles: string[] = [];
-  const deleteQueue: string[] = [];
-
   try {
+    const { param: paramId } = await params;
+    const id = Number(paramId);
+
+    // 1. Validate ID
+    if (isNaN(id)) {
+      return NextResponse.json(
+        { message: "ID không hợp lệ" },
+        { status: 400 }
+      );
+    }
+
+    // 2. Check authentication & authorization
     const user = await getUserFromCookie();
     if (!user || user.role !== "ADMIN") {
       return NextResponse.json(
-        { message: "Không có quyền truy cập" },
+        { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }
       );
     }
 
-    const { param } = await params;
-    const projectId = Number(param);
-    const formData = await req.formData();
+    // 3. Parse and validate body
+    const body: UpdateProjectBody = await req.json();
+    const {
+      name,
+      fullName,
+      location,
+      totalArea,
+      constructionRate,
+      floorHeightMin,
+      floorHeightMax,
+      type,
+      numberOfUnits,
+      investor,
+      thumbnailId,
+      backgroundOverviewId,
+      sections = []
+    } = body;
 
-    const payloadStr = formData.get("payload") as string;
-    const payload = JSON.parse(payloadStr);
+    // 4. Validate required fields
+    if (!name?.trim()) {
+      return NextResponse.json(
+        { message: "Tên dự án là bắt buộc" },
+        { status: 400 }
+      );
+    }
 
-    // Lấy dữ liệu cũ
-    const oldProject = await prisma.projects.findUnique({
-      where: { id: projectId },
+    if (!fullName?.trim()) {
+      return NextResponse.json(
+        { message: "Tên đầy đủ dự án là bắt buộc" },
+        { status: 400 }
+      );
+    }
+
+    if (!location?.trim()) {
+      return NextResponse.json(
+        { message: "Vị trí dự án là bắt buộc" },
+        { status: 400 }
+      );
+    }
+
+    if (!thumbnailId) {
+      return NextResponse.json(
+        { message: "Ảnh thumbnail là bắt buộc" },
+        { status: 400 }
+      );
+    }
+
+    // Validate numeric fields
+    if (totalArea <= 0 || constructionRate <= 0 ||
+      floorHeightMin <= 0 || floorHeightMax <= 0 ||
+      numberOfUnits <= 0) {
+      return NextResponse.json(
+        { message: "Các giá trị số phải lớn hơn 0" },
+        { status: 400 }
+      );
+    }
+
+    if (floorHeightMin > floorHeightMax) {
+      return NextResponse.json(
+        { message: "Chiều cao tầng tối thiểu không được lớn hơn tối đa" },
+        { status: 400 }
+      );
+    }
+
+    // 5. Check if project exists
+    const existingProject = await prisma.projects.findUnique({
+      where: { id },
       include: {
-        project_sections: {
-          include: { project_images: true },
-        },
-        project_images: true,
-      },
+        sections: {
+          include: {
+            section_images: true
+          }
+        }
+      }
     });
 
-    if (!oldProject) {
+    if (!existingProject) {
       return NextResponse.json(
-        { message: "Không tìm thấy dự án" },
+        { message: "Dự án không tồn tại" },
         { status: 404 }
       );
     }
 
-    // --- Thumbnail ---
-    let thumbnailUrl = oldProject.thumbnailUrl;
-    const thumbnail = formData.get("thumbnail") as File | null;
-    if (thumbnail) {
-      const [filename] = await uploadFile([thumbnail], "projects");
-      thumbnailUrl = `/images/projects/${filename}`;
-      uploadedFiles.push(thumbnailUrl);
-      if (oldProject.thumbnailUrl) deleteQueue.push(oldProject.thumbnailUrl);
-    }
-
-    // --- Cập nhật dự án chính ---
-    await prisma.projects.update({
-      where: { id: projectId },
-      data: {
-        name: payload.name,
-        slug: createSlug(payload.name),
-        location: payload.location,
-        totalArea: Number(payload.totalArea),
-        constructionRate: Number(payload.constructionRate),
-        floorHeightMin: Number(payload.floorHeightMin),
-        floorHeightMax: Number(payload.floorHeightMax),
-        type: payload.type,
-        numberOfUnits: Number(payload.numberOfUnits),
-        investor: payload.investor,
-        thumbnailUrl,
-        description: payload.description,
-        fullName: payload.fullName,
-      },
+    // 6. Generate and check slug
+    const slug = createSlug(name);
+    const slugConflict = await prisma.projects.findFirst({
+      where: {
+        slug,
+        id: { not: id }
+      }
     });
 
-    // === XỬ LÝ SECTIONS (dùng orderIndex) ===
-    const listSections = payload.listSections || [];
-    const oldSections = oldProject.project_sections;
-    const incomingSectionOrders = listSections.map((s: { orderIndex: number }) => s.orderIndex);
-
-    // Xóa section bị loại
-    const removedSections = oldSections.filter(
-      (s) => !incomingSectionOrders.includes(s.orderIndex)
-    );
-    if (removedSections.length) {
-      await prisma.project_sections.deleteMany({
-        where: { id: { in: removedSections.map((s) => s.id) } },
-      });
-      removedSections.forEach((s) => {
-        if (s.imageUrl) deleteQueue.push(s.imageUrl);
-        s.project_images.forEach((img) => img.imageUrl && deleteQueue.push(img.imageUrl));
-      });
+    if (slugConflict) {
+      return NextResponse.json(
+        { message: `Slug "${slug}" đã được sử dụng bởi dự án khác` },
+        { status: 409 }
+      );
     }
 
-    for (const section of listSections) {
-      const file = section.imageKey ? (formData.get(section.imageKey) as File | null) : null;
-      const data : { type: SECTION_TYPE, orderIndex: number, title: string, description: string, content: string, imageUrl?: string} = {
-        type: section.type,
-        orderIndex: section.orderIndex,
-        title: section.title || null,
-        description: section.description || null,
-        content: section.content || null,
-      };
+    // 7. Update project with sections using transaction
+    const updatedProject = await prisma.$transaction(async (tx) => {
+      // ========================================
+      // STEP 1: Handle Sections
+      // ========================================
 
-      if (file) {
-        const [filename] = await uploadFile([file], "projects/sections");
-        const newUrl = `/images/projects/sections/${filename}`;
-        uploadedFiles.push(newUrl);
+      const existingSectionIds = existingProject.sections.map(s => s.id);
+      const incomingSectionIds = sections
+        .filter(s => s.id)
+        .map(s => s.id!);
 
-        const oldSec = oldSections.find((s) => s.orderIndex === section.orderIndex);
-        if (oldSec?.imageUrl) deleteQueue.push(oldSec.imageUrl);
+      // Find sections to delete
+      const sectionsToDelete = existingSectionIds.filter(
+        sId => !incomingSectionIds.includes(sId)
+      );
 
-        data.imageUrl = newUrl;
-      }
-
-      const oldSec = oldSections.find((s) => s.orderIndex === section.orderIndex);
-      if (oldSec) {
-        await prisma.project_sections.update({
-          where: { id: oldSec.id },
-          data,
-        });
-      } else {
-        await prisma.project_sections.create({
-          data: { ...data, projectId },
+      // Delete removed sections (cascade will delete section_images)
+      if (sectionsToDelete.length > 0) {
+        await tx.project_sections.deleteMany({
+          where: {
+            id: { in: sectionsToDelete },
+            projectId: id
+          }
         });
       }
-    }
 
-    // === XỬ LÝ ẢNH TRONG SECTION (TIEN_ICH, THU_VIEN_HINH_ANH) ===
-    const processImages = async (
-      items: { orderIndex: number, imageKey: string, caption: string | null }[],
-      type: "TIEN_ICH" | "THU_VIEN_HINH_ANH",
-      sectionOrderIndex: number
-    ) => {
-      const section = oldSections.find((s) => s.orderIndex === sectionOrderIndex);
-      if (!section) return;
+      // ========================================
+      // STEP 2: Update/Create Sections
+      // ========================================
 
-      const oldImages = section.project_images;
-      const incomingOrders = items.map((i : { orderIndex: number }) => i.orderIndex);
-
-      // Xóa ảnh bị loại
-      const removed = oldImages.filter((i) => !incomingOrders.includes(i.orderIndex));
-      if (removed.length) {
-        await prisma.project_images.deleteMany({
-          where: { id: { in: removed.map((i) => i.id) } },
-        });
-        removed.forEach((i) => i.imageUrl && deleteQueue.push(i.imageUrl));
-      }
-
-      for (const item of items) {
-        const file = item.imageKey ? (formData.get(item.imageKey) as File | null) : null;
-        const data : { type: SECTION_TYPE, orderIndex: number, caption: string | null, sectionId: number, imageUrl?: string} = {
-          type,
-          orderIndex: item.orderIndex,
-          caption: item.caption || null,
-          sectionId: section.id,
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        const sectionData = {
+          type: section.type,
+          title: section.title || null,
+          caption: section.caption,
+          description: section.description || null,
+          content: section.content || null,
+          orderIndex: i + 1, // Force sequential
+          projectId: id
         };
 
-        if (file) {
-          const [filename] = await uploadFile([file], "projects/sections");
-          const newUrl = `/images/projects/sections/${filename}`;
-          uploadedFiles.push(newUrl);
+        let sectionId: number;
 
-          const oldImg = oldImages.find((i) => i.orderIndex === item.orderIndex);
-          if (oldImg?.imageUrl) deleteQueue.push(oldImg.imageUrl);
-
-          data.imageUrl = newUrl;
+        if (section.id && incomingSectionIds.includes(section.id)) {
+          // Update existing section
+          const updatedSection = await tx.project_sections.update({
+            where: { id: section.id },
+            data: sectionData
+          });
+          sectionId = updatedSection.id;
+        } else {
+          // Create new section
+          const createdSection = await tx.project_sections.create({
+            data: sectionData
+          });
+          sectionId = createdSection.id;
         }
 
-        const oldImg = oldImages.find((i) => i.orderIndex === item.orderIndex);
-        if (oldImg) {
-          await prisma.project_images.update({
-            where: { id: oldImg.id },
-            data,
-          });
-        } else {
-          await prisma.project_images.create({
-            data: { ...data, projectId, imageUrl: data.imageUrl ?? "" },
-          });
+        // ========================================
+        // STEP 3: Handle Section Images
+        // ========================================
+
+        if (section.section_images) {
+          // Get existing images for this section
+          const existingImages = existingProject.sections
+            .find(s => s.id === section.id)?.section_images || [];
+
+          const existingImageIds = existingImages.map(img => img.id);
+          const incomingImageIds = section.section_images
+            .filter(img => img.id)
+            .map(img => img.id!);
+
+          // Delete removed images
+          const imagesToDelete = existingImageIds.filter(
+            imgId => !incomingImageIds.includes(imgId)
+          );
+
+          if (imagesToDelete.length > 0) {
+            await tx.project_section_images.deleteMany({
+              where: {
+                id: { in: imagesToDelete },
+                sectionId: sectionId
+              }
+            });
+          }
+
+          // Update/Create images
+          for (let j = 0; j < section.section_images.length; j++) {
+            const img = section.section_images[j];
+            const imageData = {
+              sectionId: sectionId,
+              imageId: img.imageId,
+              orderIndex: j + 1 // Force sequential
+            };
+
+            if (img.id && incomingImageIds.includes(img.id)) {
+              // Update existing image
+              await tx.project_section_images.update({
+                where: { id: img.id },
+                data: imageData
+              });
+            } else {
+              // Create new image
+              await tx.project_section_images.create({
+                data: imageData
+              });
+            }
+          }
         }
       }
-    };
 
-    // Tiện ích
-    if (payload.dataTienIch && payload.dataTienIch.length > 0) {
-      await processImages(payload.dataTienIch, "TIEN_ICH", 100); // giả sử orderIndex = 100
+      // ========================================
+      // STEP 4: Update Project
+      // ========================================
+
+      return await tx.projects.update({
+        where: { id },
+        data: {
+          name,
+          fullName,
+          slug,
+          location,
+          totalArea: Number(totalArea),
+          constructionRate: Number(constructionRate),
+          floorHeightMin: Number(floorHeightMin),
+          floorHeightMax: Number(floorHeightMax),
+          type,
+          numberOfUnits: Number(numberOfUnits),
+          investor,
+          thumbnailId,
+          backgroundOverviewId: backgroundOverviewId || null,
+          authorId: user.userId,
+          updatedAt: new Date()
+        },
+        include: {
+          thumbnail: true,
+          backgroundOverview: true,
+          author: {
+            select: {
+              id: true,
+              fullName: true,
+            }
+          },
+          sections: {
+            include: {
+              section_images: {
+                include: {
+                  image: true
+                },
+                orderBy: { orderIndex: 'asc' }
+              }
+            },
+            orderBy: { orderIndex: 'asc' }
+          }
+        }
+      });
+    });
+
+    return NextResponse.json({
+      message: "Cập nhật dự án thành công",
+      data: updatedProject
+    }, { status: 200 });
+
+  } catch (error) {
+    console.error("❌ PUT /api/projects/[id] error:", error);
+
+    // Handle Prisma errors
+    if (error && typeof error === 'object' && 'code' in error) {
+      const prismaError = error as { code: string };
+
+      switch (prismaError.code) {
+        case 'P2002':
+          return NextResponse.json(
+            { message: "Dữ liệu trùng lặp (slug đã tồn tại)" },
+            { status: 409 }
+          );
+        case 'P2003':
+          return NextResponse.json(
+            { message: "Tham chiếu không hợp lệ (thumbnail/background/image không tồn tại)" },
+            { status: 400 }
+          );
+        case 'P2025':
+          return NextResponse.json(
+            { message: "Không tìm thấy bản ghi" },
+            { status: 404 }
+          );
+      }
     }
 
-    // Thư viện hình ảnh
-    if (payload.dataThuVienHinhAnh && payload.dataThuVienHinhAnh.length > 0) {
-      await processImages(payload.dataThuVienHinhAnh, "THU_VIEN_HINH_ANH", 200); // orderIndex = 200
-    }
-
-    // --- XÓA ẢNH CŨ ---
-    if (deleteQueue.length) {
-      await Promise.all(deleteQueue.map((p) => deleteFile(p)));
-    }
-
-    return NextResponse.json({ message: "Cập nhật thành công" });
-  } catch (err) {
-    if (uploadedFiles.length) {
-      await Promise.all(uploadedFiles.map((p) => deleteFile(p)));
-    }
-    console.error("PUT /projects/[id] lỗi:", err);
     return NextResponse.json(
-      { message: "Lỗi cập nhật" },
+      {
+        message: "Không thể cập nhật dự án",
+        error: error instanceof Error ? error.message : "Unknown error"
+      },
       { status: 500 }
     );
   }
@@ -260,64 +418,28 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ param: string }> }
 ) {
-  const deleteQueue: string[] = [];
-
   try {
+    const { param } = await params
+    const id = Number(param);
     const user = await getUserFromCookie();
     if (!user || user.role !== "ADMIN") {
       return NextResponse.json(
-        { message: "Không có quyền truy cập" },
+        { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }
       );
     }
 
-    const { param } = await params;
-    const projectId = Number(param);
-
-    const project = await prisma.projects.findUnique({
-      where: { id: projectId },
-      include: {
-        project_sections: {
-          include: { project_images: { select: { imageUrl: true } } },
-          select: { imageUrl: true, project_images: true },
-        },
-        project_images: { select: { imageUrl: true } },
-      },
-    });
-
-    if (!project) {
-      return NextResponse.json(
-        { message: "Không tìm thấy dự án" },
-        { status: 404 }
-      );
-    }
-
-    // Thu thập ảnh cần xóa
-    if (project.thumbnailUrl) deleteQueue.push(project.thumbnailUrl);
-    project.project_sections.forEach((s) => {
-      if (s.imageUrl) deleteQueue.push(s.imageUrl);
-      s.project_images.forEach((img) => img.imageUrl && deleteQueue.push(img.imageUrl));
-    });
-    project.project_images.forEach((img) => img.imageUrl && deleteQueue.push(img.imageUrl));
-
-    // Xóa DB (cascade tự xóa sections + images)
     await prisma.projects.delete({
-      where: { id: projectId },
-    });
+      where: {
+        id
+      }
+    })
 
-    // Xóa file
-    if (deleteQueue.length) {
-      await Promise.all(deleteQueue.map((p) => deleteFile(p).catch(console.error)));
-    }
-
-    return NextResponse.json({ message: "Xóa thành công" });
-  } catch (err) {
-    console.error("DELETE /projects/[id] lỗi:", err);
-    if (deleteQueue.length) {
-      await Promise.all(deleteQueue.map((p) => deleteFile(p).catch(console.error)));
-    }
+    return NextResponse.json({ message: 'Delete projects successfully' }, { status: 201 });
+  } catch (error) {
+    console.error("❌ DELETE /api/projects error:", error);
     return NextResponse.json(
-      { message: "Lỗi xóa" },
+      { error: "Failed to delete projects" },
       { status: 500 }
     );
   }

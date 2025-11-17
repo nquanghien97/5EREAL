@@ -22,11 +22,10 @@ model user {
   role        USER_ROLE @default(USER)
   createdAt   DateTime  @default(now())
 
-  news        news[]
-  coordinates coordinates[]
-
-  projects          projects[]
-  images_review_bds images_review_bds[]
+  news              news[]              @relation("UserNews")
+  coordinates       coordinates[]       @relation("UserCoordinates")
+  projects          projects[]          @relation("UserProjects")
+  images_review_bds images_review_bds[] @relation("UserImagesReview")
 }
 
 model coordinates {
@@ -35,7 +34,7 @@ model coordinates {
   lng       Float
   note      String?  @db.LongText
   userId    Int
-  user      user     @relation(fields: [userId], references: [id])
+  user      user     @relation("UserCoordinates", fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -43,61 +42,58 @@ model coordinates {
 }
 
 model news {
-  id        Int      @id @default(autoincrement())
-  title     String
-  slug      String   @unique
-  summary   String   @db.LongText
-  thumbnail String
-  isHotNews Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId  Int
-  author    user     @relation(fields: [authorId], references: [id])
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  summary     String   @db.LongText
+  thumbnailId Int // Thay vì String
+  thumbnail   images   @relation("NewsThumbnail", fields: [thumbnailId], references: [id])
+  isHotNews   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  authorId    Int
+  author      user     @relation("UserNews", fields: [authorId], references: [id])
 
-  news_sections news_sections[]
+  sections news_sections[]
 }
 
 model news_sections {
   id         Int      @id @default(autoincrement())
   newsId     Int
-  imageUrl   String?
+  imageId    Int? // Thay vì String?
+  image      images?  @relation("NewsSectionImage", fields: [imageId], references: [id])
   content    String?  @db.LongText
   caption    String?
-  orderIndex Int
+  orderIndex Int      @default(0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  news news @relation(fields: [newsId], references: [id])
-
-  @@unique([newsId, orderIndex])
-  @@index([newsId])
+  news news @relation(fields: [newsId], references: [id], onDelete: Cascade)
 }
 
 model projects {
-  id                    Int      @id @default(autoincrement())
-  name                  String
-  description           String
-  fullName              String
-  slug                  String   @unique
-  location              String
-  totalArea             Int
-  constructionRate      Float
-  floorHeightMin        Int
-  floorHeightMax        Int
-  type                  String
-  numberOfUnits         Int
-  investor              String
-  thumbnailUrl          String
-  backgroundOverviewUrl String?
-  authorId              Int
-  author                user     @relation(fields: [authorId], references: [id])
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  fullName             String
+  slug                 String   @unique
+  location             String
+  totalArea            Int
+  constructionRate     Float
+  floorHeightMin       Int
+  floorHeightMax       Int
+  type                 String
+  numberOfUnits        Int
+  investor             String
+  thumbnailId          Int
+  thumbnail            images   @relation("ProjectThumbnail", fields: [thumbnailId], references: [id])
+  backgroundOverviewId Int?
+  backgroundOverview   images?  @relation("ProjectBackground", fields: [backgroundOverviewId], references: [id])
+  authorId             Int
+  author               user     @relation("UserProjects", fields: [authorId], references: [id])
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
 
-  // Quan hệ tới các section chi tiết
-  project_sections project_sections[]
-
-  project_images project_images[]
+  sections project_sections[]
 }
 
 enum SECTION_TYPE {
@@ -110,43 +106,52 @@ model project_sections {
   id          Int          @id @default(autoincrement())
   projectId   Int
   type        SECTION_TYPE
-  title       String? // tiêu đề section: "Tổng quan dự án", "Tiện ích", ...
-  description String?
-  content     String?      @db.LongText // HTML/Markdown
-  imageUrl    String? // nếu có 1 ảnh chính
-  orderIndex  Int
+  caption     String?
+  title       String?
+  description String?      @db.Text
+  content     String?      @db.LongText
+  orderIndex  Int          @default(0)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 
-  project        projects         @relation(fields: [projectId], references: [id])
-  project_images project_images[]
+  project projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  @@unique([projectId, orderIndex])
-  @@index([projectId])
+  // 💡 thêm quan hệ 1-n tới bảng phụ
+  section_images project_section_images[]
 }
 
-model project_images {
-  id         Int          @id @default(autoincrement())
-  projectId  Int
-  type       SECTION_TYPE
-  sectionId  Int? // có thể null nếu ảnh thuộc toàn project chứ không thuộc section nào
-  imageUrl   String
-  caption    String?
-  orderIndex Int
-  createdAt  DateTime     @default(now())
+model project_section_images {
+  id         Int      @id @default(autoincrement())
+  sectionId  Int
+  imageId    Int
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
 
-  project projects          @relation(fields: [projectId], references: [id])
-  section project_sections? @relation(fields: [sectionId], references: [id])
+  section project_sections @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  image   images           @relation(fields: [imageId], references: [id])
+}
 
-  @@index([projectId])
-  @@index([sectionId])
+model images {
+  id        Int      @id @default(autoincrement())
+  url       String // Đổi tên từ imageUrl sang url cho ngắn gọn
+  alt       String? // Thêm alt text cho SEO
+  mimeType  String? // image/jpeg, image/png, etc.
+  createdAt DateTime @default(now())
+
+  // Relations
+  newsThumbnails     news[]          @relation("NewsThumbnail")
+  newsSections       news_sections[] @relation("NewsSectionImage")
+  projectThumbnails  projects[]      @relation("ProjectThumbnail")
+  projectBackgrounds projects[]      @relation("ProjectBackground")
+
+  projectSectionImages project_section_images[]
 }
 
 model images_review_bds {
   id            Int         @id @default(autoincrement())
   url           String
   userId        Int
-  user          user        @relation(fields: [userId], references: [id])
+  user          user        @relation("UserImagesReview", fields: [userId], references: [id])
   coordinatesId Int
   coordinates   coordinates @relation(fields: [coordinatesId], references: [id])
   createdAt     DateTime    @default(now())

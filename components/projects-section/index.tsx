@@ -5,7 +5,7 @@ import Link from 'next/link'
 import FadeIn from '../framer-motion/FadeIn'
 import PlayIcon from '@/assets/icons/PlayIcon'
 
-function ProjectsSection({ response, description }: { response: { data: ProjectsEntity[] }, description: string }) {
+function ProjectsSection({ response, description }: { response: { projects: ProjectsEntity[] }, description: string }) {
   return (
     <section className="px-4 mb-16">
       <div className="max-w-7xl mx-auto">
@@ -26,8 +26,8 @@ function ProjectsSection({ response, description }: { response: { data: Projects
           </div>
         </FadeIn>
         <FadeIn>
-          <div className={`grid grid-cols-1 ${response.data.length > 1 ? 'md:grid-cols-2' : ''} max-w-7xl mx-auto rounded-2xl overflow-hidden`}>
-            {response.data.map((project) => (
+          <div className={`grid grid-cols-1 ${response.projects.length > 1 ? 'md:grid-cols-2' : ''} max-w-7xl mx-auto rounded-2xl overflow-hidden`}>
+            {response.projects.map((project) => (
               <Link
                 href={`/du-an/${project.slug}`}
                 key={project.id}
@@ -36,7 +36,7 @@ function ProjectsSection({ response, description }: { response: { data: Projects
                 {/* Background Image with Overlay */}
                 <div className="relative">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${project.thumbnailUrl}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${project.thumbnail.url}`}
                     alt={project.name}
                     width={600}
                     height={400}

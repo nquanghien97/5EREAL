@@ -4,7 +4,7 @@ import { deleteFile, uploadFile } from "@/utils/fileUpload";
 import { getUserFromCookie } from "@/lib/getUserFromCookie";
 
 export async function POST(req: Request) {
-  let filenames: string[] = [];
+  let uploaded: { filename: string, url: string, mimeType: string }[] = [];
   try {
     const user = await getUserFromCookie();
     const userId = user?.userId;
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     }
 
     // upload và lấy tên file
-    filenames = await uploadFile(files, "images-review-bds");
+    uploaded = await uploadFile(files, "images-review-bds");
     let newCoordinatesId: number;
 
     if(!coordinatesId) {
@@ -46,9 +46,9 @@ export async function POST(req: Request) {
       newCoordinatesId = result.id;
     }
 
-    const data = filenames.map((filename) => ({
+    const data = uploaded.map((f) => ({
       userId: Number(userId),
-      url: `/images/images-review-bds/${filename}`,
+      url: f.url,
       coordinatesId: Number(coordinatesId) || newCoordinatesId,
     }));
 
@@ -74,10 +74,10 @@ export async function POST(req: Request) {
     );
   } catch (err) {
     // rollback file nếu có lỗi
-    if (filenames.length > 0) {
+    if (uploaded.length > 0) {
       await Promise.all(
-        filenames.map((filename) =>
-          deleteFile(`/images/images-review-bds/${filename}`)
+        uploaded.map((f) =>
+          deleteFile(f.url)
         )
       );
     }

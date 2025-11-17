@@ -4,9 +4,10 @@ import React from 'react'
 import { EffectCoverflow, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Image from 'next/image'
-import { ProjectsSectionsEntity } from '@/entities/projects'
+import { ProjectsImagesEntity } from '@/entities/projects'
 
-function Slider({ listImages }: { listImages: ProjectsSectionsEntity[] }) {
+function Slider({ listImages }: { listImages?: ProjectsImagesEntity[] }) {
+  if (listImages?.length === 0 || !listImages) return;
   return (
     <Swiper
       effect={'coverflow'}
@@ -27,7 +28,7 @@ function Slider({ listImages }: { listImages: ProjectsSectionsEntity[] }) {
     >
       {listImages.map(image => (
         <SwiperSlide key={image.id}>
-          <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + image.imageUrl} alt="image_hinh_anh" width={1920} height={1080} />
+          <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + image.image.url} alt="image_hinh_anh" width={1920} height={1080} />
         </SwiperSlide>
       ))}
     </Swiper>

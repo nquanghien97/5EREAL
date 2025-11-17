@@ -25,7 +25,7 @@ function OthersNewsSection(props: OthersNewsSectionProps) {
     (async () => {
       try {
         const res = await getNews({ page: paging.page, pageSize: paging.pageSize, excludeNewsSlug: slug })
-        setData(res.data)
+        setData(res.news)
         setPaging(res.paging)
       } catch (err) {
         console.log((err as Error).message)
@@ -44,7 +44,7 @@ function OthersNewsSection(props: OthersNewsSectionProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map(news => (
               <Link href={`/tin-tuc/${news.slug}`} key={news.id} className="flex flex-col group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail}`} alt={news.title} width={600} height={400} className="object-cover w-full max-h-[300px]" />
+                <Image src={news.thumbnail ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail.url}` : '/example-img-1.jpg'} alt={news.title} width={600} height={400} className="object-cover w-full max-h-[300px]" />
                 <div className="bg-[#0F3E5A] h-full p-4">
                   <p className="text-white text-xl">{news.title}</p>
                   <div className="flex items-center space-x-2 text-[#d29015] hover:text-white transition-colors duration-200">

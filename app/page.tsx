@@ -13,7 +13,7 @@ import Banner from "@/components/Banner";
 
 export default async function Home() {
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
-  const projectsResponse: { data: ProjectsEntity[] } = await res.json()
+  const projectsResponse: { projects: ProjectsEntity[] } = await res.json()
 
   const tools = [
     {

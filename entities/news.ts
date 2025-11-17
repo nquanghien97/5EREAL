@@ -1,20 +1,23 @@
+import { MediaEntity } from "./media";
+import { UserEntity } from "./user";
+
 export interface NewsEntity {
   id: number;
-  title: string;
-  summary: string;
-  thumbnail: string;
-  authorId: number;
   isHotNews: boolean;
+  sections: NewsSectionEntity[];
   slug: string;
+  summary: string;
+  thumbnail?: MediaEntity | null;
+  title: string;
+  author: Pick<UserEntity, 'id' | 'fullName'>
+  authorId: number;
   createdAt: Date;
-  news_sections: NewsSectionEntity[]
 }
 
 export interface NewsSectionEntity {
-  id: number;
-  newsId: number;
   orderIndex: number;
-  content: string | null;
-  caption: string | null;
-  imageUrl: string | null;
+  caption?: string;
+  image?: MediaEntity | null;
+  imageId?: number;
+  content?: string;
 }

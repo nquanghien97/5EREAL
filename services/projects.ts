@@ -1,5 +1,6 @@
 import { ProjectsEntity } from "@/entities/projects";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function getProjects({ page, pageSize, excludeProjectsSlug }: { page?: number, pageSize?: number, excludeProjectsSlug?: string }) {
@@ -19,41 +20,57 @@ export async function getFirstProjects() {
 export async function getProjectsBySlug(slug: string): Promise<ProjectsEntity> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/projects/${slug}`)
   const data = await res.json()
-  return data.data
+  return data.project
 }
 
-export async function getProjectsByPrisma({ page = 1, pageSize = 3, excludeProjectsSlug }: { page: number, pageSize: number, excludeProjectsSlug?: string }) {
-  const skip = (page - 1) * pageSize;
-  const take = pageSize;
+export async function getProjectsByPrisma({ page, pageSize, excludeProjectsSlug }: { page?: number, pageSize?: number, excludeProjectsSlug?: string }) {
+  let skip: number | undefined;
+  let take: number | undefined;
+
+  // Nếu có pageSize thì mới phân trang
+  if (pageSize && page) {
+    skip = (page - 1) * pageSize;
+    take = pageSize;
+  }
+
   try {
-    const Projects = await prisma.projects.findMany({
-      skip,
-      take,
-      where: excludeProjectsSlug ? {
+    const whereCondition: Prisma.projectsWhereInput = {
+      ...(excludeProjectsSlug ? {
         slug: { not: excludeProjectsSlug }
-      } : {}
-    })
-    const total = await prisma.projects.count({
-      where: excludeProjectsSlug ? {
-        slug: { not: excludeProjectsSlug }
-      } : {}
-    })
-    return NextResponse.json(
-      {
-        data: Projects,
-        paging: {
-          page,
-          pageSize,
-          total
+      } : {}),
+    };
+
+    const projectsList = await prisma.projects.findMany({
+      where: whereCondition,
+      orderBy: { createdAt: "desc" },
+      include: {
+        thumbnail: true,
+        author: { select: { id: true, fullName: true } },
+        sections: {
+          include: {
+            section_images: {
+              orderBy: { orderIndex: 'asc' },
+              include: { image: true }
+            }
+          }
         }
       },
-      { status: 200 }
-    )
-  } catch (err) {
-    if (err instanceof Error) {
-      return NextResponse.json({ message: err.message }, { status: 500 })
-    } else {
-      return NextResponse.json({ message: "Có lỗi xảy ra" }, { status: 500 })
-    }
+      ...(pageSize ? { skip, take } : {}) // 👈 Chỉ thêm vào options nếu có phân trang
+    });
+
+    const total = await prisma.projects.count({
+      where: whereCondition
+    });
+
+    return NextResponse.json({
+      projects: projectsList,
+      paging: pageSize ? { page, pageSize, total } : undefined
+    });
+  } catch (error) {
+    console.error("❌ GET /api/projects error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch projects" },
+      { status: 500 }
+    );
   }
 }

@@ -4,9 +4,9 @@ import NewsSection from '@/components/news-section'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import { getProjectsByPrisma } from '@/services/projects'
-import { ProjectsEntity } from '@/entities/projects'
 import ProjectsSection from '@/components/projects-section'
 import Banner from '@/components/Banner'
+import { ProjectsEntity } from '@/entities/projects'
 
 export const metadata: Metadata = {
   title: 'Dự án',
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 }
 
 async function DuAn() {
-  const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
-  const response: { data: ProjectsEntity[] } = await res.json()
-  const firstProject = response.data[0]
-  const secondProject = response.data[1]
+  const res = await getProjectsByPrisma({ })
+  const response: { projects: ProjectsEntity[] } = await res.json()
+  const firstProject = response.projects[0]
+  const secondProject = response.projects[1]
   // const othersProjects = response.data.slice(2)
   return (
     <main>
@@ -36,7 +36,7 @@ async function DuAn() {
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-4 w-3/4 bg-gradient-to-l from-[#155a84] to-[#104565]">
                   <p className="bg-text-yellow lgtext-xl font-bold text-center">Tên pháp lý: {firstProject.name}</p>
                 </div>
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + firstProject.thumbnailUrl} alt={firstProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + firstProject.thumbnail.url} alt={firstProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">
@@ -81,7 +81,7 @@ async function DuAn() {
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 p-4 w-3/4 bg-gradient-to-l from-[#155a84] to-[#104565]">
                   <p className="bg-text-yellow lg:text-xl font-bold text-center">Tên pháp lý: {secondProject.name}</p>
                 </div>
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + secondProject.thumbnailUrl} alt={secondProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + secondProject.thumbnail.url} alt={secondProject.name} width={600} height={400} className="w-full object-cover rounded-2xl mb-4" />
               </div>
               <div className="w-full lg:w-2/5">
                 <ul className="text-[#003c7a]">

@@ -37,7 +37,7 @@ async function DetailNews({ params }: { params: Promise<{ slug: string, page: st
         </div>
       </div>
       <div className="flex-1 lg:hidden">
-        <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + res.thumbnail} alt={res.title} width={1920} height={1080} className="w-full" />
+        <Image src={res.thumbnail ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${res.thumbnail.url}` : '/example-img-1.jpg'} alt={res.title} width={1920} height={1080} className="w-full" />
       </div>
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8 mb-4 lg:mb-16">
@@ -53,16 +53,16 @@ async function DetailNews({ params }: { params: Promise<{ slug: string, page: st
             <div className="text-[1.25rem] text-justify" dangerouslySetInnerHTML={{ __html: res.summary }} />
           </div>
           <div className="flex-1 max-lg:hidden">
-            <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + res.thumbnail} alt={res.title} width={1920} height={1080} className="w-full" />
+            <Image src={res.thumbnail ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${res.thumbnail.url}` : '/example-img-1.jpg'} alt={res.title} width={1920} height={1080} className="w-full" />
           </div>
         </div>
         <div className="max-w-4xl m-auto">
-          {res.news_sections.map(section => (
+          {res.sections.map(section => (
             <section key={section.orderIndex} className="mb-8">
-              {section.imageUrl && (
-                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.imageUrl} alt={section.caption || ''} width={1920} height={1080} className="mb-2" />
+              {section.image && (
+                <Image src={process.env.NEXT_PUBLIC_API_BASE_URL + section.image.url} alt={section.caption || ''} width={1920} height={1080} className="mb-2" />
               )}
-              {section.imageUrl && section.caption && (
+              {section.image && section.caption && (
                 <figcaption className="text-[#19366A] mb-2 text-center italic">
                   <p>{section?.caption}</p>
                 </figcaption>

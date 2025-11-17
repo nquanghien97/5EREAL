@@ -22,10 +22,10 @@ async function NewsSection() {
         </div>
         <div className="flex gap-4 flex-col lg:flex-row lg:max-h-[600px]">
           {firstNews ? (
-            <div className="relative lg:w-[55%] py-2">
-              <Link href={`/tin-tuc/${firstNews.slug}`}>
-                <Image src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${firstNews.thumbnail}`} alt={firstNews.title} width={600} height={400} className="object-cover w-full h-full rounded-lg" />
-              </Link>
+            <Link href={`/tin-tuc/${firstNews.slug}`} className="relative lg:w-[55%] py-2">
+              {/* < href={`/tin-tuc/${firstNews.slug}`}> */}
+                <Image src={firstNews.thumbnail ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${firstNews.thumbnail.url}` : '/example-img-1.jpg'} alt={firstNews.title} width={600} height={400} className="object-cover w-full h-full rounded-lg" />
+              {/* </Link> */}
               <div className="absolute bottom-2 rounded-b-lg left-0 right-0 background-linear-blue p-8">
                 <div className="flex items-center gap-1">
                   <ClockIcon width={16} height={16} fill='#d2a932' />
@@ -33,7 +33,7 @@ async function NewsSection() {
                 </div>
                 <h3 className="text-xl text-white bg-opacity-70 rounded font-bold">{firstNews.title}</h3>
               </div>
-            </div>
+            </Link>
           ) : (
             <p className="text-center">Không có dữ liệu</p>
           )}

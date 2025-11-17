@@ -1,20 +1,25 @@
+import { getUserFromCookie } from "@/lib/getUserFromCookie";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: number }> }) {
-  const { id } = await params
-
-
-  if (!id) return NextResponse.json(
-    {
-      message: "Missing user_id",
-    },
-    { status: 404 }
-  )
-
 
   try {
-    const user = await prisma.user.findUnique({
+    const { id } = await params
+    if (!id) return NextResponse.json(
+      {
+        message: "Missing user_id",
+      },
+      { status: 404 }
+    )
+    const user = await getUserFromCookie();
+    if (!user || user.role !== "ADMIN") {
+      return NextResponse.json(
+        { message: "Bạn không có quyền thực hiện hành động này" },
+        { status: 403 }
+      );
+    }
+    const currentUser = await prisma.user.findUnique({
       where: {
         id: +id
       },
@@ -26,7 +31,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: numb
     })
     return NextResponse.json(
       {
-        data: user,
+        data: currentUser,
       },
       { status: 200 }
     )
@@ -38,14 +43,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: numb
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: number }> }) {
-  const { id } = await params;
-  if (!id) {
-    return NextResponse.json(
-      { message: 'User ID is required.' },
-      { status: 400 }
-    )
-  }
   try {
+    const { id } = await params;
+    if (!id) {
+      return NextResponse.json(
+        { message: 'User ID is required.' },
+        { status: 400 }
+      )
+    }
+    const user = await getUserFromCookie();
+    if (!user || user.role !== "ADMIN") {
+      return NextResponse.json(
+        { message: "Bạn không có quyền thực hiện hành động này" },
+        { status: 403 }
+      );
+    }
     await prisma.user.delete({
       where: {
         id: +id
