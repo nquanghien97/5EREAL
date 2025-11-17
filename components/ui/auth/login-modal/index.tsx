@@ -11,6 +11,7 @@ import EyeIcon from '@/assets/icons/EyeIcon'
 import EyeOffIcon from '@/assets/icons/EyeOff'
 import { useRouter } from 'next/navigation'
 import LoadingIcon from '@/assets/icons/LoadingIcon'
+import { toast } from 'react-toastify'
 
 interface LoginModalProps {
   onSwitchRegisterModal: () => void
@@ -47,10 +48,12 @@ function LoginModal(props: LoginModalProps) {
       setIsLoading(true)
       const res = await LoginUser(data)
       setUser(res.user)
+      toast.success('Đăng nhập thành công')
       router.refresh()
       onClose()
     } catch (err) {
       console.log((err as Error).message)
+      toast.error((err as Error).message)
     } finally {
       setIsLoading(false)
     }

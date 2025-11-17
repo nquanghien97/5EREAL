@@ -11,6 +11,7 @@ import { RegisterUser } from '@/services/auth'
 import { useAuthStore } from '@/zustand/user'
 import LoadingIcon from '@/assets/icons/LoadingIcon'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 interface RegisterModalProps {
   onSwitchLoginModal: () => void
@@ -51,9 +52,11 @@ function RegisterModal(props: RegisterModalProps) {
       setIsLoading(true)
       const res = await RegisterUser(data)
       setUser(res.user)
+      toast.success('Đăng ký thành công!')
       router.refresh()
       onClose()
     } catch (err) {
+      toast.error((err as Error).message)
       console.log((err as Error).message)
     } finally {
       setIsLoading(false)

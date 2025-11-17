@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     if (!phoneNumber || !password || !fullName) {
       return NextResponse.json(
-        { success: false, message: 'Missing phone number, password or full name' },
+        { success: false, message: 'Thiếu số điện thoại hoặc mật khẩu hoặc họ tên' },
         { status: 400 }
       );
     }
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const existingUser = await prisma.user.findUnique({ where: { phoneNumber } });
     if (existingUser) {
       return NextResponse.json(
-        { success: false, message: 'Phone number already registered' },
+        { success: false, message: 'Số điện thoại đã tồn tại!' },
         { status: 400 }
       );
     }
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { success: true, message: 'Register & login successfully', user },
+      { success: true, message: 'Đăng nhập thành công', user },
       { status: 201 }
     );
   } catch (error) {

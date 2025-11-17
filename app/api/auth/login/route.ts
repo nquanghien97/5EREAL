@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   if (!phoneNumber || !password) {
     return NextResponse.json({
       success: false,
-      message: "Missing phone number or password"
+      message: "Thiếu số điện thoại hoặc mật khẩu"
     }, { status: 400 });
   }
 
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json({
         success: false,
-        message: "Incorrect phone number or password"
+        message: "Số điện thoại hoặc mật khẩu không chính xác"
       }, { status: 400 });
     }
 
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     if (!passwordValidated) {
       return NextResponse.json({
         success: false,
-        message: "Incorrect phone number or password"
+        message: "Số điện thoại hoặc mật khẩu không chính xác"
       }, { status: 400 });
     }
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     // Tạo response JSON
     const response = NextResponse.json({
       success: true,
-      message: "Login successfully",
+      message: "Đăng nhập thành công",
       accessToken,
       user: userResponse
     }, { status: 200 });
