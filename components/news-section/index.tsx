@@ -46,7 +46,7 @@ async function NewsSection() {
                     className="w-2/5 h-full block"
                   >
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail}`}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${news.thumbnail?.url}`}
                       alt={news.title}
                       width={600}
                       height={400}
