@@ -11,7 +11,7 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
     <div>Không tìm thấy dự án</div>
   )
   const project = await getProjectsBySlug(slug)
-  if(!project) return (
+  if (!project) return (
     <p className='text-center p-6 text-xl'>Dự án không tồn tại</p>
   )
   const dataProjectSection = project.sections.filter(item => item.type === 'NORMAL')
@@ -68,16 +68,17 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
           <div key={section.id} className="flex flex-col lg:flex-row max-w-7xl m-auto px-4 mb-8 gap-4">
             {section.section_images.map(s => (
               <div className="flex-1 lg:hidden" key={s.id}>
-                <Image src={section.image ? process.env.NEXT_PUBLIC_API_BASE_URL + section.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl" />
+                <Image src={s.image ? process.env.NEXT_PUBLIC_API_BASE_URL + s.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl" />
               </div>
             ))}
             {section.orderIndex % 2 !== 0 && (
               <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content || '' }} />
             )}
-            <div className="flex-1 max-lg:hidden">
-              <Image src={section.image ? process.env.NEXT_PUBLIC_API_BASE_URL + section.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl mb-1" />
-              <p className="text-[#19366A] text-center">{section.caption}</p>
-            </div>
+            {section.section_images.map(s => (
+              <div className="flex-1 max-lg:hidden" key={s.id}>
+                <Image src={s.image ? process.env.NEXT_PUBLIC_API_BASE_URL + s.image.url : '/example-img-1.jpg'} alt="image_section" width={1920} height={1080} className="rounded-xl" />
+              </div>
+            ))}
             {section.orderIndex % 2 === 0 && (
               <div className="text-[#19366A] text-[1.25rem] flex-1 text-justify" dangerouslySetInnerHTML={{ __html: section.content || '' }} />
             )}
@@ -100,10 +101,10 @@ async function DetailProject({ params }: { params: Promise<{ slug: string, page:
 
       {dataThuVienHinhAnh?.section_images.length !== 0 && (
         <section className="max-w-7xl m-auto px-4 mb-8">
-        <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">THƯ VIỆN HÌNH ẢNH</h2>
-        <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataThuVienHinhAnh?.title}</p>
-        <Slider listImages={dataThuVienHinhAnh?.section_images} />
-      </section>
+          <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] text-center mb-2">THƯ VIỆN HÌNH ẢNH</h2>
+          <p className="text-center text-[#19366A] text-[1.25rem] mb-4">{dataThuVienHinhAnh?.title}</p>
+          <Slider listImages={dataThuVienHinhAnh?.section_images} />
+        </section>
       )}
 
       {/* <OthersProjectsSection slug={slug} /> */}
