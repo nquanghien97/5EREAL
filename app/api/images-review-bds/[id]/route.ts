@@ -2,12 +2,12 @@ import prisma from "../../../../lib/prisma"
 import { NextResponse } from "next/server";
 import { deleteFile } from "@/utils/fileUpload";
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: number }> }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 
     const image = await prisma.images_review_bds.findUnique({
-      where: { id },
+      where: { id: Number(id) },
     });
 
     if (!image) {
@@ -18,7 +18,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: n
     }
 
     // Xóa record trong DB
-    await prisma.images_review_bds.delete({ where: { id } });
+    await prisma.images_review_bds.delete({ where: { id: Number(id) } });
 
     // Xóa file vật lý (nếu có)
     try {
