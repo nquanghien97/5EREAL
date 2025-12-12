@@ -46,9 +46,9 @@ function Banner() {
       >
         <SwiperSlide>
           <div className="reletive">
-            <Image src="/linh-vuc-2.jpg" alt="linh-vuc-2" width={1831} height={916} className="w-full max-h-[300px] lg:max-h-[600px] object-cover" />
+            <Image src="/banner-du-an.png" alt="banner-du-an" width={1831} height={916} className="w-full max-h-[300px] lg:max-h-[600px] object-cover" />
             <div className="absolute inset-0 lg:top-1/2 background-linear-blue" />
-            <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
+            {/* <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
               <div>
                 {<h2 className="text-2xl text-center lg:text-4xl font-bold pb-2">TUYỂN DỤNG</h2>}
               </div>
@@ -56,14 +56,14 @@ function Banner() {
                 <div className="max-lg:hidden w-1/2 h-[4px] bg-white" />
                 <p className="text-sm lg:text-xl max-w-lg max-lg:text-center px-2">Tham gia cùng chúng tôi</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="relative">
-            <Image src="/linh-vuc-3.jpg" alt="linh-vuc-3" width={1920} height={400} className="w-full max-h-[300px] lg:max-h-[600px]" />
+            <Image src="/banner-ve-chung-toi.png" alt="banner-ve-chung-toi" width={1920} height={400} className="w-full max-h-[300px] lg:max-h-[600px]" />
             <div className="absolute inset-0 lg:top-1/2 background-linear-blue" />
-            <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
+            {/* <div className={`absolute lg:left-[10%] bottom-[10%] text-white`}>
               <div>
                 {<h2 className="text-2xl text-center lg:text-4xl font-bold pb-2">TUYỂN DỤNG</h2>}
               </div>
@@ -71,7 +71,7 @@ function Banner() {
                 <div className="max-lg:hidden w-1/2 h-[4px] bg-white" />
                 <p className="text-sm lg:text-xl max-w-lg max-lg:text-center px-2">Tham gia cùng chúng tôi</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </SwiperSlide>
       </Swiper>

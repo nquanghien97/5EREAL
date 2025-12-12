@@ -1,6 +1,6 @@
-import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
+// import ArrowRightIcon from "@/assets/icons/ArrowRightIcon";
 import LinhVucHoatDong from "@/components/ui/homepage/linh-vuc-hoat-dong";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import DoiNguCoVan from "@/components/ui/homepage/doi-ngu-co-van";
 import DonViThanhVien from "@/components/ui/homepage/don-vi-thanh-vien";
@@ -15,32 +15,32 @@ export default async function Home() {
   const res = await getProjectsByPrisma({ page: 1, pageSize: 4 })
   const projectsResponse: { projects: ProjectsEntity[] } = await res.json()
 
-  const tools = [
-    {
-      id: "1",
-      title: "Lưu & quản lý thông tin BDS đã xem thông minh",
-      description: "Hệ thống lưu trữ và quản lý thông minh các bất động sản đã xem",
-      link: "/cong-cu-dinh-gia/#map-bds",
-    },
-    {
-      id: "2",
-      title: "Thiết lập bản đồ giá so sánh",
-      description: "Công cụ tạo bản đồ giá cả để so sánh các khu vực",
-      link: "/cong-cu-dinh-gia/#dinh-gia-bds",
-    },
-    {
-      id: "3",
-      title: "Tư vấn giá mua/bán trên dữ liệu thực tế KH đã khảo sát",
-      description: "Tư vấn giá cả dựa trên dữ liệu khảo sát thực tế từ khách hàng",
-      link: "/cong-cu-dinh-gia/#dinh-gia-bds",
-    },
-    {
-      id: "4",
-      title: "Dự báo tiềm năng tăng giá và khuyến cáo thời điểm bán",
-      description: "Phân tích và dự báo xu hướng giá cả, tư vấn thời điểm giao dịch",
-      link: "/cong-cu-dinh-gia/#tin-tuc-bds",
-    },
-  ]
+  // const tools = [
+  //   {
+  //     id: "1",
+  //     title: "Lưu & quản lý thông tin BDS đã xem thông minh",
+  //     description: "Hệ thống lưu trữ và quản lý thông minh các bất động sản đã xem",
+  //     link: "/cong-cu-dinh-gia/#map-bds",
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "Thiết lập bản đồ giá so sánh",
+  //     description: "Công cụ tạo bản đồ giá cả để so sánh các khu vực",
+  //     link: "/cong-cu-dinh-gia/#dinh-gia-bds",
+  //   },
+  //   {
+  //     id: "3",
+  //     title: "Tư vấn giá mua/bán trên dữ liệu thực tế KH đã khảo sát",
+  //     description: "Tư vấn giá cả dựa trên dữ liệu khảo sát thực tế từ khách hàng",
+  //     link: "/cong-cu-dinh-gia/#dinh-gia-bds",
+  //   },
+  //   {
+  //     id: "4",
+  //     title: "Dự báo tiềm năng tăng giá và khuyến cáo thời điểm bán",
+  //     description: "Phân tích và dự báo xu hướng giá cả, tư vấn thời điểm giao dịch",
+  //     link: "/cong-cu-dinh-gia/#tin-tuc-bds",
+  //   },
+  // ]
 
   return (
     <main className="background-linear-yellow">
@@ -50,12 +50,10 @@ export default async function Home() {
         description="Đối tác chiến lược trong phát triển và thương mại hóa bất động sản"
       />
 
-      <FadeIn>
+      {/* <FadeIn>
         <section className="mb-16 px-4 max-w-7xl mx-auto">
-          {/* Section Title */}
           <h2 className="text-3xl md:text-5xl font-[800] text-[#0F3E5A] mb-8 text-center">CÔNG CỤ TRỢ LÝ TƯ VẤN ĐỊNH GIÁ BDS</h2>
 
-          {/* Tools Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
             {tools.map((tool) => (
               <Link
@@ -63,7 +61,6 @@ export default async function Home() {
                 key={tool.id}
                 className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
               >
-                {/* Background Image with Overlay */}
                 <div className="relative">
                   <Image
                     src={`/cong-cu-${tool.id}.jpg`}
@@ -74,9 +71,7 @@ export default async function Home() {
                     loading="lazy"
                   />
                   <div className="bg-black opacity-40 z-10 absolute inset-0" />
-                  {/* Content */}
                   <div className="absolute background-linear-blue bottom-0 left-0 w-full z-20 p-8 flex flex-col justify-between">
-                    {/* Number Badge */}
                     <div className="flex">
                       <div className="text-6xl font-semibold text-white/90 leading-none">0{tool.id}</div>
                       <div className="flex items-end w-1/2">
@@ -84,7 +79,6 @@ export default async function Home() {
                       </div>
                     </div>
 
-                    {/* Title and CTA */}
                     <div className="min-h-[80px] flex flex-col">
                       <div className="flex flex-1 items-center">
                         <h3 className="text-2xl font-semibold text-white leading-tight">{tool.title}</h3>
@@ -103,7 +97,7 @@ export default async function Home() {
             ))}
           </div>
         </section>
-      </FadeIn>
+      </FadeIn> */}
 
       <FadeIn>
         <section className="mb-16 px-4">

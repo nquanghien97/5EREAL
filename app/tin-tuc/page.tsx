@@ -32,7 +32,7 @@ async function TinTuc({ searchParams }: { searchParams: Promise<{ page: string, 
   return (
     <main>
       <Banner
-        bannerImage='/banner-ve-chung-toi.png'
+        bannerImage='/banner-du-an.png'
         title='TIN TỨC'
         description='Cập nhật tin tức, sự kiện nổi bật về thị trường bất động sản'
         style='secondary'

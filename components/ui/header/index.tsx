@@ -5,44 +5,49 @@ import MenuIcon from '@/assets/icons/MenuIcon';
 import { ListHeader } from '@/constants/ListHeader';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import {
+  usePathname,
+  // useRouter
+} from 'next/navigation';
+import React, { useState } from 'react';
 import Auth from '../auth';
-import { useAuthStore } from '@/zustand/user';
-import { getMe, LogoutUser } from '@/services/auth';
-import { UserEntity } from '@/entities/user';
+// import { useAuthStore } from '@/zustand/user';
+// import { getMe, LogoutUser } from '@/services/auth';
+// import { UserEntity } from '@/entities/user';
 
-interface HeaderProps {
-  me: UserEntity | null;
-}
+// interface HeaderProps {
+//   me: UserEntity | null;
+// }
 
-function Header({ me }: HeaderProps) {
+function Header(
+  // { me }: HeaderProps
+) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const pathname = usePathname();
 
-  const { user, setUser } = useAuthStore();
+  // const { user, setUser } = useAuthStore();
 
-  const router = useRouter();
-  const currentUser = user === undefined ? me : user;
+  // const router = useRouter();
+  // const currentUser = user === undefined ? me : user;
 
-  useEffect(() => {
-    (async () => {
-      if(me) {
-        await getMe()
-      }
-    })()
-  }, [me])
+  // useEffect(() => {
+  //   (async () => {
+  //     if(me) {
+  //       await getMe()
+  //     }
+  //   })()
+  // }, [me])
   // Gán user từ server (SSR) vào Zustand lần đầu
-  useEffect(() => {
-    if (me) setUser(me);
-  }, [me, setUser]);
+  // useEffect(() => {
+  //   if (me) setUser(me);
+  // }, [me, setUser]);
 
-  const onLogout = async () => {
-    await LogoutUser();
-    setUser(null); // Cập nhật Zustand -> UI đổi ngay
-    router.refresh()
-  };
+  // const onLogout = async () => {
+  //   await LogoutUser();
+  //   setUser(null); // Cập nhật Zustand -> UI đổi ngay
+  //   router.refresh()
+  // };
 
   return (
     <>
@@ -69,7 +74,7 @@ function Header({ me }: HeaderProps) {
             </nav>
 
             {/* Auth */}
-            {currentUser ? (
+            {/* {currentUser ? (
               <div className="max-lg:hidden flex flex-col 2xl:flex-row gap-2 2xl:gap-4">
                 <p>Xin chào {currentUser.fullName}</p>
                 <div className="flex justify-center">
@@ -90,7 +95,7 @@ function Header({ me }: HeaderProps) {
                   Đăng nhập
                 </button>
               </div>
-            )}
+            )} */}
 
             {/* Mobile Menu Button */}
             <button
@@ -124,7 +129,7 @@ function Header({ me }: HeaderProps) {
                     {item.title}
                   </Link>
                 ))}
-                {!currentUser ? (
+                {/* {!currentUser ? (
                   <div className="lg:hidden flex justify-center">
                     <button
                       className="hover:text-[#d29015] transition-colors duration-200 font-medium text-sm tracking-wide uppercase bg-white px-8 py-2 rounded-lg text-[#0F3E5A] cursor-pointer"
@@ -148,7 +153,7 @@ function Header({ me }: HeaderProps) {
                       </button>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             </nav>
           </div>
