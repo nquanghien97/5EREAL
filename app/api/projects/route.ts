@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   try {
     // 1. Check authentication & authorization
     const user = await getUserFromCookie();
-    if (!user || user.role !== "ADMIN") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "STAFF")) {
       return NextResponse.json(
         { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }

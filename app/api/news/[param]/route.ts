@@ -76,7 +76,7 @@ export async function PUT(
 
     // Check authentication & authorization
     const user = await getUserFromCookie();
-    if (!user || user.role !== "ADMIN") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "STAFF")) {
       return NextResponse.json(
         { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }
@@ -261,7 +261,7 @@ export async function DELETE(
     const { param } = await params
     const id = Number(param);
     const user = await getUserFromCookie();
-    if (!user || user.role !== "ADMIN") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "STAFF")) {
       return NextResponse.json(
         { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }

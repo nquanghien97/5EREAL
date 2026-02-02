@@ -7,7 +7,7 @@ import { Prisma } from "@prisma/client";
 export async function POST(req: Request) {
   try {
     const user = await getUserFromCookie();
-    if (!user || user.role !== "ADMIN") {
+    if (!user || (user.role !== "ADMIN" && user.role !== "STAFF")) {
       return NextResponse.json(
         { message: "Bạn không có quyền thực hiện hành động này" },
         { status: 403 }
