@@ -8,6 +8,8 @@ import ProjectsSection from '@/components/projects-section'
 import Banner from '@/components/Banner'
 import { ProjectsEntity } from '@/entities/projects'
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Dự án',
   description: 'Tổng quan dự án'
